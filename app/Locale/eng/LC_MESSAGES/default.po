@@ -1,0 +1,41 @@
+msgid "Name"
+msgstr "Nome"
+
+msgid "Date Of Birth"
+msgstr "Data de Aniversário"
+
+msgid "School"
+msgstr "Escola"
+
+msgid "Clinical Condition"
+msgstr "Condição Clínica"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Submit"
+msgstr "Salvar"
+
+msgid "Students"
+msgstr "Estudantes"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "New Student"
+msgstr "Novo Estudante"
+
+msgid "< previous"
+msgstr "< Anterior"
+
+msgid "next >"
+msgstr "Próximo >"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Delete"
+msgstr "Deletar"
