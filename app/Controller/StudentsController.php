@@ -85,7 +85,23 @@ class StudentsController extends AppController {
 			)
 		) );
 
-		$this->set(compact("atores", "inputs", "student_inputs"));
+		$student_lessons = $this->Student->StudentLesson->find("all", array(
+			"conditions" => array(
+				"StudentLesson.student_id" => $id
+			),
+		) );
+
+		$student_exercises = $this->Student->StudentExercise->find("all", array(
+			"conditions" => array(
+				"StudentExercise.student_id" => $id
+			),
+		) );
+
+		$aulas = $this->Student->StudentInput->StudentInputValue->findGroup($id);
+
+		$o_student_lessons = $this->Student->StudentLesson->find("list");
+
+		$this->set(compact("atores", "inputs", "student_inputs", "aulas", "student_lessons", "o_student_lessons", "student_exercises"));
 	}
 
 /**
@@ -107,6 +123,22 @@ class StudentsController extends AppController {
 			$this->Session->setFlash(__('The student could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
+	}
+
+	public function add_student_exercise() {
+
+		if($this->request->is("post")) {
+
+			$this->Student->StudentExercise->create();
+
+			$this->Student->StudentExercise->save($this->request->data);
+
+			$this->Session->setFlash(__('O novo exercício foi salvo.'));
+
+			return $this->redirect( array("action" => "edit", $this->request->data["StudentExercise"]["student_id"]) );
+
+		} // - post
+
 	}
 
 	public function add_input($input_id, $student_id, $actor) {
@@ -136,11 +168,68 @@ class StudentsController extends AppController {
 		$this->set(compact("input", "student"));
 	}
 
+	public function add_student_lesson() {
+
+		if($this->request->is("post")) {
+
+			$this->Student->StudentLesson->create();
+
+			$this->Student->StudentLesson->save($this->request->data);
+
+			$this->Session->setFlash(__('A nova matéria foi salva.'));
+
+			return $this->redirect( array("action" => "edit", $this->request->data["StudentLesson"]["student_id"]) );
+
+		} // - post
+
+		$input = $this->Input->findById($input_id);
+		$student = $this->Student->findById($student_id);
+
+		$this->set(compact("input", "student"));
+	}
+
 	public function delete_student_input($student_input_id, $student_id) {
 		$this->Student->StudentInput->delete($student_input_id);
 
 		$this->Session->setFlash(__('O input foi deletado.'));
 
 		return $this->redirect( array("action" => "edit", $student_id) );
+	}
+
+	public function delete_student_lesson($student_lesson_id, $student_id) {
+		$this->Student->StudentLesson->delete($student_lesson_id);
+
+		$this->Session->setFlash(__('A matéria foi deletada.'));
+
+		return $this->redirect( array("action" => "edit", $student_id) );
+	}
+
+	public function add_student_input_value() {
+
+		if($this->request->is("post")) {
+			
+			$student_id = 0;
+
+			foreach($this->request->data["StudentInputValue"] as $input_value) {
+
+				if(!empty($input_value["value"])) {
+
+					$student_id = $input_value["student_id"];
+
+					$input_value["date"] = $this->request->data["StudentInputValue"]["date"];
+
+					$this->Student->StudentInput->StudentInputValue->create();
+
+					$this->Student->StudentInput->StudentInputValue->save($input_value);
+
+				}
+
+			}
+		}
+
+		$this->Session->setFlash(__('O novo registro de input foi salvo.'));
+
+		return $this->redirect( array("action" => "edit", $student_id) );
+
 	}
 }

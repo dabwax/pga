@@ -22,4 +22,6 @@ $(document).ready(function() {
       revert: "invalid"
     });
 
+    $( ".calendario" ).datepicker();
+
 });
