@@ -31,4 +31,39 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+	/**
+	 * Dicionário dos inputs.
+	 *
+	 * @return ID do Input no banco de dados.
+	 */
+	public function getInputId($name = null) {
+		switch($name) {
+			case "Calendário":
+				return 1;
+			break;
+			case "Intervalo de Tempo":
+				return 2;
+			break;
+			case "Texto":
+				return 3;
+			break;
+			case "Escala Numérica":
+				return 4;
+			break;
+			case "Escala Texto":
+				return 5;
+			break;
+			case "Número":
+				return 6;
+			break;
+			case "Texto Privativo":
+				return 7;
+			break;
+			default:
+				return 0;
+			break;
+		}
+	}
+	
 }

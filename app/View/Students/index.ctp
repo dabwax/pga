@@ -5,12 +5,8 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('date_of_birth'); ?></th>
 			<th><?php echo $this->Paginator->sort('school'); ?></th>
 			<th><?php echo $this->Paginator->sort('clinical_condition'); ?></th>
-			<th><?php echo $this->Paginator->sort('description'); ?></th>
-			<th><?php echo $this->Paginator->sort('created'); ?></th>
-			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	</thead>
@@ -19,15 +15,10 @@
 	<tr>
 		<td><?php echo h($student['Student']['id']); ?>&nbsp;</td>
 		<td><?php echo h($student['Student']['name']); ?>&nbsp;</td>
-		<td><?php echo h($student['Student']['date_of_birth']); ?>&nbsp;</td>
 		<td><?php echo h($student['Student']['school']); ?>&nbsp;</td>
 		<td><?php echo h($student['Student']['clinical_condition']); ?>&nbsp;</td>
-		<td><?php echo h($student['Student']['description']); ?>&nbsp;</td>
-		<td><?php echo h($student['Student']['created']); ?>&nbsp;</td>
-		<td><?php echo h($student['Student']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $student['Student']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $student['Student']['id']), array(), __('Are you sure you want to delete # %s?', $student['Student']['id'])); ?>
+			<?php echo $this->Html->link(__('Visualizar'), array('action' => 'edit', $student['Student']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

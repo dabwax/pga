@@ -135,7 +135,7 @@ class StudentsController extends AppController {
 
 			$this->Session->setFlash(__('O novo exercício foi salvo.'));
 
-			return $this->redirect( array("action" => "edit", $this->request->data["StudentExercise"]["student_id"]) );
+			return $this->redirect( array("action" => "edit", $this->request->data["StudentExercise"]["student_id"], "#" => "exercicios") );
 
 		} // - post
 
@@ -147,10 +147,23 @@ class StudentsController extends AppController {
 
 			$this->Student->StudentInput->create();
 
+			// limpa o array de config
+			// apenas por organização
+			if(!empty($this->request->data["StudentInput"]["config"])) {
+				foreach($this->request->data["StudentInput"]["config"] as $k => $i) {
+					if(is_int($k)) {
+						if(empty($i["name"])) {
+							unset($this->request->data["StudentInput"]["config"][$k]);
+						}
+					}
+				}
+			}
+
 			$dados = array(
 				"student_id" => $student_id,
 				"input_id" => $input_id,
 				"actor" => strtolower($actor),
+				"config" => $this->request->data["StudentInput"]["config"],
 				"name" => $this->request->data["StudentInput"]["name"]
 			);
 
@@ -158,7 +171,7 @@ class StudentsController extends AppController {
 
 			$this->Session->setFlash(__('O novo input foi salvo.'));
 
-			return $this->redirect( array("action" => "edit", $student_id) );
+			return $this->redirect( array("action" => "edit", $student_id, "#" => "inputs") );
 
 		} // - post
 
@@ -178,7 +191,7 @@ class StudentsController extends AppController {
 
 			$this->Session->setFlash(__('A nova matéria foi salva.'));
 
-			return $this->redirect( array("action" => "edit", $this->request->data["StudentLesson"]["student_id"]) );
+			return $this->redirect( array("action" => "edit", $this->request->data["StudentLesson"]["student_id"], "#" => "materias") );
 
 		} // - post
 
@@ -193,7 +206,7 @@ class StudentsController extends AppController {
 
 		$this->Session->setFlash(__('O input foi deletado.'));
 
-		return $this->redirect( array("action" => "edit", $student_id) );
+		return $this->redirect( array("action" => "edit", $student_id, "#" => "conteudo") );
 	}
 
 	public function delete_student_lesson($student_lesson_id, $student_id) {
@@ -201,7 +214,7 @@ class StudentsController extends AppController {
 
 		$this->Session->setFlash(__('A matéria foi deletada.'));
 
-		return $this->redirect( array("action" => "edit", $student_id) );
+		return $this->redirect( array("action" => "edit", $student_id, "#" => "materias") );
 	}
 
 	public function add_student_input_value() {
@@ -229,7 +242,14 @@ class StudentsController extends AppController {
 
 		$this->Session->setFlash(__('O novo registro de input foi salvo.'));
 
-		return $this->redirect( array("action" => "edit", $student_id) );
+		return $this->redirect( array("action" => "edit", $student_id, "#" => "conteudo") );
+	}
 
+	public function delete_student_exercise($student_exercise_id, $student_id) {
+		$this->Student->StudentExercise->delete($student_exercise_id);
+
+		$this->Session->setFlash(__('O exercício foi deletado.'));
+
+		return $this->redirect( array("action" => "edit", $student_id, "#" => "exercicios") );
 	}
 }

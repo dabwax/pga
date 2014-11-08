@@ -37,31 +37,31 @@ class AppHelper extends Helper {
 	 * @return ID do Input no banco de dados.
 	 */
 	public function getInputId($name = null) {
-		switch($name) {
+		switch ($name) {
 			case "Calendário":
 				return 1;
-			break;
+				break;
 			case "Intervalo de Tempo":
 				return 2;
-			break;
+				break;
 			case "Texto":
 				return 3;
-			break;
+				break;
 			case "Escala Numérica":
 				return 4;
-			break;
+				break;
 			case "Escala Texto":
 				return 5;
-			break;
+				break;
 			case "Número":
 				return 6;
-			break;
+				break;
 			case "Texto Privativo":
 				return 7;
-			break;
+				break;
 			default:
 				return 0;
-			break;
+				break;
 		}
 	}
 }
