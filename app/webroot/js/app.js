@@ -1,5 +1,21 @@
 $(document).ready(function() {
 
+	// Ranges (Escala Texto)
+	$( ".range-texto-slider" ).slider({
+      range: "min",
+      value: $( ".range-texto-slider" ).data("min"),
+      min: $( ".range-texto-slider" ).data("min"),
+      max: $( ".range-texto-slider" ).data("max"),
+      slide: function( event, ui ) {
+      	var input = $( ".range-texto-slider" ).data("input");
+      	var resultado = $( ".range-texto-slider" ).data("resultado");
+      	var opcoes = $(".range-texto-slider").data("config");
+
+        $(input).val( opcoes[ui.value].name );
+        $(resultado).html( opcoes[ui.value].name );
+      }
+    });
+
 	// Ranges (Escala Numérica)
 	$( ".range-slider" ).slider({
       range: "min",

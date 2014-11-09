@@ -220,8 +220,6 @@ class StudentsController extends AppController {
 	public function add_student_input_value() {
 
 		if($this->request->is("post")) {
-			
-			$student_id = 0;
 
 			foreach($this->request->data["StudentInputValue"] as $input_value) {
 
@@ -242,7 +240,7 @@ class StudentsController extends AppController {
 
 		$this->Session->setFlash(__('O novo registro de input foi salvo.'));
 
-		return $this->redirect( array("action" => "edit", $student_id, "#" => "conteudo") );
+		return $this->redirect( array("controller" => "students", "action" => "edit", $this->request->data["StudentInputValue"][0]["student_id"], "#" => "conteudo") );
 	}
 
 	public function delete_student_exercise($student_exercise_id, $student_id) {

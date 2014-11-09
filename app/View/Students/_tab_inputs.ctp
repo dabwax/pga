@@ -73,6 +73,42 @@
 
 						<!-- Fim - range -->
 
+					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Escala Texto") ) : ?>
+
+						<!-- Começo - label -->
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th class="text-left">
+										<?php foreach($si["StudentInput"]["config"] as $k_config => $c) : ?>
+											<?php echo $c["name"]; ?> <?php echo ($k_config != sizeof($si["StudentInput"]["config"])) ? "/" : ""; ?>
+										<?php endforeach; ?>
+									</th>
+									<th class="text-right">
+										Atual: <span id='<?php echo "ResultadoEscalaTexto" . $si["StudentInput"]["id"]; ?>'><?php echo $si["StudentInput"]["config"][1]["name"]; ?></span>
+									</th>
+								</tr>
+							</thead>
+						</table>
+
+						<!-- Fim - label -->
+
+						<!-- Começo - range -->
+
+						<div class="range-texto-slider" data-min="1" data-max="<?php echo sizeof($si["StudentInput"]["config"]); ?>" data-config='<?php echo json_encode($si["StudentInput"]["config"]); ?>' data-input="<?php echo "#CampoEscalaTexto" . $si["StudentInput"]["id"]; ?>" data-resultado="<?php echo "#ResultadoEscalaTexto" . $si["StudentInput"]["id"]; ?>"></div>
+						
+						<?php
+							echo $this->Form->input("StudentInputValue." . $k . ".value", array(
+								"label" => false,
+								"type" => "hidden",
+								"id" => "CampoEscalaTexto" . $si["StudentInput"]["id"],
+								"value" => 1,
+							));
+						?>
+
+						<!-- Fim - range -->
+
 					<?php endif; ?>
 
 				<?php endif; ?>
