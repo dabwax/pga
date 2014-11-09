@@ -1,5 +1,14 @@
 $(document).ready(function() {
 
+	// Intervalo de Tempo
+	$(".input.time select").change(function() {
+		var div 			= $(this).parent().parent();
+		var hora_inicial 	= $(div).find("select:eq(0)").val() + ":" + $(div).find("select:eq(1)").val();
+		var hora_final 		= $(div).find("select:eq(2)").val() + ":" + $(div).find("select:eq(3)").val();
+		var resultado 		= hora_inicial + " a " + hora_final;
+
+		$(this).parent().parent().find(".time-value").val(resultado);
+	});
 	// Ranges (Escala Texto)
 	$( ".range-texto-slider" ).slider({
       range: "min",

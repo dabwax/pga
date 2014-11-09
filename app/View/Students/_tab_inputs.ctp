@@ -33,7 +33,14 @@
 
 					<?php if( $si["Input"]["id"] == $this->Html->getInputId("Calendário") ) : ?>
 
-						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "calendario") ); ?>
+						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "calendario", "type" => "text", "value" => date("d/m/Y") ) ); ?>
+
+					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Intervalo de Tempo") ) : ?>
+
+						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "time-value", "type" => "hidden") ); ?>
+
+						<?php echo $this->Form->input("StudentInputValue." . $k . ".config.time_start", array("label" => false, "type" => "time", "interval" => 10, "timeFormat" => "24") ); ?>
+						<?php echo $this->Form->input("StudentInputValue." . $k . ".config.time_end", array("label" => false, "type" => "time", "interval" => 10, "timeFormat" => "24") ); ?>
 
 					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Texto") ) : ?>
 

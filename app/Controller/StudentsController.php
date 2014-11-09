@@ -171,7 +171,7 @@ class StudentsController extends AppController {
 
 			$this->Session->setFlash(__('O novo input foi salvo.'));
 
-			return $this->redirect( array("action" => "edit", $student_id, "#" => "inputs") );
+			return $this->redirect( array("action" => "edit", $student_id, "#" => "conteudo") );
 
 		} // - post
 
