@@ -1,10 +1,10 @@
 <?php
 class StudentInputValue extends AppModel {
-	public $belongsTo = array("StudentInput", "Student");
+	public $belongsTo = array("StudentInput", "StudentLesson", "Student");
 
 	public function findGroup($student_id) {
 		$return = array();
-		$all = $this->find("all", array("contain" => array("StudentInput") ) );
+		$all = $this->find("all", array("contain" => array("StudentInput", "StudentLesson") ) );
 
 		foreach($all as $e) {
 

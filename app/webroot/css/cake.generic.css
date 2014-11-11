@@ -741,3 +741,15 @@ pre {
 #url-rewriting-warning {
 	display:none;
 }
+
+.list-group-item.ativo {
+	background: #cdcdcd;
+}
+
+.list-group-item.ativo a {
+	background: #009ecc;
+	color: #FFF;
+	display: inline-block;
+	width: 100%;
+	padding: 8px;
+}

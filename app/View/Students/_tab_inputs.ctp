@@ -9,7 +9,7 @@
 
 	<div id="criar-input" class="tab-pane">
 		
-		<?php foreach($atores as $ac) : ?>
+		<?php $i_materias = 1; foreach($atores as $ac) : ?>
 
 			<h3>Como <?php echo $ac; ?></h3>
 
@@ -35,6 +35,10 @@
 
 						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "calendario", "type" => "text", "value" => date("d/m/Y") ) ); ?>
 
+					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Número") ) : ?>
+
+						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "numero", "type" => "text" ) ); ?>
+
 					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Intervalo de Tempo") ) : ?>
 
 						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "time-value", "type" => "hidden") ); ?>
@@ -43,6 +47,10 @@
 						<?php echo $this->Form->input("StudentInputValue." . $k . ".config.time_end", array("label" => false, "type" => "time", "interval" => 10, "timeFormat" => "24") ); ?>
 
 					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Texto") ) : ?>
+
+						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false) ); ?>
+
+					<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Texto Privativo") ) : ?>
 
 						<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false) ); ?>
 
@@ -122,6 +130,26 @@
 
 			<?php endforeach; ?>
 
+			<ul class="list-group">
+			<!-- Matérias -->
+			<?php foreach($student_lessons as $sl) : ?>
+				<li class="list-group-item">
+
+					<a class="btn-selecionar-materia" href="javascript:;"><?php echo $sl["StudentLesson"]["name"]; ?></a>
+
+					<div class="toggle hide">
+						<?php $sizeof = sizeof($student_inputs) + $i_materias; ?>
+						<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".student_id", array("type" => "hidden", "value" => $this->request->data["Student"]["id"]) ); ?>
+						<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".actor", array("type" => "hidden", "value" => strtolower($ac) ) ); ?>
+						<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".student_lesson_id", array("type" => "hidden", "value" => $sl["StudentLesson"]["id"]) ); ?>
+
+						<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".value", array("label" => false, "type" => "textarea", "placeholder" => "Observações " . $sl["StudentLesson"]["name"] ) ); ?>
+					</div>
+
+				</li>
+			<?php $i_materias++; endforeach; ?>
+			</ul>
+
 			<?php if(empty($campos[$ac])) : ?>
 				<div class="alert alert-info">
 					Não há inputs para este ator.
@@ -167,7 +195,7 @@
 						</span>
 					</td>
 					<td>
-						<?php echo $_a["StudentInput"]["name"]; ?>
+						<?php echo (!empty($_a["StudentInput"]["name"])) ? $_a["StudentInput"]["name"] : "Matéria: " . $_a["StudentLesson"]["name"]; ?>
 					</td>
 					<td>
 						<?php echo $_a["StudentInputValue"]["value"]; ?>

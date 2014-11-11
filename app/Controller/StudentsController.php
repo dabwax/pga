@@ -221,13 +221,39 @@ class StudentsController extends AppController {
 
 		if($this->request->is("post")) {
 
+			$input_date = null;
+
+			// adiciona os inputs
 			foreach($this->request->data["StudentInputValue"] as $input_value) {
 
-				if(!empty($input_value["value"])) {
-
-					$student_id = $input_value["student_id"];
+				if(!empty($input_value["value"]) && !empty($input_value["student_input_id"])) {
 
 					$input_value["date"] = $this->request->data["StudentInputValue"]["date"];
+
+					$input_date = $input_value["date"];
+
+					$this->Student->StudentInput->StudentInputValue->create();
+
+					$this->Student->StudentInput->StudentInputValue->save($input_value);
+
+				}
+
+			}
+
+			// limpa o array de matérias
+			// apenas por organização
+			foreach($this->request->data["StudentInputValue"] as $k => $input_value) {
+				if(empty($input_value["value"])) {
+					unset($this->request->data["StudentInputValue"][$k]);
+				}
+			}
+
+			// adiciona as matérias
+			foreach($this->request->data["StudentInputValue"] as $input_value) {
+
+				if(!empty($input_value["value"]) && !empty($input_value["student_lesson_id"])) {
+
+					$input_value["date"] = $input_date;
 
 					$this->Student->StudentInput->StudentInputValue->create();
 
