@@ -1,0 +1,39 @@
+.navbar-brand img {
+	max-height: 100%;
+}
+.navbar-brand {
+	padding: 6px;
+}
+.navbar {
+	border-radius: 0px;
+}
+footer p {
+	border-top: 1px solid #CCC;
+	padding-top: 6px;
+	margin-top: 20px;
+	font-size: 11px;
+}
+.panel-login {
+	position: fixed;
+	width: 40%;
+	left: 50%;
+	margin-left: -21%;
+	top: 30%;
+	padding-bottom: 40px;
+}
+.panel-login .btn-success {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 50px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+.panel-login a img {
+	height: 40px;
+}
+body {
+    width:100%;
+    height:100%;
+}

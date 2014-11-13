@@ -64,4 +64,18 @@ class AppHelper extends Helper {
 			break;
 		}
 	}
+
+	/**
+	 * Função de atalho para a action set_student.
+	 */
+	function dados($a, $campo, $subcampo = null) {
+		
+		if($campo == "id")
+			$a["prefix"] = null;
+
+		if($campo == "Student")
+			return $a[$a["model"]]["Student"][$subcampo];
+
+		return $a[$a["model"]][$a["prefix"] . $campo];
+	}
 }

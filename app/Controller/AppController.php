@@ -32,6 +32,30 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
+	public $components = array(
+        'Session',
+        'Auth' => array(
+            'loginRedirect' => array(
+                'controller' => 'pages',
+                'action' => 'dashboard',
+            ),
+            'logoutRedirect' => array(
+                'controller' => 'pages',
+                'action' => 'dashboard',
+            ),
+            'authenticate' => array(
+                'Form' => array(
+                    'passwordHasher' => 'Blowfish'
+                )
+            )
+        )
+    );
+
+    public function beforeFilter() {
+        $this->Auth->allow('display', 'set_student');
+    }
+
+
 	/**
 	 * Dicionário dos inputs.
 	 *
