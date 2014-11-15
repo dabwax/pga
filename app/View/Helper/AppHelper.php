@@ -89,4 +89,39 @@ class AppHelper extends Helper {
 
 		return AuthComponent::user($info);
 	}
+
+	/**
+	 * Função de atalho para recuperar o nome do pai e da mãe.
+	 */
+	public function getParentsName() {
+		$student_parents = AuthComponent::user("Student.StudentParent");
+
+		return $student_parents["dad_name"] . " e " . $student_parents["mom_name"];
+	}
+
+	/**
+	 * Função de atalho para recuperar o nome do psiquiatra.
+	 */
+	public function getPsychiatristName() {
+		$psychiatrist = AuthComponent::user("Student.StudentPsychiatrist");
+
+		return $psychiatrist["name"];
+	}
+
+	/**
+	 * Função de atalho para recuperar o nome da escola.
+	 */
+	public function getSchoolName() {
+		$school = AuthComponent::user("Student.StudentSchool");
+
+		return $school["mediator_name"] . " e " . $school["coordinator_name"];
+	}
+
+	/**
+	 * Função de atalho para recuperar informações do estudante logado.
+	 */
+	public function getStudentInfo($field = null) {
+		return AuthComponent::user("Student.Student." . $field);
+	}
+
 }

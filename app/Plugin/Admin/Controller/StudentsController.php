@@ -1,12 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
-/**
- * Students Controller
- *
- * @property Student $Student
- * @property PaginatorComponent $Paginator
- */
-class StudentsController extends AppController {
+class StudentsController extends AdminAppController {
 	public $uses = array("Student", "Input");
 
 /**

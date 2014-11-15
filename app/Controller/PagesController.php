@@ -37,11 +37,7 @@ class PagesController extends AppController {
  */
 	public $uses = array();
 
-	public function dashboard() {
-		
-	}
-	
-	public function admin_dashboard() {
+	public function index() {
 		
 	}
 

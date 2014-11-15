@@ -1,12 +1,17 @@
 <div class="students index">
 	<h2><?php echo __('Students'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
+
+	<p>
+		<?php echo $this->Html->link(__('Adicionar Novo Estudante'), array('action' => 'add'), array( "class" => "btn btn-default") ); ?>
+	</p>
+
+	<table class="table table-bordered">
 	<thead>
 	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('school'); ?></th>
-			<th><?php echo $this->Paginator->sort('clinical_condition'); ?></th>
+			<th><?php echo $this->Paginator->sort('id', "#"); ?></th>
+			<th><?php echo $this->Paginator->sort('name', "Nome"); ?></th>
+			<th><?php echo $this->Paginator->sort('school', "Escola"); ?></th>
+			<th><?php echo $this->Paginator->sort('clinical_condition', "Condição Clínica"); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	</thead>
@@ -18,7 +23,7 @@
 		<td><?php echo h($student['Student']['school']); ?>&nbsp;</td>
 		<td><?php echo h($student['Student']['clinical_condition']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Visualizar'), array('action' => 'edit', $student['Student']['id'])); ?>
+			<?php echo $this->Html->link(__('Visualizar'), array('action' => 'edit', $student['Student']['id']), array("class" => "btn btn-primary btn-xs") ); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -37,10 +42,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Student'), array('action' => 'add')); ?></li>
-	</ul>
 </div>

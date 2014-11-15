@@ -36,12 +36,14 @@ class AppController extends Controller {
         'Session',
         'Auth' => array(
             'loginRedirect' => array(
+            	'plugin' => false,
                 'controller' => 'pages',
-                'action' => 'dashboard',
+                'action' => 'index',
             ),
             'logoutRedirect' => array(
+            	'plugin' => false,
                 'controller' => 'pages',
-                'action' => 'dashboard',
+                'action' => 'index',
             ),
             'authenticate' => array(
                 'Form' => array(
@@ -88,6 +90,32 @@ class AppController extends Controller {
 				return 0;
 			break;
 		}
+	}
+
+	/**
+	 * Recupera qual o tipo de ator do usuário atual.
+	 */
+	public function getActor($user = null) {
+
+		switch($user["model"]) {
+			case "StudentParent":
+
+				if($user["prefix"] == "dad_" || $user["prefix"] == "mom_") {
+					$actor = "pais";
+				} else if($user["prefix"] == "tutor_") {
+					$actor = "tutor";
+				}
+
+				break;
+			case "StudentPsychiatrist":
+				$actor = "psico";
+				break;
+			case "StudentSchool";
+				$actor = "escola";
+				break;
+		}
+
+		return $actor;
 	}
 	
 }

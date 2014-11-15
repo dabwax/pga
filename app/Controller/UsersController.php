@@ -5,75 +5,6 @@ App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 class UsersController extends AppController {
     public $uses = array("User", "Student");
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-        // Allow users to register and logout.
-        $this->Auth->allow('add', 'logout');
-    }
-
-    public function index() {
-        $this->User->recursive = 0;
-        $this->set('users', $this->paginate());
-    }
-
-    public function view($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        $this->set('user', $this->User->read(null, $id));
-    }
-
-    public function add() {
-        if ($this->request->is('post')) {
-            $this->User->create();
-            if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved'));
-                return $this->redirect(array('action' => 'index'));
-            }
-            $this->Session->setFlash(
-                __('The user could not be saved. Please, try again.')
-            );
-        }
-    }
-
-    public function edit($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved'));
-                return $this->redirect(array('action' => 'index'));
-            }
-            $this->Session->setFlash(
-                __('The user could not be saved. Please, try again.')
-            );
-        } else {
-            $this->request->data = $this->User->read(null, $id);
-            unset($this->request->data['User']['password']);
-        }
-    }
-
-    public function delete($id = null) {
-        // Prior to 2.5 use
-        // $this->request->onlyAllow('post');
-
-        $this->request->allowMethod('post');
-
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->User->delete()) {
-            $this->Session->setFlash(__('User deleted'));
-            return $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('User was not deleted'));
-        return $this->redirect(array('action' => 'index'));
-    }
-
     // página para definir qual ator o usuário quer usar
     public function set_student($student_id = null, $actor_id = null) {
         $actors = $this->Session->read("actors");
@@ -121,6 +52,7 @@ class UsersController extends AppController {
                     ) );
 
                     // gambiarra - 3
+                    $actor[$model]["model"] = $model;
                     $actor[$model]["prefix"] = $prefix;
                 }
             }
@@ -136,8 +68,8 @@ class UsersController extends AppController {
             // fazer um login manual com ambos os dados
             $this->Auth->login($session_data);
 
-            // redirecionar para dashboard
-            return $this->redirect( array("controller" => "pages", "action" => "dashboard") );
+            // redirecionar para home
+            return $this->redirect( array("controller" => "pages", "action" => "index") );
         }
 
         if(empty($actors)) {
