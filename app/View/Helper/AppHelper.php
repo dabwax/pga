@@ -68,7 +68,7 @@ class AppHelper extends Helper {
 	/**
 	 * Função de atalho para a action set_student.
 	 */
-	function dados($a, $campo, $subcampo = null) {
+	public function dados($a, $campo, $subcampo = null) {
 		
 		if($campo == "id")
 			$a["prefix"] = null;
@@ -77,5 +77,16 @@ class AppHelper extends Helper {
 			return $a[$a["model"]]["Student"][$subcampo];
 
 		return $a[$a["model"]][$a["prefix"] . $campo];
+	}
+
+	/**
+	 * Função de atalho para recuperar informações do ator logado.
+	 *
+	 * auxílio mágico - INFO: daltro.inq
+	 */
+	public function getActorInfo($field = null) {
+		$info = "Actor." . AuthComponent::user("Actor.prefix") . "name";
+
+		return AuthComponent::user($info);
 	}
 }

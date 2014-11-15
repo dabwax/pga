@@ -51,10 +51,24 @@
 				
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 
+
+					<?php if(AuthComponent::user()) : ?>
+					<ul class="nav navbar-nav">
+						<li>
+							<p style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
+						</li>
+					</ul>
+					<?php endif; ?>
+
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="<?php echo $this->Html->url( array("controller" => "pages", "action" => "display", "sobre") ); ?>">O que é o PGA?</a>
 						</li>
+						<?php if(AuthComponent::user()) : ?>
+						<li>
+							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "logout") ); ?>">Sair</a>
+						</li>
+						<?php endif; ?>
 					</ul>
 
 				</div> <!-- .navbar-ex1-collapse -->
@@ -65,6 +79,21 @@
 	</header>
 
 	<div class="container">
+
+		<div class="btn-group">
+			<a href="<?php echo $this->Html->url( array("controller" => "input", "action" => "index") ); ?>" class="btn btn-primary">
+				Input
+			</a>
+			<a href="<?php echo $this->Html->url( array("controller" => "feed", "action" => "index") ); ?>" class="btn btn-primary">
+				Feed
+			</a>
+			<a href="<?php echo $this->Html->url( array("controller" => "evolution", "action" => "index") ); ?>" class="btn btn-primary">
+				Evolução
+			</a>
+			<a href="<?php echo $this->Html->url( array("controller" => "flow", "action" => "index") ); ?>" class="btn btn-primary">
+				Fluxo
+			</a>
+		</div>
 		<?php echo $this->Session->flash(); ?>
 
 		<?php echo $this->fetch('content'); ?>
