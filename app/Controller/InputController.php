@@ -9,6 +9,7 @@ class InputController extends AppController {
 	 * Página Inicial.
 	 */
 	public function index() {
+		$this->set("title_for_layout", "Inputs");
 		
 	}
 
@@ -16,6 +17,7 @@ class InputController extends AppController {
 	 * Página de Criar Novo Registro.
 	 */
 	public function create() {
+		$this->set("title_for_layout", "Criar Novo Input");
 
 		$actor = $this->getActor(AuthComponent::user("Actor"));
 		$student_id = AuthComponent::user("Student.Student.id");
@@ -45,6 +47,8 @@ class InputController extends AppController {
 	 * Página de Arquivo.
 	 */
 	public function archive() {
+		$this->set("title_for_layout", "Arquivo de Inputs");
+
 		$aulas = $this->Student->StudentInput->StudentInputValue->findGroup(AuthComponent::user("Student.Student.id"));
 
 		$this->set(compact("aulas"));

@@ -39,3 +39,6 @@ msgstr "Editar"
 
 msgid "Delete"
 msgstr "Deletar"
+
+msgid "Date"
+msgstr "Data"

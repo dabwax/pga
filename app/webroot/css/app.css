@@ -1,3 +1,6 @@
+body {
+	background: #D2D7D3;
+}
 .navbar-brand img {
 	max-height: 100%;
 }
@@ -39,4 +42,26 @@ body {
 }
 img {
 	max-width: 100%;
+}
+div.input {
+	display: inline-block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	clear: both;
+}
+div.input label {
+	display: block;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+div.input input[type="text"] {
+	display: inline-block;
+	width: 100%;
+	padding: 6px;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	background: #999;
 }

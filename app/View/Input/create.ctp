@@ -10,7 +10,7 @@
 <div class="row">
 	<?php echo $this->Form->create("StudentInputValue", array("url" => array("controller" => "input", "action" => "add_student_input_value") ) ); ?>
 
-	<?php echo $this->Form->input("StudentInputValue.date", array("type" => "text", "class" => "calendario", "value" => date("d/m/Y")) ); ?>
+	<?php echo $this->Form->input("StudentInputValue.date", array("type" => "text", "class" => "calendario", "value" => date("d/m/Y"), "label" => "Data da Aula") ); ?>
 
 	<?php
 

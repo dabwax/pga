@@ -25,6 +25,12 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'index'));
+	Router::connect('/login', array('controller' => 'users', 'action' => 'login'));
+	Router::connect('/selecionar-estudante', array('controller' => 'users', 'action' => 'set_student'));
+	Router::connect('/evolucao', array('controller' => 'evolution', 'action' => 'index'));
+	Router::connect('/fluxo', array('controller' => 'flow', 'action' => 'index'));
+	Router::connect('/fluxo/criar-mensagem', array('controller' => 'flow', 'action' => 'create'));
+	Router::connect('/fluxo/comentar/*', array('controller' => 'flow', 'action' => 'view'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

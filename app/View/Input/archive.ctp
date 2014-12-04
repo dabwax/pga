@@ -9,25 +9,12 @@
 
 <div class="row" style="margin-top: 20px;">
 	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>
-					Ator
-				</th>
-				<th>
-					Campo
-				</th>
-				<th>
-					Valor
-				</th>
-			</tr>
-		</thead>
 		<tbody>
 			<?php foreach($aulas as $data => $_aulas) : ?>
 			<?php foreach($_aulas as $ator => $_aula) : ?>
 			<tr>
 				<td colspan="4" style="background: #000; color: #FFF; font-weight: bold; text-align: center;">
-					<?php echo $data; ?>	
+					<?php echo $data; ?> <span class="label label-primary"><?php echo ucfirst($ator); ?></span>
 				</td>
 			</tr>
 			<?php foreach($_aula as $_a) : ?>
