@@ -14,6 +14,8 @@
 			<?php echo $message["Message"]["content"]; ?>
 		</p>
 
+		<small>Visualizado <?php echo $message["Message"]["views"]; ?> vezes</small>
+
 		<?php if(!empty($message["MessageReply"])) : ?>
 			<h3>Respostas</h3>
 

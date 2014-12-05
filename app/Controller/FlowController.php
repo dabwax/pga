@@ -99,6 +99,11 @@ class FlowController extends AppController {
 
 		$this->set(compact("message"));
 
+		$this->Message->save( array(
+			"id" => $message["Message"]["id"],
+			"views" => $message["Message"]["views"] + 1
+		) );
+
 		if($this->request->is("post")) {
 			$this->Message->MessageReply->create();
 
