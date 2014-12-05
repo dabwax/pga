@@ -1,6 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
+App::uses('CakeEmail', 'Network/Email');
 
 class Student extends AppModel {
 
@@ -27,6 +28,19 @@ class Student extends AppModel {
 	    }
 
 	    return true;
+	}
+
+	public function sendWelcomeEmail($nome, $ator, $aluno, $destinatario) {
+		$Email = new CakeEmail('smtp');
+
+		$Email->viewVars(array('nome' => $nome, 'ator' => $ator, 'aluno' => $aluno));
+
+		$Email->template('bem_vindo')
+		    ->emailFormat('html')
+		    ->to($destinatario)
+		    ->from('contato@pga.com.br')
+		    ->subject("[PGA] Seja bem-vindo, " . $nome)
+		    ->send();
 	}
 
 }

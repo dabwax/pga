@@ -81,12 +81,16 @@ class PagesController extends AppController {
 
 	public function email_test()
 	{
+		$this->uses = array("Student");
 	    $this->layout = 'Emails/html/default';
 	    $nome = "Pedro Daltro";
 	    $ator = "mãe";
 	    $aluno = "Luiz Henrique Almeida da Silva";
+	    $destinatario = "luizhrqas@gmail.com";
 
 	    $this->set(compact("nome", "ator", "aluno"));
+
+		$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
 	    return $this->render('/Emails/html/bem_vindo');
 	}

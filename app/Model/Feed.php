@@ -48,7 +48,11 @@ class Feed extends AppModel {
 		if(AuthComponent::user("Actor")) {
 			$actor = AuthComponent::user("Actor");
 		} else {
-			$actor = "aluno";
+			$actor = array(
+				"prefix" => "",
+				"name" => AuthComponent::user("Student.Student.name"),
+				"model" => "Student",
+			);
 		}
 		
 		$feed = array(

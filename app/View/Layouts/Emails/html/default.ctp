@@ -36,7 +36,7 @@ a:hover#ff { background-color: #6CF !important; text-decoration: none !important
                                         <tr>
                                             <td>
                                                 <h1 style="color: #333; margin: 0px; font-weight: normal; font-size: 60px; font-family: Helvetica, Arial, sans-serif;">
-                                                	<?php echo $this->Html->image("pga.png"); ?>
+                                                	<img src="<?php echo Router::fullbaseUrl(); ?>/img/pga.png" />
                                                 </h1>
                                                 <h2 style="color: #333; margin: 0px; font-weight: normal; font-size: 30px; font-family: Helvetica, Arial, sans-serif;">//
                                                     <?php echo date("d/m/Y"); ?>

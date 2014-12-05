@@ -135,6 +135,10 @@ class AppHelper extends Helper {
 
 	public function getActorTypeInPortuguese($model, $prefix) {
 		switch($model) {
+			case "Student":
+				$a = "aluno";
+				
+				break;
 			case "StudentParent":
 
 				if($prefix == "mom_") {
