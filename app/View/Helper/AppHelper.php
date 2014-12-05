@@ -100,6 +100,15 @@ class AppHelper extends Helper {
 	}
 
 	/**
+	 * Função de atalho para recuperar o nome do pai e da mãe.
+	 */
+	public function getTutorName() {
+		$student_parents = AuthComponent::user("Student.StudentParent");
+
+		return $student_parents["tutor_name"];
+	}
+
+	/**
 	 * Função de atalho para recuperar o nome do psiquiatra.
 	 */
 	public function getPsychiatristName() {

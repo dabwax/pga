@@ -14,6 +14,7 @@
 		echo $this->Html->css('//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css');
 		echo $this->Html->css('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 		echo $this->Html->css('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css');
+		echo $this->Html->css('/files/select2-3.5.2/select2.css');
 		echo $this->Html->css('app.css');
 
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
@@ -21,6 +22,8 @@
 		echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js');
 		echo $this->Html->script('jquery.mask.min.js');
 		echo $this->Html->script('jquery.timeago.js');
+		echo $this->Html->script('/files/select2-3.5.2/select2.min.js');
+		echo $this->Html->script('/files/select2-3.5.2/select2_locale_pt-BR.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
@@ -122,6 +125,10 @@
 					<li>
 						<strong>Escola:</strong>
 						<?php echo $this->Html->getSchoolName(); ?>
+					</li>
+					<li>
+						<strong>Tutor:</strong>
+						<?php echo $this->Html->getTutorName(); ?>
 					</li>
 				</ul>
 

@@ -45,6 +45,12 @@
 		echo $this->Form->input('StudentParent.mom_phone');
 		echo $this->Form->input('StudentParent.mom_email');
 	?>
+		<legend>Tutor</legend>
+		<?php
+		echo $this->Form->input('StudentParent.tutor_name');
+		echo $this->Form->input('StudentParent.tutor_phone');
+		echo $this->Form->input('StudentParent.tutor_email');
+	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>

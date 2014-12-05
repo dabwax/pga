@@ -73,3 +73,6 @@ div.input input[type="text"] {
 #alerta.sucesso {
 	color: blue;
 }
+.select2-input {
+	width: 100% !important;
+}

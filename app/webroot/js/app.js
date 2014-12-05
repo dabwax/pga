@@ -1,5 +1,14 @@
 $(document).ready(function() {
 
+	if (jQuery().select2) {
+		$("select").select2();
+
+		
+		$("#MessageRecipientRecipients").select2({
+			maximumSelectionSize: 3
+		});
+	}
+
 	function IsEmail(email) {
 	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	  return regex.test(email);
@@ -50,27 +59,31 @@ $(document).ready(function() {
 		checkUsername($(this));
 	});
 
-	jQuery.timeago.settings.strings = {
-	   prefixAgo: "há",
-	   prefixFromNow: "em",
-	   suffixAgo: null,
-	   suffixFromNow: null,
-	   seconds: "alguns segundos",
-	   minute: "um minuto",
-	   minutes: "%d minutos",
-	   hour: "uma hora",
-	   hours: "%d horas",
-	   day: "um dia",
-	   days: "%d dias",
-	   month: "um mês",
-	   months: "%d meses",
-	   year: "um ano",
-	   years: "%d anos"
-	};
+	if(jQuery().timeago) {
+		jQuery.timeago.settings.strings = {
+		   prefixAgo: "há",
+		   prefixFromNow: "em",
+		   suffixAgo: null,
+		   suffixFromNow: null,
+		   seconds: "alguns segundos",
+		   minute: "um minuto",
+		   minutes: "%d minutos",
+		   hour: "uma hora",
+		   hours: "%d horas",
+		   day: "um dia",
+		   days: "%d dias",
+		   month: "um mês",
+		   months: "%d meses",
+		   year: "um ano",
+		   years: "%d anos"
+		};
 
-	$("span.timeago").timeago();
+		$("span.timeago").timeago();
+	}
 
-	$('.numero').mask('09999');
+	if (jQuery().mask) {
+		$('.numero').mask('09999');
+	}
 
 	$(".btn-selecionar-materia").click(function() {
 		$(this).parent().toggleClass("ativo");
