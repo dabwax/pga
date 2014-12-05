@@ -14,11 +14,11 @@
 				<div class="col-xs-12 col-sm-12 col-md-12">
 					<div class="form-group">
 						<?php
-			        		echo $this->Form->input('username', array("label" => false, "div" => false, "placeholder" => "E-mail", "class" => "form-control input-lg") );
+			        		echo $this->Form->input('username', array("label" => false, "div" => false, "placeholder" => "E-mail", "class" => "form-control input-lg", "data-url" => $this->Html->url( array("action" => "ajax_check_username") ) ) );
 			        	?>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group form-password hide">
 						<?php
 			        		echo $this->Form->input('password', array("label" => false, "div" => false, "placeholder" => "Senha", "class" => "form-control input-lg") );
 			        	?>
@@ -37,7 +37,15 @@
 					</p>
 				</div>
 
-				<input type="submit" value="Entrar" class="btn btn-success btn-lg btn-block" />
+				<div class="clearfix"></div>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="alerta">
+					
+				</div>
+
+				<div class="clearfix"></div>
+
+				<input type="submit" value="Entrar" class="btn btn-success btn-lg btn-block" id="btn-entrar" disabled="disabled" />
 
 			</div>
 			

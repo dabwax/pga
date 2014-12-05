@@ -65,3 +65,11 @@ div.input input[type="text"] {
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
 	background: #999;
 }
+#alerta {
+	color: red;
+	font-size: 12px;
+	text-align: center;
+}
+#alerta.sucesso {
+	color: blue;
+}

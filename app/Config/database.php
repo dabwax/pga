@@ -6,7 +6,7 @@ class DATABASE_CONFIG {
 		'persistent' => true,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
+		'password' => 'relogio123',
 		'database' => 'pga',
 		'prefix' => '',
 		'encoding' => 'utf8',

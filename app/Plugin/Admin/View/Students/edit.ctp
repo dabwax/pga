@@ -4,7 +4,7 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
-  <li role="presentation"><a href="#conteudo" role="tab" data-toggle="tab">Conteúdo</a></li>
+  <li role="presentation"><a href="#conteudo" id="btn-conteudo" role="tab" data-toggle="tab">Conteúdo</a></li>
   <!-- <li role="presentation"><a href="#relatorios" role="tab" data-toggle="tab">Relatórios</a></li> -->
   <!-- <li role="presentation"><a href="#alertas" role="tab" data-toggle="tab">Alertas</a></li> -->
   <li role="presentation"><a href="#materias" role="tab" data-toggle="tab">Matérias</a></li>
@@ -15,15 +15,15 @@
 <!-- Tab panes -->
 <div class="tab-content">
   
-  <?php echo $this->element("../Students/_tab_perfil"); ?>
+  <?php echo $this->element("Students/_tab_perfil"); ?>
 
-  <?php echo $this->element("../Students/_tab_conteudo"); ?>
+  <?php echo $this->element("Students/_tab_conteudo"); ?>
 
-  <?php echo $this->element("../Students/_tab_inputs"); ?>
+  <?php echo $this->element("Students/_tab_inputs"); ?>
 
-  <?php echo $this->element("../Students/_tab_materias"); ?>
+  <?php echo $this->element("Students/_tab_materias"); ?>
 
-  <?php echo $this->element("../Students/_tab_exercicios"); ?>
+  <?php echo $this->element("Students/_tab_exercicios"); ?>
 
 </div>
 

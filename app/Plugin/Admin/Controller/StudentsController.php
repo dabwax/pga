@@ -135,6 +135,7 @@ class StudentsController extends AdminAppController {
 	}
 
 	public function add_input($input_id, $student_id, $actor) {
+		$this->layout = "iframe";
 
 		if($this->request->is("post")) {
 
@@ -163,8 +164,6 @@ class StudentsController extends AdminAppController {
 			$this->Student->StudentInput->save($dados);
 
 			$this->Session->setFlash(__('O novo input foi salvo.'));
-
-			return $this->redirect( array("action" => "edit", $student_id, "#" => "conteudo") );
 
 		} // - post
 

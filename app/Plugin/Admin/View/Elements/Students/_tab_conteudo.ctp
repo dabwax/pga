@@ -3,7 +3,7 @@
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 		<?php foreach($atores as $a) : ?>
-	  	<li><a href="#<?php echo strtolower($a); ?>" role="tab" data-toggle="tab"><?php echo $a; ?></a></li>
+	  	<li><a href="#<?php echo strtolower($a); ?>" id="btn-<?php echo strtolower($a); ?>" role="tab" data-toggle="tab"><?php echo $a; ?></a></li>
 		<?php endforeach; ?>
 	</ul>
 
@@ -30,7 +30,7 @@
                 <?php echo $i["Input"]["name"]; ?>
               </td>
               <td>
-                <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "add_input", $i["Input"]["id"], $this->request->data["Student"]["id"], strtolower($a) ) ); ?>" class="btn btn-default">
+                <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "add_input", $i["Input"]["id"], $this->request->data["Student"]["id"], strtolower($a) ) ); ?>" class="btn btn-default fancybox">
                   Adicionar
                 </a>
               </td>

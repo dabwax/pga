@@ -5,6 +5,51 @@ App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 class UsersController extends AppController {
     public $uses = array("User", "Student");
 
+    public function beforeFilter() {
+        parent::beforeFilter();
+
+        $this->Auth->allow("ajax_check_username");
+    }
+
+    public function ajax_check_username() {
+        $this->layout = "ajax";
+
+        $email = $_POST["email"];
+
+        // verifica se o usuário é admin
+        $users = $this->User->find("all", array(
+            "conditions" => array(
+            "User.username" => $email,
+            "User.role" => "admin"
+            )
+        ) );
+
+        if(!empty($users)) {
+            echo json_encode(array("status" => "sucesso", "message" => ""));
+            die();
+        }
+
+        // verifica se existe algum ator com este usuário
+        $actors = $this->User->getActors($email);
+
+        if(!empty($actors)) {
+
+            foreach($actors as $a) {
+                if(empty($a["password"])) {
+                    echo json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha"));
+                    die();
+                } else {
+                    echo json_encode(array("status" => "sucesso", "message" => ""));
+                }
+            }
+        } else {
+            echo json_encode(array("status" => "erro", "message" => "E-mail não está cadastrado."));
+            die();
+        }
+
+        die();
+    }
+
     // página para definir qual ator o usuário quer usar
     public function set_student($student_id = null, $actor_id = null) {
         $actors = $this->Session->read("actors");
@@ -79,32 +124,10 @@ class UsersController extends AppController {
 
         // buscar todos os estudantes dos atores
         foreach($actors as $k => $a) {
-            switch($a["actor"]) {
-                case "mae":
-                    $model = "StudentParent";
-                    $prefix = "mom_";
-                    break;
-                case "pai":
-                    $model = "StudentParent";
-                    $prefix = "dad_";
-                    break;
-                case "tutor":
-                    $model = "StudentParent";
-                    $prefix = "tutor_";
-                    break;
-                case "psiquiatra":
-                    $model = "StudentPsychiatrist";
-                    $prefix = "";
-                    break;
-                case "mediador":
-                    $model = "StudentSchool";
-                    $prefix = "mediator_";
-                    break;
-                case "coordenador":
-                    $model = "StudentSchool";
-                    $prefix = "coordinator_";
-                    break;
-            }
+
+            $model = $this->User->getActorInfo($a["actor"], "model");
+            $prefix = $this->User->getActorInfo($a["actor"], "prefix");
+
             // importa o model do ator
             $this->uses = array($model);
 
@@ -168,99 +191,47 @@ class UsersController extends AppController {
                     $this->Auth->login();
 
                     // redireciona para a dashboard de admin
-                    return $this->redirect( array("controller" => "pages", "action" => "admin_dashboard", "admin" => true) );
+                    return $this->redirect( array("controller" => "admin", "action" => "index", "plugin" => "admin") );
                 }
             }
 
-            // verifica se o usuário inserido no form
-            // é um ator de algum aluno - ### INÍCIO ###
-
-            // array com os possíveis atores
-            $actors = array();
-
-            // primeiro eu busco todos os pais
-            $parents = $this->Student->StudentParent->find("all", array(
-                "conditions" => array(
-                    "OR" => array(
-                        "StudentParent.mom_email" => $email,
-                        "StudentParent.dad_email" => $email,
-                        "StudentParent.tutor_email" => $email,
-                    )
-                )
-            ) );
-
-            // verifico se tem algum pai como ator e adiciono
-            foreach($parents as $p) {
-                
-                if(!empty($p["StudentParent"]["mom_email"]) && $p["StudentParent"]["mom_email"] == $email) {
-                    $actor = "mae";
-
-                    $actors[] = array("actor" => $actor, "id" => $p["StudentParent"]["id"], "password" => $p["StudentParent"]["mom_password"]);
-                }
-
-                if(!empty($p["StudentParent"]["dad_email"]) && $p["StudentParent"]["dad_email"] == $email) {
-                    $actor = "pai";
-
-                    $actors[] = array("actor" => $actor, "id" => $p["StudentParent"]["id"], "password" => $p["StudentParent"]["dad_password"]);
-                }
-
-                if(!empty($p["StudentParent"]["tutor_email"]) && $p["StudentParent"]["tutor_email"] == $email) {
-                    $actor = "tutor";
-
-                    $actors[] = array("actor" => $actor, "id" => $p["StudentParent"]["id"], "password" => $p["StudentParent"]["tutor_password"]);
-                }
-            }
-
-            // após buscar os pais, agora vou consultar os psiquiatras
-            $psychiatrists = $this->Student->StudentPsychiatrist->find("all", array(
-                "conditions" => array(
-                    "StudentPsychiatrist.email" => $email,
-                )
-            ));
-
-            // verifico se tem algum psiquiatra como ator e adiciono
-            foreach($psychiatrists as $p) {
-                
-                if(!empty($p["StudentPsychiatrist"]["email"])) {
-                    $actor = "psiquiatra";
-                }
-
-                $actors[] = array("actor" => $actor, "id" => $p["StudentPsychiatrist"]["id"], "password" => $p["StudentPsychiatrist"]["password"]);
-            }
-
-            // após buscar os psiquiatras, agora vou consultar as escolas
-            $schools = $this->Student->StudentSchool->find("all", array(
-                "conditions" => array(
-                    "OR" => array(
-                        "StudentSchool.mediator_email" => $email,
-                        "StudentSchool.coordinator_email" => $email,
-                    )
-                )
-            ));
-
-            // verifico se tem alguma escola como ator e adiciono
-            foreach($psychiatrists as $p) {
-                
-                if(!empty($p["StudentSchool"]["mediator_email"])) {
-                    $actor = "mediador";
-
-                    $actors[] = array("actor" => $actor, "id" => $p["StudentSchool"]["id"], "password" => $p["StudentSchool"]["mediator_password"]);
-                } else if(!empty($p["StudentSchool"]["coordinator_email"])) {
-                    $actor = "coordenador";
-
-                    $actors[] = array("actor" => $actor, "id" => $p["StudentSchool"]["id"], "password" => $p["StudentSchool"]["coordinator_password"]);
-                }
-            }
+            $actors = $this->User->getActors($email);
 
             // verificar quais atores estão com a senha correta
             foreach($actors as $a_key => $a) {
-                
-                $hasher = new BlowfishPasswordHasher();
 
-                $result = $hasher->check($password, $a["password"]);
+                if(!empty($a["password"])) {
+                    $hasher = new BlowfishPasswordHasher();
 
-                if(!$result) {
-                    unset($actors[$a_key]);
+                    $result = $hasher->check($password, $a["password"]);
+
+                    if(!$result) {
+                        unset($actors[$a_key]);
+                    }
+                // não há senha para este ator
+                } else {
+                    $model = $this->User->getActorInfo($a["actor"], "model");
+                    $prefix = $this->User->getActorInfo($a["actor"], "prefix");
+
+                    // importa o model do ator
+                    $this->uses = array($model);
+
+                    // busca o ator pelo id
+                    $data = $this->$model->find(
+                        "first",
+                        array(
+                            "conditions" => 
+                                array($model . ".id" => $a["id"]),
+                            "contain" => 
+                                array("Student")
+                        )
+                    );
+
+                    // atualiza a senha do ator
+                    $this->$model->save( array(
+                        "id" => $a["id"],
+                        $prefix . "password" => $password
+                    ) );
                 }
             }
 

@@ -1,1 +1,1 @@
-<h1>Página Inicial do Admin</h1>
+<h1>Página Inicial do Administrador</h1>

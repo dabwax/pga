@@ -1,3 +1,4 @@
+<?php if(!$this->request->is("post")) : ?>
 <div class="row">
 	<div class="col-xs-12">
 
@@ -27,3 +28,13 @@
 		<?php echo $this->Form->end("Salvar"); ?>
 	</div>
 </div>
+<?php endif; ?>
+
+<?php if($this->request->is("post")) : ?>
+<script>
+$(document).ready(function() {
+	parent.location.reload();
+    parent.$.fancybox.close();                //will close the fancybox
+});
+</script> 
+<?php endif; ?>

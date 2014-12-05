@@ -7,7 +7,7 @@
 	<fieldset>
 	<?php
 		echo $this->Form->input('Student.name');
-		echo $this->Form->input('Student.date_of_birth');
+		echo $this->Form->input('Student.date_of_birth', array("minYear" => date("Y") - 60, "maxYear" => date("Y")) );
 		echo $this->Form->input('Student.school');
 		echo $this->Form->input('Student.clinical_condition');
 		echo $this->Form->input('Student.description');

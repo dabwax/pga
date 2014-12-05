@@ -1,53 +1,19 @@
 $(document).ready(function() {
 
-	function IsEmail(email) {
-	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	  return regex.test(email);
+	var hash = window.location.hash.substring(1);
+
+	if(hash == "tutor" || hash == "psico" || hash == "pais" || hash == "escola" || hash == "aluno") {
+		$(window).load(function() {
+			
+			$("#btn-conteudo").tab("show");
+			$("#btn-" + hash).tab("show");
+		});
 	}
 
-	function checkUsername(obj) {
-		var val = $(obj).val();
-		var url = $(obj).data("url");
-
-		if(IsEmail(val)) {
-			$("#alerta").removeClass("sucesso erro").html("");
-
-			$.ajax({
-				type: "POST",
-				data: {email: val},
-				url: url,
-				success: function(data) {
-					var data = jQuery.parseJSON(data);
-
-					if(data.tipo == "sem_senha") {
-						$("#UserPassword").attr("placeholder", "Defina sua senha aqui");
-					} else {
-						$("#alerta").addClass(data.status).html(data.message);
-					}
-
-					if(data.status == "sucesso") {
-						$("#btn-entrar").attr("disabled", false);
-
-						$(".form-password").removeClass("hide");
-					} else {
-						$(".form-password").addClass("hide");
-						$("#btn-entrar").attr("disabled", true);
-					}
-				}
-			});
-		} else {
-			$("#alerta").removeClass("sucesso erro").html("E-mail inválido.");
-		}
-	}
-
-	$("#UserUsername").keyup(function() {
-
-		checkUsername($(this));
-	});
-
-	$("#UserUsername").blur(function() {
-
-		checkUsername($(this));
+	$(".fancybox").fancybox({
+		maxWidth	: 800,
+		maxHeight	: 600,
+		type: 'iframe'
 	});
 
 	jQuery.timeago.settings.strings = {

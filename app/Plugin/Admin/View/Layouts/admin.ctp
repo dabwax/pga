@@ -14,13 +14,16 @@
 		echo $this->Html->css('//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css');
 		echo $this->Html->css('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 		echo $this->Html->css('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css');
+		echo $this->Html->css('//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css');
 		echo $this->Html->css('app.css');
 
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 		echo $this->Html->script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js');
 		echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js');
+		echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js');
 		echo $this->Html->script('jquery.mask.min.js');
-		echo $this->Html->script('app.js');
+		echo $this->Html->script('jquery.timeago.js');
+		echo $this->Html->script('/admin/admin.js');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -54,7 +57,7 @@
 					<?php if(AuthComponent::user()) : ?>
 					<ul class="nav navbar-nav">
 						<li>
-							<p style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
+							<p style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo AuthComponent::user("username"); ?></p>
 						</li>
 					</ul>
 					<?php endif; ?>
