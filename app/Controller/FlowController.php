@@ -9,6 +9,8 @@ class FlowController extends AppController {
 	);
 
 	public function index() {
+		$this->set("title_for_layout", "Fluxo");
+
 		$student_id = AuthComponent::user("Student.Student.id");
 
 		// busca todas as mensagens envolvendo o estudante
@@ -22,6 +24,8 @@ class FlowController extends AppController {
 	}
 
 	public function create() {
+		$this->set("title_for_layout", "Criar Mensagem");
+
 		// limpa o array de destinatários
 		$recipients = array();
 
@@ -96,6 +100,8 @@ class FlowController extends AppController {
 				"MessageReply",
 			)
 		) );
+		
+		$this->set("title_for_layout", $message["Message"]["name"] . " - Fluxo");
 
 		$this->set(compact("message"));
 

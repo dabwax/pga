@@ -29,6 +29,24 @@ class UsersController extends AppController {
             die();
         }
 
+        // verifica se o usuário é aluno
+        $student = $this->Student->find("first", array(
+                "conditions" => array(
+                    "Student.email" => $email,
+                )
+            ) );
+
+        if(!empty($student)) {
+
+            if(empty($student["Student"]["password"])) {
+                echo json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha"));
+            } else {
+                echo json_encode(array("status" => "sucesso", "message" => ""));
+            }
+
+            die();
+        }
+
         // verifica se existe algum ator com este usuário
         $actors = $this->User->getActors($email);
 
@@ -192,6 +210,64 @@ class UsersController extends AppController {
 
                     // redireciona para a dashboard de admin
                     return $this->redirect( array("controller" => "admin", "action" => "index", "plugin" => "admin") );
+                }
+            }
+
+            // verifica se o usuário é o aluno
+            $student = $this->Student->find("first", array(
+                "conditions" => array(
+                    "Student.email" => $email,
+                ),
+                "contain" => false
+            ) );
+
+            if(!empty($student)) {
+
+                if(empty($student["Student"]["password"])) {
+                    // o estudante não tem senha
+                    $this->Student->save( array(
+                        "id" => $student["Student"]["id"],
+                        "password" => $password
+                    ) );
+                }
+
+                // gambiarra - refresh
+                $student = $this->Student->find("first", array(
+                    "conditions" => array(
+                        "Student.email" => $email,
+                    ),
+                    "contain" => array(
+                        "StudentParent",
+                        "StudentPsychiatrist",
+                        "StudentSchool"
+                    )
+                ) );
+
+                if(!empty($student["Student"]["password"])) {
+                    // checa se a senha inserida é a mesma que a senha do usuário
+                    $result = $hasher->check($password, $student["Student"]["password"]);
+
+                    // se for a mesma senha, redireciona ele para o dashboard de estudante
+                    if($result) {
+                        // buscar o usuário padrão de estudante
+                        $default_user = $this->User->find("first", array(
+                            "conditions" => array(
+                                "User.role" => "student"
+                            )
+                        ) );
+
+                        // juntar o usuário padrão com os dados do estudante
+                        $session_data = array(
+                            "User" => $default_user["User"],
+                            "Student" => $student,
+                        );
+
+                        // fazer um login manual com ambos os dados
+                        $this->Auth->login($session_data);
+
+                        // redireciona para a dashboard de estudante
+                        return $this->redirect( array("controller" => "student", "action" => "index", "plugin" => "student") );
+                    }
                 }
             }
 

@@ -25,11 +25,15 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'pages', 'action' => 'index'));
-	Router::connect('/login', array('controller' => 'users', 'action' => 'login'));
+	Router::connect('/entrar', array('controller' => 'users', 'action' => 'login'));
 	Router::connect('/selecionar-estudante', array('controller' => 'users', 'action' => 'set_student'));
 	Router::connect('/evolucao', array('controller' => 'evolution', 'action' => 'index'));
 	Router::connect('/fluxo', array('controller' => 'flow', 'action' => 'index'));
 	Router::connect('/fluxo/criar-mensagem', array('controller' => 'flow', 'action' => 'create'));
+	Router::connect('/input/criar-novo-registro', array('controller' => 'input', 'action' => 'create'));
+	Router::connect('/input/arquivo', array('controller' => 'input', 'action' => 'archive'));
+	Router::connect('/o-que-e-pga', array('controller' => 'pages', 'action' => 'display', 'sobre'));
+	Router::connect('/sair', array('controller' => 'users', 'action' => 'logout'));
 	Router::connect('/fluxo/comentar/*', array('controller' => 'flow', 'action' => 'view'));
 
 /**
