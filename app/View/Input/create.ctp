@@ -125,16 +125,17 @@
 
 	<?php endforeach; ?>
 
+	<h2>Matérias</h2>
 	<ul class="list-group">
 	<!-- Matérias -->
-	<?php foreach($student_lessons as $sl) : ?>
+	<?php $i_materias = 0; foreach($student_lessons as $sl) : ?>
 		<li class="list-group-item">
 
 			<a class="btn-selecionar-materia" href="javascript:;"><?php echo $sl["StudentLesson"]["name"]; ?></a>
 
 			<div class="toggle hide">
 				<?php $sizeof = sizeof($student_inputs) + $i_materias; ?>
-				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".student_id", array("type" => "hidden", "value" => $this->request->data["Student"]["id"]) ); ?>
+				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".student_id", array("type" => "hidden", "value" => AuthComponent::user("Student.Student.id")) ); ?>
 				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".actor", array("type" => "hidden", "value" => strtolower($actor) ) ); ?>
 				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".student_lesson_id", array("type" => "hidden", "value" => $sl["StudentLesson"]["id"]) ); ?>
 

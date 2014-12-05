@@ -36,7 +36,7 @@ class InputController extends AppController {
 		// busca todas as matérias do estudante
 		$student_lessons = $this->Student->StudentLesson->find("all", array(
 			"conditions" => array(
-				"StudentLesson.student_id" => AuthComponent::user("Student.id")
+				"StudentLesson.student_id" => AuthComponent::user("Student.Student.id")
 			),
 		) );
 
@@ -61,16 +61,15 @@ class InputController extends AppController {
 
 		if($this->request->is("post")) {
 
-			$input_date = null;
+			$input_date = $this->request->data["StudentInputValue"]["date"];
+			unset($this->request->data["StudentInputValue"]["date"]);
 
 			// adiciona os inputs
 			foreach($this->request->data["StudentInputValue"] as $input_value) {
 
 				if(!empty($input_value["value"]) && !empty($input_value["student_input_id"])) {
 
-					$input_value["date"] = $this->request->data["StudentInputValue"]["date"];
-
-					$input_date = $input_value["date"];
+					$input_value["date"] = $input_date;
 
 					$this->Student->StudentInput->StudentInputValue->create();
 
