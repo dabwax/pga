@@ -44,9 +44,16 @@ class Feed extends AppModel {
 	}
 
 	public function generate($date, $content, $type = "input") {
+
+		if(AuthComponent::user("Actor")) {
+			$actor = AuthComponent::user("Actor");
+		} else {
+			$actor = "aluno";
+		}
+		
 		$feed = array(
 			"student_id" => AuthComponent::user("Student.Student.id"),
-			"actor" => AuthComponent::user("Actor"),
+			"actor" => $actor,
 			"date" => $date,
 			"content" => $content,
 			"sidebar" => "",

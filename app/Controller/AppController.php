@@ -55,7 +55,7 @@ class AppController extends Controller {
 
     public function beforeFilter() {
     	// se o usuário logado for estudante e a pagina atual nao ser do plugin de estudante, redirecionar ele para home de estudante
-    	if(AuthComponent::user('User.role') == 'student' && $this->params["plugin"] != "student") {
+    	if(AuthComponent::user('User.role') == 'student' && $this->params["plugin"] != "student" && $this->params["action"] != "logout") {
     		return $this->redirect( array("action" => "index", "controller" => "student", "plugin" => "student") );
     	}
     	

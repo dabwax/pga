@@ -1,15 +1,11 @@
 <h1>Input</h1>
 
-<div class="row">
-	<div class="btn-group">
-		<a href="<?php echo $this->Html->url( array("action" => "create") ); ?>" class="btn btn-info">Criar Novo Registro</a>
-		<a href="<?php echo $this->Html->url( array("action" => "archive") ); ?>" class="btn btn-default">Arquivo</a>
-	</div>
-</div>
+<a href="<?php echo $this->Html->url( array("action" => "all") ); ?>" class="btn btn-xs btn-default">Ver todos exercícios</a>
+<a href="<?php echo $this->Html->url( array("action" => "index") ); ?>" class="btn btn-xs btn-default">Voltar</a>
 
 <?php if(!$has_input) : ?>
 <div class="row">
-	<?php echo $this->Form->create("StudentInputValue", array("url" => array("controller" => "input", "action" => "add_student_input_value") ) ); ?>
+	<?php echo $this->Form->create("StudentInputValue", array("url" => array("controller" => "student", "action" => "add_input") ) ); ?>
 
 	<?php echo $this->Form->input("StudentInputValue.date", array("type" => "text", "class" => "calendario", "value" => date("d/m/Y"), "label" => "Data da Aula") ); ?>
 

@@ -40,7 +40,23 @@ class InputController extends AppController {
 			),
 		) );
 
-		$this->set(compact("student_id", "student_inputs", "student_lessons", "actor"));
+		$last_entry = $this->Student->StudentInput->StudentInputValue->find("first", array(
+			"conditions" => array(
+				"StudentInputValue.date" => date("d/m/Y"),
+				"StudentInputValue.actor" => $actor
+			),
+			"order" => array(
+				"StudentInputValue.id DESC"
+			)
+		) );
+
+		if(!empty($last_entry)) {
+			$has_input = true;
+		} else {
+			$has_input = false;
+		}
+
+		$this->set(compact("student_id", "student_inputs", "student_lessons", "actor", "has_input"));
 	}
 
 	/**

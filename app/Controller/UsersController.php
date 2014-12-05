@@ -180,6 +180,7 @@ class UsersController extends AppController {
 
     public function login() {
         $this->layout = "login";
+        $this->set("title_for_layout", "Entrar - PGA");
         
         if ($this->request->is('post')) {
 

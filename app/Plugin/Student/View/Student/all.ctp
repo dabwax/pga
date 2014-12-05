@@ -1,6 +1,7 @@
 <h1>Seja bem-vindo ao PGA</h1>
 
 <a href="<?php echo $this->Html->url( array("action" => "index") ); ?>" class="btn btn-xs btn-default">Voltar</a>
+<a href="<?php echo $this->Html->url( array("action" => "input") ); ?>" class="btn btn-xs btn-default">Input</a>
 
 <h3>Todos os Exercícios</h3>
 
