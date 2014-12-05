@@ -133,4 +133,39 @@ class AppHelper extends Helper {
 		return AuthComponent::user("Student.Student." . $field);
 	}
 
+	public function getActorTypeInPortuguese($model, $prefix) {
+		switch($model) {
+			case "StudentParent":
+
+				if($prefix == "mom_") {
+					$a = "mae";
+				}
+
+				if($prefix == "dad_") {
+					$a = "pai";
+				}
+
+				if($prefix == "tutor_") {
+					$a = "tutor";
+				}
+				break;
+			case "StudentPsychiatrist":
+				$a = "psico";
+				break;
+			case "StudentSchool":
+
+				if($prefix == "mediator_") {
+					$a = "escola";
+				}
+
+				if($prefix == "coordinator_") {
+					$a = "escola";
+				}
+
+				break;
+		}
+
+		return $a;
+	}
+
 }

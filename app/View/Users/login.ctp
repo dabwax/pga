@@ -25,7 +25,7 @@
 					</div>
 				</div>
 
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<!--<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<label>
 						<input type="checkbox" value="remember-me"> Lembrar
 					</label>
@@ -35,7 +35,7 @@
 					<p class="blocks_forgotPwd">
 						<a href="#" class="label label-default">Esqueceu sua senha?</a>
 					</p>
-				</div>
+				</div>-->
 
 				<div class="clearfix"></div>
 

@@ -3,7 +3,7 @@
  * Páginas envolvendo input encontram-se aqui.
  */
 class InputController extends AppController {
-	public $uses = array("Student");
+	public $uses = array("Student", "Feed");
 
 	/**
 	 * Página Inicial.
@@ -65,7 +65,7 @@ class InputController extends AppController {
 			unset($this->request->data["StudentInputValue"]["date"]);
 
 			// adiciona os inputs
-			foreach($this->request->data["StudentInputValue"] as $input_value) {
+			foreach($this->request->data["StudentInputValue"] as $k => $input_value) {
 
 				if(!empty($input_value["value"]) && !empty($input_value["student_input_id"])) {
 
@@ -88,7 +88,7 @@ class InputController extends AppController {
 			}
 
 			// adiciona as matérias
-			foreach($this->request->data["StudentInputValue"] as $input_value) {
+			foreach($this->request->data["StudentInputValue"] as $k => $input_value) {
 
 				if(!empty($input_value["value"]) && !empty($input_value["student_lesson_id"])) {
 
@@ -101,6 +101,9 @@ class InputController extends AppController {
 				}
 
 			}
+
+			// joga o input para o feed
+			$this->Feed->generate($input_date, $this->request->data["StudentInputValue"]);
 		}
 
 		$this->Session->setFlash(__('O novo registro de input foi salvo.'));
