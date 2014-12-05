@@ -28,6 +28,53 @@ class StudentsController extends AdminAppController {
 		if ($this->request->is('post')) {
 			$this->Student->create();
 			if ($this->Student->saveAll($this->request->data)) {
+
+				$aluno = $this->request->data["Student"]["name"];
+
+				// enviar e-mail para todos os atores
+
+				### PSICO ###
+				$nome = $this->request->data["StudentPsychiatrist"]["name"];
+				$destinatario = $this->request->data["StudentPsychiatrist"]["email"];
+				$ator = "psicopedagogo(a)";
+
+				$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+
+				### MEDIADOR ###
+				$nome = $this->request->data["StudentSchool"]["mediator_name"];
+				$destinatario = $this->request->data["StudentSchool"]["mediator_email"];
+				$ator = "mediador(a)";
+
+				$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+
+				### COORDENADOR ###
+				$nome = $this->request->data["StudentSchool"]["coordinator_name"];
+				$destinatario = $this->request->data["StudentSchool"]["coordinator_email"];
+				$ator = "coordenador(a)";
+
+				$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+
+				### PAI ###
+				$nome = $this->request->data["StudentParent"]["dad_name"];
+				$destinatario = $this->request->data["StudentParent"]["dad_email"];
+				$ator = "pai";
+
+				$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+
+				### MAE ###
+				$nome = $this->request->data["StudentParent"]["mom_name"];
+				$destinatario = $this->request->data["StudentParent"]["mom_email"];
+				$ator = "mãe";
+
+				$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+
+				### TUTOR ###
+				$nome = $this->request->data["StudentParent"]["tutor_name"];
+				$destinatario = $this->request->data["StudentParent"]["tutor_email"];
+				$ator = "tutor";
+
+				$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+
 				$this->Session->setFlash(__('The student has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {

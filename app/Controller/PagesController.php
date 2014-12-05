@@ -78,4 +78,16 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+
+	public function email_test()
+	{
+	    $this->layout = 'Emails/html/default';
+	    $nome = "Pedro Daltro";
+	    $ator = "mãe";
+	    $aluno = "Luiz Henrique Almeida da Silva";
+
+	    $this->set(compact("nome", "ator", "aluno"));
+
+	    return $this->render('/Emails/html/bem_vindo');
+	}
 }

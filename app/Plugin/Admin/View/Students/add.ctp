@@ -8,6 +8,7 @@
 		echo $this->Form->input('Student.school');
 		echo $this->Form->input('Student.clinical_condition');
 		echo $this->Form->input('Student.description');
+		echo $this->Form->input('Student.email');
 	?>
 	</fieldset>
 	<fieldset>
