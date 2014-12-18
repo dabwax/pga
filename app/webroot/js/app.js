@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+	if(Timeline) {
+	}
+
 	$("body").on("click", ".z-content-inner a", function() {
 
 		if(!$(this).hasClass("disable-ajax")) {

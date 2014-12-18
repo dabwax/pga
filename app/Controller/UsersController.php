@@ -32,8 +32,6 @@ class UsersController extends AppController {
             $this->_stop();
         }
 
-        var_dump($users);
-
         // verifica se o usuário é aluno
         $student = $this->Student->find("first", array(
                 "conditions" => array(
@@ -63,14 +61,17 @@ class UsersController extends AppController {
             foreach($actors as $a) {
                 if(empty($a["password"])) {
                     $this->response->body(json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha")));
+                    $this->response->send();
                     $this->_stop();
                 } else {
                     $this->response->body(json_encode(array("status" => "sucesso", "message" => "")));
+                    $this->response->send();
                     $this->_stop();
                 }
             }
         } else {
             $this->response->body(json_encode(array("status" => "erro", "message" => "E-mail não está cadastrado.")));
+            $this->response->send();
             $this->_stop();
         }
     }

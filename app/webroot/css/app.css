@@ -224,3 +224,35 @@ footer p {
 	padding: 0px;
 	padding-bottom: 20px;
 }
+#timeline {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#timeline .conteudo-esquerda {
+	float: left;
+	display: inline;
+	width: 22%;
+}
+
+#timeline .conteudo-direita {
+	float: left;
+	display: inline;
+	width: 78%;
+}
+#timeline .timeline_title_date {
+	visibility: hidden;
+}
+.timeline_title_label {
+	font-size: 18px;
+	font-weight: bold;
+	font-family: "Oxygen";
+	color: #3498db;
+	text-align: center;
+	right: 0px !important;
+}
+.timeline_element_box {
+	-webkit-box-shadow:inset 0px 4px 0px 0px #26A65B !important;
+    -moz-box-shadow:inset 0px 4px 0px 0px #26A65B !important;
+    box-shadow:inset 0px 4px 0px 0px #26A65B !important;
+}

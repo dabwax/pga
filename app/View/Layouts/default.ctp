@@ -19,6 +19,7 @@
 		echo $this->Html->css('/files/select2-3.5.2/select2.css');
 		echo $this->Html->css('/files/zozo-tabs/css/zozo.tabs.min.css');
 		echo $this->Html->css('/files/zozo-tabs/css/zozo.tabs.flat.min.css');
+		echo $this->Html->css('/files/timeline/css/timeline.css');
 		echo $this->Html->css('app.css');
 
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
@@ -29,6 +30,7 @@
 		echo $this->Html->script('/files/select2-3.5.2/select2.min.js');
 		echo $this->Html->script('/files/select2-3.5.2/select2_locale_pt-BR.js');
 		echo $this->Html->script('/files/zozo-tabs/js/zozo.tabs.js');
+		echo $this->Html->script('/files/timeline/javascript/scriptgates.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
