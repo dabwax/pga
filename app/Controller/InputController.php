@@ -9,6 +9,7 @@ class InputController extends AppController {
 	 * Página Inicial.
 	 */
 	public function index() {
+		$this->layout = "ajax";
 		$this->set("title_for_layout", "Inputs");	
 	}
 

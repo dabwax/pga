@@ -5,6 +5,7 @@
 class FeedController extends AppController {
 
 	public function index() {
+		$this->layout = "ajax";
 		$feed = $this->Feed->find("all", array(
 			"limit" => 100,
 			"conditions" => array(

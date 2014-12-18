@@ -1,5 +1,26 @@
 $(document).ready(function() {
 
+	$("body").on("click", ".z-content-inner a", function() {
+
+		if(!$(this).hasClass("disable-ajax")) {
+		
+			$container = $("#tabbed-nav").find("> div");
+			$container.append('<span class="z-spinner"></span>');
+
+			$.ajax({
+				type: "GET",
+				url: $(this).attr("href"),
+				dataType: "html",
+				success: function(data) {
+					$(".z-content.z-active").find(".z-content-inner").html(data);
+					$container.find(">.z-spinner").remove();
+				}
+			});
+		
+			return false;
+		}
+	});
+
 	if (jQuery().select2) {
 		$("select").select2();
 

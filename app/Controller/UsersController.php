@@ -69,7 +69,7 @@ class UsersController extends AppController {
     }
 
     // página para definir qual ator o usuário quer usar
-    public function set_student($student_id = null, $actor_id = null) {
+    public function set_student($student_id = null, $actor_id = null, $actor_prefix = null) {
         $this->set("title_for_layout", "Selecionar Aluno");
         $actors = $this->Session->read("actors");
 
@@ -107,7 +107,7 @@ class UsersController extends AppController {
                 if($a["id"] == $actor_id) {
                     // gambiarra - 2
                     $model = $a["model"];
-                    $prefix = $a["prefix"];
+                    $prefix = $actor_prefix;
 
                     $actor = $this->Student->$a["model"]->find("first", array(
                         "conditions" => array(
@@ -117,7 +117,7 @@ class UsersController extends AppController {
 
                     // gambiarra - 3
                     $actor[$model]["model"] = $model;
-                    $actor[$model]["prefix"] = $prefix;
+                    $actor[$model]["prefix"] = $actor_prefix;
                 }
             }
 

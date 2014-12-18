@@ -17,6 +17,8 @@
 		echo $this->Html->css('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
 		echo $this->Html->css('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css');
 		echo $this->Html->css('/files/select2-3.5.2/select2.css');
+		echo $this->Html->css('/files/zozo-tabs/css/zozo.tabs.min.css');
+		echo $this->Html->css('/files/zozo-tabs/css/zozo.tabs.flat.min.css');
 		echo $this->Html->css('app.css');
 
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
@@ -26,6 +28,7 @@
 		echo $this->Html->script('jquery.timeago.js');
 		echo $this->Html->script('/files/select2-3.5.2/select2.min.js');
 		echo $this->Html->script('/files/select2-3.5.2/select2_locale_pt-BR.js');
+		echo $this->Html->script('/files/zozo-tabs/js/zozo.tabs.min.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
@@ -60,7 +63,7 @@
 					<?php if(AuthComponent::user()) : ?>
 					<ul class="nav navbar-nav">
 						<li>
-							<p style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
+							<p class="p-ator" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
 						</li>
 					</ul>
 					<?php endif; ?>
@@ -86,20 +89,6 @@
 	<div class="container">
 
 		<?php if(AuthComponent::user()) : ?>
-		<div class="btn-group">
-			<a href="<?php echo $this->Html->url( array("controller" => "input", "action" => "index") ); ?>" class="btn btn-primary">
-				Input
-			</a>
-			<a href="<?php echo $this->Html->url( array("controller" => "feed", "action" => "index") ); ?>" class="btn btn-primary">
-				Feed
-			</a>
-			<a href="<?php echo $this->Html->url( array("controller" => "evolution", "action" => "index") ); ?>" class="btn btn-primary">
-				Evolução
-			</a>
-			<a href="<?php echo $this->Html->url( array("controller" => "flow", "action" => "index") ); ?>" class="btn btn-primary">
-				Fluxo
-			</a>
-		</div>
 
 		<div class="row" style="margin-top: 20px;">
 
@@ -136,6 +125,30 @@
 
 			</div> <!-- .actors -->
 		</div> <!-- .row -->
+
+
+
+		<div id='tabbed-nav' data-role='z-tabs' data-options='{"orientation":"vertical","theme": "flat-peter-river", "animation": {"duration": 500, "effects": "slideV"}}'>
+		  <ul>
+	        <li><a><i class="fa fa-home"></i> Home</a></li>
+	        <li><a data-content-url="<?php echo $this->Html->url( array("controller" => "input", "action" => "index") ); ?>"><i class="fa fa-pencil"></i> Input</a></li>
+	        <li><a data-content-url="<?php echo $this->Html->url( array("controller" => "feed", "action" => "index") ); ?>"><i class="fa fa-bars"></i> Feed</a></li>
+	        <li><a data-content-url="<?php echo $this->Html->url( array("controller" => "evolution", "action" => "index") ); ?>"><i class="fa fa-line-chart"></i> Evolução</a></li>
+	        <li><a data-content-url="<?php echo $this->Html->url( array("controller" => "flow", "action" => "index") ); ?>"><i class="fa fa-comments"></i> Fluxo</a></li>
+		  </ul>
+		  <div>
+		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "pages", "action" => "home") ); ?>">
+		  	</div>
+		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "input", "action" => "index") ); ?>">
+		  	</div>
+		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "feed", "action" => "index") ); ?>">
+		  	</div>
+		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "evolution", "action" => "index") ); ?>">
+		  	</div>
+		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "flow", "action" => "index") ); ?>">
+		  	</div>
+		  </div>
+		</div>
 		<?php endif; ?>
 
 		<?php echo $this->Session->flash(); ?>

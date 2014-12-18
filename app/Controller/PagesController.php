@@ -38,6 +38,13 @@ class PagesController extends AppController {
 	public $uses = array();
 
 	public function index() {
+		
+		$this->set("title_for_layout", "Página Inicial");
+	}
+
+	public function home() {
+		$this->layout = "ajax";
+		
 		$this->set("title_for_layout", "Página Inicial");
 	}
 

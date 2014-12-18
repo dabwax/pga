@@ -10,6 +10,7 @@ class FlowController extends AppController {
 	);
 
 	public function index() {
+		$this->layout = "ajax";
 		$this->set("title_for_layout", "Fluxo");
 
 		$student_id = AuthComponent::user("Student.Student.id");
