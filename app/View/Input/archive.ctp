@@ -1,4 +1,6 @@
-<h1>Input</h1>
+<h2 class="titulo-tab">
+	<i class="fa fa-pencil"></i> Input <small>Arquivo</small>
+</h2>
 
 <div class="row">
 	<div class="btn-group">

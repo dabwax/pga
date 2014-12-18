@@ -17,6 +17,7 @@ class InputController extends AppController {
 	 * Página de Criar Novo Registro.
 	 */
 	public function create() {
+		$this->layout = "ajax";
 		$this->set("title_for_layout", "Criar Novo Input");
 
 		$actor = $this->getActor(AuthComponent::user("Actor"));
@@ -63,6 +64,7 @@ class InputController extends AppController {
 	 * Página de Arquivo.
 	 */
 	public function archive() {
+		$this->layout = "ajax";
 		$this->set("title_for_layout", "Arquivo de Inputs");
 
 		$aulas = $this->Student->StudentInput->StudentInputValue->findGroup(AuthComponent::user("Student.Student.id"));
@@ -74,6 +76,7 @@ class InputController extends AppController {
 	 * Action de requisição POST da criação de input.
 	 */
 	public function add_student_input_value() {
+		$this->layout = "ajax";
 
 		if($this->request->is("post")) {
 

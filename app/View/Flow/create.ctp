@@ -1,4 +1,6 @@
-<h2>Fluxo <small>Criar Mensagem</small></h2>
+<h2 class="titulo-tab">
+	<i class="fa fa-comments"></i> Fluxo <small>Criar Mensagem</small>
+</h2>
 
 <div class="row">
 	<div class="btn-group">

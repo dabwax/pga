@@ -1,4 +1,6 @@
-<h1>Fluxo</h1>
+<h2 class="titulo-tab">
+	<i class="fa fa-comments"></i> Fluxo
+</h2>
 
 <div class="row">
 	<div class="btn-group">

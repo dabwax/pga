@@ -1,4 +1,6 @@
-<h1>Feed</h1>
+<h2 class="titulo-tab">
+	<i class="fa fa-bars"></i> Feed
+</h2>
 
 <div class="row">
 	<?php foreach($feed as $f) : ?>
