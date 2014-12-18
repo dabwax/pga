@@ -17,7 +17,7 @@ foreach($aulas as $data => $_aulas) :
     foreach($_aulas as $ator => $_aula) :
 
         $tmp = array(
-            "date" => $data,
+            "date" => (new DateTime($data))->format('Y-m-d'),
             "type" => "blog_post",
             "ator" => ucfirst($ator),
             "title" => $data,
@@ -67,6 +67,7 @@ endforeach;
         timeline.display();
 	});
 </script>
+
 <div class="row" style="margin-top: 20px;">
 	
 	<div id="timeline"></div>
