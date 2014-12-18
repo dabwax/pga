@@ -1,5 +1,9 @@
 body {
-	background: #D2D7D3;
+	background: #DADFE1;
+}
+.navbar-inverse {
+	background: #6C7A89;
+	border: none !important;
 }
 .navbar-brand img {
 	max-height: 100%;
@@ -10,11 +14,15 @@ body {
 .navbar {
 	border-radius: 0px;
 }
-footer p {
-	border-top: 1px solid #CCC;
-	padding-top: 6px;
-	margin-top: 20px;
-	font-size: 11px;
+.navbar a {
+	color: #FFF !important;
+	font-family: "Oxygen";
+	font-weight: 300;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.navbar a:hover {
+	background: #ABB7B7 !important;
 }
 .panel-login {
 	position: fixed;
@@ -75,4 +83,86 @@ div.input input[type="text"] {
 }
 .select2-input {
 	width: 100% !important;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Lato";
+	font-weight: 300;
+	text-transform: uppercase;
+	padding-bottom: 4px;
+	color: #6C7A89;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #95A5A6;
+}
+footer p {
+	margin: 0px;
+	line-height: 60px;
+	font-size: 12px;
+	font-family: "Oxygen";
+	font-weight: 300;
+	text-transform: uppercase;
+	color: #ECECEC;
+}
+.btn-escolher-estudante {
+	display: inline-block;
+	padding: 8px;
+	height: 90px;
+	margin-bottom: 12px;
+	border-radius: 8px;
+	position: relative;
+	width: 47%;
+	margin-left: 1%;
+	margin-right: 1%;
+	text-align: center;
+}
+.btn-escolher-estudante:hover {
+	text-decoration: none;
+	background: #D2D7D3;
+	transition: all 0.4s ease;
+}
+.btn-escolher-estudante:hover img {
+	filter: gray; /* IE6-9 */
+ 	-webkit-filter: grayscale(100%); /* Chrome 19+ & Safari 6+ */
+}
+.btn-escolher-estudante:hover p.ator {
+	display: none;
+}
+.btn-escolher-estudante:hover p.nome {
+	color: #95A5A6;
+	font-size: 18px;
+}
+.btn-escolher-estudante p.nome {
+	text-transform: uppercase;
+	font-family: "Oxygen";
+	font-weight: 700;
+	font-size: 16px;
+	color: #6C7A89;
+	display: inline-block;
+	margin-left: 12px;
+}
+.btn-escolher-estudante p.ator {
+	position: absolute;
+	right: 12px;
+	bottom: 12px;
+	font-size: 12px;
+	color: #CCC;
+}
+.btn-escolher-estudante img {
+	display: inline-block;
+	height: 66px;
 }

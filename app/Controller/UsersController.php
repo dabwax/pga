@@ -70,6 +70,7 @@ class UsersController extends AppController {
 
     // página para definir qual ator o usuário quer usar
     public function set_student($student_id = null, $actor_id = null) {
+        $this->set("title_for_layout", "Selecionar Aluno");
         $actors = $this->Session->read("actors");
 
         // já foi selecionado o estudante
@@ -174,6 +175,13 @@ class UsersController extends AppController {
         // atualiza a sessão de atores com o model e o prefixo deles
         $this->Session->delete("actors");
         $this->Session->write("actors", $actors);
+
+        if(count($actors) == 1) {
+            App::uses('HtmlHelper', 'View/Helper');
+            $html = new HtmlHelper(new View());
+
+            return $this->redirect( array("action" => "set_student", $html->dados($actors[0], 'Student', 'id'), $html->dados($actors[0], 'id') ) );
+        }
 
         $this->set(compact("actors"));
     }

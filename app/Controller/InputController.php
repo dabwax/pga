@@ -9,8 +9,7 @@ class InputController extends AppController {
 	 * Página Inicial.
 	 */
 	public function index() {
-		$this->set("title_for_layout", "Inputs");
-		
+		$this->set("title_for_layout", "Inputs");	
 	}
 
 	/**

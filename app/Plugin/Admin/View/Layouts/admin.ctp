@@ -84,9 +84,6 @@
 			<a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "index") ); ?>" class="btn btn-primary">
 				Estudantes
 			</a>
-			<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "index") ); ?>" onclick="alert('em breve!');return false;" class="btn btn-primary">
-				Usuários
-			</a>
 		</div>
 		<?php endif; ?>
 

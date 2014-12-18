@@ -54,14 +54,25 @@ class AppController extends Controller {
     );
 
     public function beforeFilter() {
+    	$actors = $this->Session->read("actors");
+
+    	// se ele ainda não tiver selecionado um estudante, vai para a tela de selecionar
+    	if(!empty($actors) && !AuthComponent::user() && $this->params["action"] == "index") {
+    		return $this->redirect( array("controller" => "users", "action" => "set_student") );
+    	}
+    	
     	// se o usuário logado for estudante e a pagina atual nao ser do plugin de estudante, redirecionar ele para home de estudante
     	if(AuthComponent::user('User.role') == 'student' && $this->params["plugin"] != "student" && $this->params["action"] != "logout") {
     		return $this->redirect( array("action" => "index", "controller" => "student", "plugin" => "student") );
     	}
+
+
+		define('IN_PRODUCTION', ($_SERVER['HTTP_HOST'] !== 'localhost'));
+
+		$this->set("IN_PRODUCTION", IN_PRODUCTION);
     	
         $this->Auth->allow('display', 'set_student');
     }
-
 
 	/**
 	 * Dicionário dos inputs.

@@ -3,11 +3,13 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $this->fetch('title'); ?>
+		<?php echo $this->fetch('title'); ?> - PGA
 	</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-
+	
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700|Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+	
 	<?php
 		echo $this->Html->meta('icon');
 
@@ -142,11 +144,11 @@
 	</div> <!-- .container -->
 
 
-	<footer>
+	<footer class="footer">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
-					<p>Copyright <?php echo date("Y"); ?> PGA.</p>
+					<p>PGA <?php echo date("Y"); ?> - TODOS OS DIREITOS RESERVADOS.</p>
 				</div>
 			</div>
 		</div>
