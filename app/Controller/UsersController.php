@@ -12,7 +12,9 @@ class UsersController extends AppController {
     }
 
     public function ajax_check_username() {
+        $this->autoRender = false;
         $this->layout = "ajax";
+        $this->response->type('json');
 
         $email = $_POST["email"];
 
@@ -25,8 +27,7 @@ class UsersController extends AppController {
         ) );
 
         if(!empty($users)) {
-            echo json_encode(array("status" => "sucesso", "message" => ""));
-            die();
+            $this->response->body(json_encode(array("status" => "sucesso", "message" => "")));
         }
 
         // verifica se o usuário é aluno
@@ -39,12 +40,11 @@ class UsersController extends AppController {
         if(!empty($student)) {
 
             if(empty($student["Student"]["password"])) {
-                echo json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha"));
+                $this->response->body(json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha")));
             } else {
-                echo json_encode(array("status" => "sucesso", "message" => ""));
+                $this->response->body(json_encode(array("status" => "sucesso", "message" => "")));
             }
 
-            die();
         }
 
         // verifica se existe algum ator com este usuário
@@ -54,18 +54,15 @@ class UsersController extends AppController {
 
             foreach($actors as $a) {
                 if(empty($a["password"])) {
-                    echo json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha"));
+                    $this->response->body(json_encode(array("status" => "sucesso", "message" => "", "tipo" => "sem_senha")));
                     die();
                 } else {
-                    echo json_encode(array("status" => "sucesso", "message" => ""));
+                    $this->response->body(json_encode(array("status" => "sucesso", "message" => "")));
                 }
             }
         } else {
-            echo json_encode(array("status" => "erro", "message" => "E-mail não está cadastrado."));
-            die();
+            $this->response->body(json_encode(array("status" => "erro", "message" => "E-mail não está cadastrado.")));
         }
-
-        die();
     }
 
     // página para definir qual ator o usuário quer usar

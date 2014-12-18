@@ -71,7 +71,7 @@ class AppController extends Controller {
 
 		$this->set("IN_PRODUCTION", IN_PRODUCTION);
     	
-        $this->Auth->allow('display', 'set_student');
+        $this->Auth->allow('display', 'set_student', 'sair');
     }
 
 	/**

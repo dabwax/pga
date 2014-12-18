@@ -47,7 +47,6 @@ $(document).ready(function() {
 				data: {email: val},
 				url: url,
 				success: function(data) {
-					var data = jQuery.parseJSON(data);
 
 					if(data.tipo == "sem_senha") {
 						$("#UserPassword").attr("placeholder", "Defina sua senha aqui");
