@@ -178,8 +178,49 @@ footer p {
 	font-size: 20px;
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	color: #2C3E50;
-	line-height: 20px;
+	line-height: 25px;
 	margin: 0px;
 	text-transform: none;
-	margin-bottom: 10px;
+	width: 100%;
+	background: #3498db;
+	color: #FFF;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 12px;
+	clear: both;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+.titulo-tab small {
+	color: #ECECEC;
+}
+.z-content-inner {
+	position: relative;
+}
+.z-content-inner .row {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.z-content-inner .btn-group {
+	text-align: right;
+	width: 100%;
+	position: absolute;
+	right: 8px;
+	top: 8px;
+}
+.z-content-inner .btn-group a {
+	border-radius: 20px;
+	display: inline-block;
+	float: none;
+	margin-left: -6px !important;
+	font-family: "Oxygen";
+	font-weight: 300;
+}
+.z-content-inner .btn-group a.btn-info {
+	background: #34495E;
+	border-color: #34495E;
+}
+.z-tabs.flat.vertical.contained > .z-container > .z-content > .z-content-inner {
+	padding: 0px;
+	padding-bottom: 20px;
 }
