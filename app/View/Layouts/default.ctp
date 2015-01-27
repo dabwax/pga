@@ -72,11 +72,11 @@
 
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="<?php echo $this->Html->url( array("controller" => "pages", "action" => "display", "sobre") ); ?>">O que é o PGA?</a>
+							<a href="<?php echo $this->Html->url( array("controller" => "pages", "action" => "display", "sobre") ); ?>"><i class="fa fa-question-circle"></i> O que é o PGA?</a>
 						</li>
 						<?php if(AuthComponent::user()) : ?>
 						<li>
-							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "logout") ); ?>">Sair</a>
+							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "logout") ); ?>"><i class="fa fa-power-off"></i> Sair</a>
 						</li>
 						<?php endif; ?>
 					</ul>
@@ -99,28 +99,28 @@
 			</div> <!-- .col-avatar -->
 
 			<div class="col-xs-6 col-student">
-				<h2><?php echo $this->Html->getStudentInfo("name"); ?></h2>
-				<p>Aluno desde <?php echo date_format(date_create($this->Html->getStudentInfo("created")), "d/m/Y"); ?></p>
+				<h2 class="text-right"><?php echo $this->Html->getStudentInfo("name"); ?></h2>
+				<p class="since"><i class="fa fa-clock-o"></i> Desde <?php echo date_format(date_create($this->Html->getStudentInfo("created")), "d/m/Y"); ?></p>
 			</div> <!-- .col-student -->
 
 			<div class="col-xs-4 col-actors">
 
 				<ul>
 					<li>
-						<strong>Pais:</strong>
+						<strong><i class="fa fa-users"></i> Pais</strong>
 						<?php echo $this->Html->getParentsName(); ?>
 					</li>
 
 					<li>
-						<strong>Psico:</strong>
+						<strong><i class="fa fa-user-md"></i> Psico</strong>
 						<?php echo $this->Html->getPsychiatristName(); ?>
 					</li>
 					<li>
-						<strong>Escola:</strong>
+						<strong><i class="fa fa-hospital-o"></i> Escola</strong>
 						<?php echo $this->Html->getSchoolName(); ?>
 					</li>
 					<li>
-						<strong>Tutor:</strong>
+						<strong><i class="fa fa-user"></i> Tutor</strong>
 						<?php echo $this->Html->getTutorName(); ?>
 					</li>
 				</ul>

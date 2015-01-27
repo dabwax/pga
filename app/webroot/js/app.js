@@ -1,9 +1,11 @@
 $(document).ready(function() {
 
-	if(Timeline) {
-	}
-
 	$("body").on("click", ".z-content-inner a", function() {
+		var href = $(this).attr("href");
+
+		if(href === "javascript:;") {
+			return false;
+		}
 
 		if(!$(this).hasClass("disable-ajax")) {
 		
@@ -123,44 +125,48 @@ $(document).ready(function() {
 		$(this).parent().parent().find(".time-value").val(resultado);
 	});
 
-	// Ranges (Escala Texto)
-	$( ".range-texto-slider" ).each(function(index, element) {
+	function setRangeSlider() {
+		// Ranges (Escala Texto)
+		$( ".range-texto-slider" ).each(function(index, element) {
 
-		$( element ).slider({
-	      range: "min",
-	      value: $(element).data("min"),
-	      min: $(element).data("min"),
-	      max: $(element).data("max"),
-	      slide: function( event, ui ) {
-	      	var input = $(element).data("input");
-	      	var resultado = $(element).data("resultado");
-	      	var opcoes = $(element).data("config");
+			$( element ).slider({
+		      range: "min",
+		      value: $(element).data("min"),
+		      min: $(element).data("min"),
+		      max: $(element).data("max"),
+		      slide: function( event, ui ) {
+		      	var input = $(element).data("input");
+		      	var resultado = $(element).data("resultado");
+		      	var opcoes = $(element).data("config");
 
-	        $(input).val( opcoes[ui.value].name );
-	        $(resultado).html( opcoes[ui.value].name );
-	      }
+		        $(input).val( opcoes[ui.value].name );
+		        $(resultado).html( opcoes[ui.value].name );
+		      }
+		    });
+
 	    });
 
-    });
+		// Ranges (Escala Numérica)
+		$( ".range-slider" ).each(function(index, element) {
 
-	// Ranges (Escala Numérica)
-	$( ".range-slider" ).each(function(index, element) {
+			$( element ).slider({
+		      range: "min",
+		      value: $(element).data("min"),
+		      min: $(element).data("min"),
+		      max: $(element).data("max"),
+		      slide: function( event, ui ) {
+		      	var input = $(element).data("input");
+		      	var resultado = $(element).data("resultado");
 
-		$( element ).slider({
-	      range: "min",
-	      value: $(element).data("min"),
-	      min: $(element).data("min"),
-	      max: $(element).data("max"),
-	      slide: function( event, ui ) {
-	      	var input = $(element).data("input");
-	      	var resultado = $(element).data("resultado");
+		        $(input).val( ui.value );
+		        $(resultado).html( ui.value );
+		      }
+		    });
 
-	        $(input).val( ui.value );
-	        $(resultado).html( ui.value );
-	      }
-	    });
+		});
+	}
 
-	});
+	setRangeSlider();
 
 	// Bootstrap - Tabs (Para carregar com o hash da URL)
 	var hash = window.location.hash;
