@@ -243,13 +243,45 @@ p.since {
 	padding: 0px;
 	padding-bottom: 20px;
 }
+.z-link i {
+	font-size: 22px !important;
+	margin-right: 6px;
+}
 .z-active a {
 	font-size: 16px !important;
-	font-weight: bold !important;
 }
 #timeline {
 	width: 90%;
 	margin: 0 auto;
+}
+.btn-atalho {
+	float: left;
+	display: inline;
+	width: 100%;
+	text-align: center;
+	height: 60px;
+	text-decoration: none;
+	margin-bottom: 20px;
+	background: #DADFE1;
+	text-transform: uppercase;
+	color: #6C7A89;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-weight: 300 !important;
+	font-size: 14px;
+}
+.btn-atalho:hover {
+	background: #2C3E50;
+	text-decoration: none;
+	color: #FFF;
+}
+.btn-atalho:hover i {
+	color: #FFF;
+}
+.btn-atalho i {
+	display: block;
+	font-size: 26px;
+	margin-top: 6px;
+	color: #2C3E50;
 }
 
 #timeline .conteudo-esquerda {

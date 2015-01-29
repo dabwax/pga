@@ -1,9 +1,15 @@
 $(document).ready(function() {
 
+	$("#MessageContent").ckeditor();
+
 	$("body").on("click", ".z-content-inner a", function() {
 		var href = $(this).attr("href");
 
 		if(href === "javascript:;") {
+			return false;
+		}
+
+		if(href === "#") {
 			return false;
 		}
 

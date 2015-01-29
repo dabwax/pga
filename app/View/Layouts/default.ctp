@@ -31,6 +31,8 @@
 		echo $this->Html->script('/files/select2-3.5.2/select2_locale_pt-BR.js');
 		echo $this->Html->script('/files/zozo-tabs/js/zozo.tabs.js');
 		echo $this->Html->script('/files/timeline/javascript/scriptgates.js');
+		echo $this->Html->script('//cdn.ckeditor.com/4.4.7/standard/ckeditor.js');
+		echo $this->Html->script('//cdn.ckeditor.com/4.4.7/standard/adapters/jquery.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');

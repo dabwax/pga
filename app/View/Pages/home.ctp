@@ -2,6 +2,21 @@
 	<i class="fa fa-home"></i> Home
 </h2>
 
+<div class="row">
+    <div class="col-xs-3 col-xs-offset-2">
+        <a href="<?php echo $this->Html->url( array('controller' => 'input', 'action' => 'create') ); ?>" class="btn-atalho">
+            <i class="fa fa-pencil"></i>
+            Novo Input
+        </a>
+    </div>
+    <div class="col-xs-3 col-xs-offset-2">
+        <a href="<?php echo $this->Html->url( array('controller' => 'flow', 'action' => 'create') ); ?>" class="btn-atalho">
+            <i class="fa fa-comments"></i>
+            Nova Mensagem
+        </a>
+    </div>
+</div>
+
 <?php
 $timeline = array();
 
@@ -17,7 +32,9 @@ $timeline = array();
 
         $content = "<div class='conteudo-direita'>";
 
-		$content .= $f['Post']['content'];
+        $content .= $f['Post']['content'];
+
+		$content .= "<small>" . (new DateTime($f['Post']['created']))->format('d/m/Y') . "</small>";
 
         $content .= "</div>";
 

@@ -40,6 +40,7 @@ class FlowController extends AppController {
 	}
 
 	public function create() {
+		$this->layout = "ajax";
 		$this->set("title_for_layout", "Criar Mensagem");
 
 		// limpa o array de destinatários
@@ -131,6 +132,8 @@ class FlowController extends AppController {
 	}
 
 	public function view($id = null) {
+		$this->layout = "ajax";
+		
 		$message = $this->Message->find("first", array(
 			"conditions" => array(
 				"Message.id" => $id
@@ -146,10 +149,10 @@ class FlowController extends AppController {
 
 		$this->set(compact("message"));
 
-		$this->Message->save( array(
-			"id" => $message["Message"]["id"],
-			"views" => $message["Message"]["views"] + 1
-		) );
+		// $this->Message->save( array(
+		// 	"id" => $message["Message"]["id"],
+		// 	"views" => $message["Message"]["views"] + 1
+		// ) );
 
 		if($this->request->is("post")) {
 			$this->Message->MessageReply->create();

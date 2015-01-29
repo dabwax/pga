@@ -25,9 +25,9 @@
 		echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js');
 		echo $this->Html->script('jquery.mask.min.js');
 		echo $this->Html->script('jquery.timeago.js');
-		echo $this->Html->script('/admin/admin.js');
 		echo $this->Html->script('//cdn.ckeditor.com/4.4.7/standard/ckeditor.js');
 		echo $this->Html->script('//cdn.ckeditor.com/4.4.7/standard/adapters/jquery.js');
+		echo $this->Html->script('/admin/admin.js');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
