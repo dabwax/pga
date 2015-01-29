@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	$( '#PostContent' ).ckeditor();
+
 	var hash = window.location.hash.substring(1);
 
 	if(hash == "tutor" || hash == "psico" || hash == "pais" || hash == "escola" || hash == "aluno") {

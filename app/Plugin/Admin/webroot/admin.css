@@ -1,0 +1,30 @@
+html,
+body {
+	height: 100%;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+footer {
+	height: 70px;
+	background: #6C7A89;
+	padding-bottom: 12px;
+}
+
+footer p {
+	line-height: 30px;
+}
+
+#flashMessage {
+	margin-top: 20px;
+	background: #CCC;
+	padding: 14px;
+	color: #FFF;
+	font-weight: bold;
+	font-family: "Oxygen";
+	font-size: 18px;
+}

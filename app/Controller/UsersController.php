@@ -223,7 +223,7 @@ class UsersController extends AppController {
                 // se for a mesma senha, redireciona ele para o admin
                 if($result) {
                     // força o login
-                    $this->Auth->login();
+                    $this->Auth->login($u);
 
                     // redireciona para a dashboard de admin
                     return $this->redirect( array("controller" => "admin", "action" => "index", "plugin" => "admin") );

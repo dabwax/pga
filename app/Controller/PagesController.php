@@ -44,6 +44,12 @@ class PagesController extends AppController {
 
 	public function home() {
 		$this->layout = "ajax";
+
+		$this->loadModel("Post");
+
+		$posts = $this->Post->find("all");
+
+		$this->set(compact("posts"));
 		
 		$this->set("title_for_layout", "Página Inicial");
 	}
