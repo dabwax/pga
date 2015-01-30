@@ -1,11 +1,6 @@
 <?php
-App::uses('AppModel', 'Model');
-/**
- * Post Model
- *
- * @property User $User
- */
-class Post extends AppModel {
+
+class Post extends AdminAppModel {
 
 /**
  * belongsTo associations
