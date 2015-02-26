@@ -106,7 +106,7 @@ class UsersController extends AppController {
             $actors = $this->Session->read("actors");
 
             // busca qual dos atores ele selecionou
-            
+
             // gambiarra - 1
             $model = null;
             $prefix = null;
@@ -115,6 +115,7 @@ class UsersController extends AppController {
                 if($a["id"] == $actor_id) {
                     // gambiarra - 2
                     $model = $a["model"];
+
                     $prefix = $actor_prefix;
 
                     $actor = $this->Student->$a["model"]->find("first", array(
@@ -162,9 +163,9 @@ class UsersController extends AppController {
             $data = $this->$model->find(
                 "first",
                 array(
-                    "conditions" => 
+                    "conditions" =>
                         array($model . ".id" => $a["id"]),
-                    "contain" => 
+                    "contain" =>
                         array("Student")
                 )
             );
@@ -188,7 +189,7 @@ class UsersController extends AppController {
             App::uses('HtmlHelper', 'View/Helper');
             $html = new HtmlHelper(new View());
 
-            return $this->redirect( array("action" => "set_student", $html->dados($actors[0], 'Student', 'id'), $html->dados($actors[0], 'id') ) );
+            return $this->redirect( array("action" => "set_student", $html->dados($actors[0], 'Student', 'id'), $html->dados($actors[0], 'id'), $actors[0]['prefix'] ) );
         }
 
         $this->set(compact("actors"));
@@ -197,7 +198,7 @@ class UsersController extends AppController {
     public function login() {
         $this->layout = "login";
         $this->set("title_for_layout", "Entrar - PGA");
-        
+
         if ($this->request->is('post')) {
 
             // shortcut
@@ -313,9 +314,9 @@ class UsersController extends AppController {
                     $data = $this->$model->find(
                         "first",
                         array(
-                            "conditions" => 
+                            "conditions" =>
                                 array($model . ".id" => $a["id"]),
-                            "contain" => 
+                            "contain" =>
                                 array("Student")
                         )
                     );

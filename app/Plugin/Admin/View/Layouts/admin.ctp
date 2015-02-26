@@ -75,6 +75,11 @@
                                 Notícias
                             </a>
                         </li>
+                        <li>
+                            <a href="<?php echo $this->Html->url( array("controller" => "charts", "action" => "index") ); ?>">
+                                Gráficos
+                            </a>
+                        </li>
                     </ul>
                     <?php endif; ?>
 

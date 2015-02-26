@@ -69,7 +69,7 @@ class AppHelper extends Helper {
 	 * Função de atalho para a action set_student.
 	 */
 	public function dados($a, $campo, $subcampo = null) {
-		
+
 		if($campo == "id")
 			$a["prefix"] = null;
 
@@ -86,6 +86,12 @@ class AppHelper extends Helper {
 	 */
 	public function getActorInfo($field = null) {
 		$info = "Actor." . AuthComponent::user("Actor.prefix") . "name";
+
+		return AuthComponent::user($info);
+	}
+
+	public function getActorInfo2($field = null) {
+		$info = "Actor." . $field;
 
 		return AuthComponent::user($info);
 	}
@@ -137,7 +143,7 @@ class AppHelper extends Helper {
 		switch($model) {
 			case "Student":
 				$a = "aluno";
-				
+
 				break;
 			case "StudentParent":
 
