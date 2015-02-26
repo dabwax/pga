@@ -1,39 +1,60 @@
-<div class="students form">
-<?php echo $this->Form->create('Student'); ?>
+<div class="row">
+    <div class="col-md-12">
 
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="active"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
-  <li role="presentation"><a href="#conteudo" id="btn-conteudo" role="tab" data-toggle="tab">Conteúdo</a></li>
-  <!-- <li role="presentation"><a href="#relatorios" role="tab" data-toggle="tab">Relatórios</a></li> -->
-  <!-- <li role="presentation"><a href="#alertas" role="tab" data-toggle="tab">Alertas</a></li> -->
-  <li role="presentation"><a href="#materias" role="tab" data-toggle="tab">Matérias</a></li>
-  <li role="presentation"><a href="#exercicios" role="tab" data-toggle="tab">Exercícios</a></li>
-  <li role="presentation"><a href="#inputs" role="tab" data-toggle="tab">Inputs</a></li>
-</ul>
+          <div class="panel panel-default">
+              <div class="panel-heading">
 
-<!-- Tab panes -->
-<div class="tab-content">
-  
-  <?php echo $this->element("Students/_tab_perfil"); ?>
+                <div class="col-md-3">
+                  <h3 class="panel-title">Estudantes <small>Editar</small></h3>
+                </div>
 
-  <?php echo $this->element("Students/_tab_conteudo"); ?>
+                <div class="col-md-7">
 
-  <?php echo $this->element("Students/_tab_inputs"); ?>
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs" role="tablist" style="width: 420px;">
+                    <li role="presentation" class="active"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
+                    <li role="presentation"><a href="#conteudo" id="btn-conteudo" role="tab" data-toggle="tab">Conteúdo</a></li>
+                    <!-- <li role="presentation"><a href="#relatorios" role="tab" data-toggle="tab">Relatórios</a></li> -->
+                    <!-- <li role="presentation"><a href="#alertas" role="tab" data-toggle="tab">Alertas</a></li> -->
+                    <li role="presentation"><a href="#materias" role="tab" data-toggle="tab">Matérias</a></li>
+                    <li role="presentation"><a href="#exercicios" role="tab" data-toggle="tab">Exercícios</a></li>
+                    <li role="presentation"><a href="#inputs" role="tab" data-toggle="tab">Exportação</a></li>
+                  </ul>
 
-  <?php echo $this->element("Students/_tab_materias"); ?>
+                </div>
 
-  <?php echo $this->element("Students/_tab_exercicios"); ?>
+                <div class="col-md-2">
+                  <a href="<?php echo $this->Html->url( array('action' => 'index') ); ?>" class="btn btn-primary pull-right">
+                    Voltar
+                  </a>
+                </div>
 
-</div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="panel-body">
 
-	
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+                  <div class="students form">
+                  <?php echo $this->Form->create('Student'); ?>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Student.id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Student.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('Listar Estudantes'), array('action' => 'index')); ?></li>
-	</ul>
+                  <!-- Tab panes -->
+                  <div class="tab-content">
+
+                    <?php echo $this->element("Students/_tab_perfil"); ?>
+
+                    <?php echo $this->element("Students/_tab_conteudo"); ?>
+
+                    <?php echo $this->element("Students/_tab_inputs"); ?>
+
+                    <?php echo $this->element("Students/_tab_materias"); ?>
+
+                    <?php echo $this->element("Students/_tab_exercicios"); ?>
+
+                  </div>
+
+
+                  </div>
+
+              </div>
+          </div>
+  </div>
 </div>

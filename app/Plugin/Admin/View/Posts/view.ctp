@@ -17,7 +17,7 @@
 			&nbsp;
 		</dd>
 		<dt><?php echo __('User'); ?></dt>
-		<dd>
+		<dd>''
 			<?php echo $this->Html->link($post['User']['id'], array('controller' => 'users', 'action' => 'view', $post['User']['id'])); ?>
 			&nbsp;
 		</dd>

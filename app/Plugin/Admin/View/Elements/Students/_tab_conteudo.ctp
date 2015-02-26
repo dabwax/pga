@@ -1,7 +1,7 @@
 <div role="tabpanel" class="tab-pane" id="conteudo">
 
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist">
+	<ul class="nav nav-tabs" role="tablist" style="width: 304px;">
 		<?php foreach($atores as $a) : ?>
 	  	<li><a href="#<?php echo strtolower($a); ?>" id="btn-<?php echo strtolower($a); ?>" role="tab" data-toggle="tab"><?php echo $a; ?></a></li>
 		<?php endforeach; ?>
@@ -12,32 +12,36 @@
 		<?php foreach($atores as $a) : ?>
 		<div role="tabpanel" class="tab-pane" id="<?php echo strtolower($a); ?>">
 
-      <table class="table">
-          <thead>
-            <tr>
-              <th>
-                Input
-              </th>
-              <th>
-                Ações
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach($inputs as $i) : ?>
-            <tr>
-              <td>
-                <?php echo $i["Input"]["name"]; ?>
-              </td>
-              <td>
-                <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "add_input", $i["Input"]["id"], $this->request->data["Student"]["id"], strtolower($a) ) ); ?>" class="btn btn-default fancybox">
-                  Adicionar
-                </a>
-              </td>
-            </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+            <div class="col-md-4">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>
+                      Input
+                    </th>
+                    <th>
+                      Ações
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach($inputs as $i) : ?>
+                  <tr>
+                    <td>
+                      <?php echo $i["Input"]["name"]; ?>
+                    </td>
+                    <td>
+                      <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "add_input", $i["Input"]["id"], $this->request->data["Student"]["id"], strtolower($a) ) ); ?>" class="btn btn-default fancybox">
+                        Adicionar
+                      </a>
+                    </td>
+                  </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+              </div>
+
+              <div class="col-md-8" style="margin-top: 30px;">
 
 			<?php foreach($student_inputs as $si) : ?>
 
@@ -48,20 +52,20 @@
 
             <?php if($si["Input"]["id"] == $this->Html->getInputId("Escala Numérica") ) : ?>
                 <span class="label label-default" style="margin-right: 4px;">
-                  De <?php echo $si["StudentInput"]["config"]["range_start"]; ?> 
-                  a <?php echo $si["StudentInput"]["config"]["range_end"]; ?> 
+                  De <?php echo $si["StudentInput"]["config"]["range_start"]; ?>
+                  a <?php echo $si["StudentInput"]["config"]["range_end"]; ?>
                 </span>
             <?php endif; ?>
 
             <?php if(!empty($si["StudentInput"]["config"]) && $si["Input"]["id"] == $this->Html->getInputId("Escala Texto") ) : ?>
                 <?php foreach($si["StudentInput"]["config"] as $c) : ?>
                 <span class="label label-default" style="margin-right: 4px;">
-                  <?php echo $c["name"]; ?> 
+                  <?php echo $c["name"]; ?>
                 </span>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-						<a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "delete_student_input", $si["StudentInput"]["id"], $this->request->data["Student"]["id"]) ); ?>" class="btn btn-danger pull-right">
+						<a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "delete_student_input", $si["StudentInput"]["id"], $this->request->data["Student"]["id"]) ); ?>" class="btn btn-danger btn-xs pull-right"  onclick="if(!confirm('Você tem certeza disto? Esta ação é PERMANENTE!')) { return false; }">
 							<i class="fa fa-trash"></i>
 						</a>
 
@@ -72,7 +76,9 @@
 
 			<?php endforeach; ?>
 		</div>
+          </div>
 		<?php endforeach; ?>
+
 	</div>
 
 </div>

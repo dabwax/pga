@@ -18,7 +18,7 @@
 	<?php
 
 	$campos = array();
-	
+
 	foreach($student_inputs as $k => $si) : ?>
 
 		<?php if($si["StudentInput"]["actor"] == strtolower($actor)) : $campos[$actor][] = $si; ?>
@@ -74,7 +74,7 @@
 				<!-- Começo - range -->
 
 				<div class="range-slider" data-min="<?php echo $si["StudentInput"]["config"]["range_start"]; ?>" data-max="<?php echo $si["StudentInput"]["config"]["range_end"]; ?>" data-input="<?php echo "#CampoEscalaNumerica" . $si["StudentInput"]["id"]; ?>" data-resultado="<?php echo "#ResultadoEscalaNumerica" . $si["StudentInput"]["id"]; ?>"></div>
-				
+
 				<?php
 					echo $this->Form->input("StudentInputValue." . $k . ".value", array(
 						"label" => false,
@@ -110,7 +110,7 @@
 				<!-- Começo - range -->
 
 				<div class="range-texto-slider" data-min="1" data-max="<?php echo sizeof($si["StudentInput"]["config"]); ?>" data-config='<?php echo json_encode($si["StudentInput"]["config"]); ?>' data-input="<?php echo "#CampoEscalaTexto" . $si["StudentInput"]["id"]; ?>" data-resultado="<?php echo "#ResultadoEscalaTexto" . $si["StudentInput"]["id"]; ?>"></div>
-				
+
 				<?php
 					echo $this->Form->input("StudentInputValue." . $k . ".value", array(
 						"label" => false,
@@ -142,7 +142,7 @@
 				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".actor", array("type" => "hidden", "value" => strtolower($actor) ) ); ?>
 				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".student_lesson_id", array("type" => "hidden", "value" => $sl["StudentLesson"]["id"]) ); ?>
 
-				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".value", array("label" => false, "type" => "textarea", "placeholder" => "Observações " . $sl["StudentLesson"]["name"] ) ); ?>
+				<?php echo $this->Form->input("StudentInputValue." . $sizeof . ".value", array("label" => false, "type" => "textarea", "class" => "ckeditor", "placeholder" => "Observações " . $sl["StudentLesson"]["name"] ) ); ?>
 			</div>
 
 		</li>

@@ -1,209 +1,215 @@
 $(document).ready(function() {
 
-	$("#MessageContent").ckeditor();
+    function loadEditors() {
+        if(typeof redactor == 'function') {
+            $('.ckeditor').redactor();
+        }
+    }
 
-	$("body").on("click", ".z-content-inner a", function() {
-		var href = $(this).attr("href");
+    loadEditors();
 
-		if(href === "javascript:;") {
-			return false;
-		}
+    $("body").on("click", ".z-content-inner a", function() {
+        var href = $(this).attr("href");
 
-		if(href === "#") {
-			return false;
-		}
+        if(href === "javascript:;") {
+            return false;
+        }
 
-		if(!$(this).hasClass("disable-ajax")) {
-		
-			$container = $("#tabbed-nav").find("> div");
-			$container.append('<span class="z-spinner"></span>');
+        if(href === "#") {
+            return false;
+        }
 
-			$.ajax({
-				type: "GET",
-				url: $(this).attr("href"),
-				dataType: "html",
-				success: function(data) {
-					$(".z-content.z-active").find(".z-content-inner").html(data);
-					$container.find(">.z-spinner").remove();
-				}
-			});
-		
-			return false;
-		}
-	});
+        if(!$(this).hasClass("disable-ajax")) {
 
-	if (jQuery().select2) {
-		$("select").select2();
+            $container = $("#tabbed-nav").find("> div");
+            $container.append('<span class="z-spinner"></span>');
 
-		
-		$("#MessageRecipientRecipients").select2({
-			maximumSelectionSize: 3
-		});
-	}
+            $.ajax({
+                type: "GET",
+                url: $(this).attr("href"),
+                dataType: "html",
+                success: function(data) {
+                    $(".z-content.z-active").find(".z-content-inner").html(data);
+                    $container.find(">.z-spinner").remove();
+                }
+            });
 
-	function IsEmail(email) {
-	  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	  return regex.test(email);
-	}
+            return false;
+        }
+    });
 
-	function checkUsername(obj) {
-		var val = $(obj).val();
-		var url = $(obj).data("url");
+    if (jQuery().select2) {
+        $("select").select2();
 
-		if(IsEmail(val)) {
-			$("#alerta").removeClass("sucesso erro").html("");
 
-			$.ajax({
-				type: "POST",
-				data: {email: val},
-				url: url,
-				success: function(data) {
+        $("#MessageRecipientRecipients").select2({
+            maximumSelectionSize: 3
+        });
+    }
 
-					if(data.tipo == "sem_senha") {
-						$("#UserPassword").attr("placeholder", "Defina sua senha aqui");
-					} else {
-						$("#alerta").addClass(data.status).html(data.message);
-					}
+    function IsEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
 
-					if(data.status == "sucesso") {
-						$("#btn-entrar").attr("disabled", false);
+    function checkUsername(obj) {
+        var val = $(obj).val();
+        var url = $(obj).data("url");
 
-						$(".form-password").removeClass("hide");
-					} else {
-						$(".form-password").addClass("hide");
-						$("#btn-entrar").attr("disabled", true);
-					}
-				}
-			});
-		} else {
-			$("#alerta").removeClass("sucesso erro").html("E-mail inválido.");
-		}
-	}
+        if(IsEmail(val)) {
+            $("#alerta").removeClass("sucesso erro").html("");
 
-	$("#UserUsername").keyup(function() {
+            $.ajax({
+                type: "POST",
+                data: {email: val},
+                url: url,
+                success: function(data) {
 
-		checkUsername($(this));
-	});
+                    if(data.tipo == "sem_senha") {
+                        $("#UserPassword").attr("placeholder", "Defina sua senha aqui");
+                    } else {
+                        $("#alerta").addClass(data.status).html(data.message);
+                    }
 
-	$("#UserUsername").blur(function() {
+                    if(data.status == "sucesso") {
+                        $("#btn-entrar").attr("disabled", false);
 
-		checkUsername($(this));
-	});
+                        $(".form-password").removeClass("hide");
+                    } else {
+                        $(".form-password").addClass("hide");
+                        $("#btn-entrar").attr("disabled", true);
+                    }
+                }
+            });
+        } else {
+            $("#alerta").removeClass("sucesso erro").html("E-mail inválido.");
+        }
+    }
 
-	if(jQuery().timeago) {
-		jQuery.timeago.settings.strings = {
-		   prefixAgo: "há",
-		   prefixFromNow: "em",
-		   suffixAgo: null,
-		   suffixFromNow: null,
-		   seconds: "alguns segundos",
-		   minute: "um minuto",
-		   minutes: "%d minutos",
-		   hour: "uma hora",
-		   hours: "%d horas",
-		   day: "um dia",
-		   days: "%d dias",
-		   month: "um mês",
-		   months: "%d meses",
-		   year: "um ano",
-		   years: "%d anos"
-		};
+    $("#UserUsername").keyup(function() {
 
-		$("span.timeago").timeago();
-	}
+        checkUsername($(this));
+    });
 
-	if (jQuery().mask) {
-		$('.numero').mask('09999');
-	}
+    $("#UserUsername").blur(function() {
 
-	$(".btn-selecionar-materia").click(function() {
-		$(this).parent().toggleClass("ativo");
-		$(this).parent().find(".toggle").toggleClass("hide");
-	});
+        checkUsername($(this));
+    });
 
-	// Intervalo de Tempo
-	$(".input.time select").change(function() {
-		var div 			= $(this).parent().parent();
-		var hora_inicial 	= $(div).find("select:eq(0)").val() + ":" + $(div).find("select:eq(1)").val();
-		var hora_final 		= $(div).find("select:eq(2)").val() + ":" + $(div).find("select:eq(3)").val();
-		var resultado 		= hora_inicial + " a " + hora_final;
+    if(jQuery().timeago) {
+        jQuery.timeago.settings.strings = {
+           prefixAgo: "há",
+           prefixFromNow: "em",
+           suffixAgo: null,
+           suffixFromNow: null,
+           seconds: "alguns segundos",
+           minute: "um minuto",
+           minutes: "%d minutos",
+           hour: "uma hora",
+           hours: "%d horas",
+           day: "um dia",
+           days: "%d dias",
+           month: "um mês",
+           months: "%d meses",
+           year: "um ano",
+           years: "%d anos"
+        };
 
-		$(this).parent().parent().find(".time-value").val(resultado);
-	});
+        $("span.timeago").timeago();
+    }
 
-	function setRangeSlider() {
-		// Ranges (Escala Texto)
-		$( ".range-texto-slider" ).each(function(index, element) {
+    if (jQuery().mask) {
+        $('.numero').mask('09999');
+    }
 
-			$( element ).slider({
-		      range: "min",
-		      value: $(element).data("min"),
-		      min: $(element).data("min"),
-		      max: $(element).data("max"),
-		      slide: function( event, ui ) {
-		      	var input = $(element).data("input");
-		      	var resultado = $(element).data("resultado");
-		      	var opcoes = $(element).data("config");
+    $(".btn-selecionar-materia").click(function() {
+        $(this).parent().toggleClass("ativo");
+        $(this).parent().find(".toggle").toggleClass("hide");
+    });
 
-		        $(input).val( opcoes[ui.value].name );
-		        $(resultado).html( opcoes[ui.value].name );
-		      }
-		    });
+    // Intervalo de Tempo
+    $(".input.time select").change(function() {
+        var div             = $(this).parent().parent();
+        var hora_inicial    = $(div).find("select:eq(0)").val() + ":" + $(div).find("select:eq(1)").val();
+        var hora_final      = $(div).find("select:eq(2)").val() + ":" + $(div).find("select:eq(3)").val();
+        var resultado       = hora_inicial + " a " + hora_final;
 
-	    });
+        $(this).parent().parent().find(".time-value").val(resultado);
+    });
 
-		// Ranges (Escala Numérica)
-		$( ".range-slider" ).each(function(index, element) {
+    function setRangeSlider() {
+        // Ranges (Escala Texto)
+        $( ".range-texto-slider" ).each(function(index, element) {
 
-			$( element ).slider({
-		      range: "min",
-		      value: $(element).data("min"),
-		      min: $(element).data("min"),
-		      max: $(element).data("max"),
-		      slide: function( event, ui ) {
-		      	var input = $(element).data("input");
-		      	var resultado = $(element).data("resultado");
+            $( element ).slider({
+              range: "min",
+              value: $(element).data("min"),
+              min: $(element).data("min"),
+              max: $(element).data("max"),
+              slide: function( event, ui ) {
+                var input = $(element).data("input");
+                var resultado = $(element).data("resultado");
+                var opcoes = $(element).data("config");
 
-		        $(input).val( ui.value );
-		        $(resultado).html( ui.value );
-		      }
-		    });
+                $(input).val( opcoes[ui.value].name );
+                $(resultado).html( opcoes[ui.value].name );
+              }
+            });
 
-		});
-	}
+        });
 
-	setRangeSlider();
+        // Ranges (Escala Numérica)
+        $( ".range-slider" ).each(function(index, element) {
 
-	// Bootstrap - Tabs (Para carregar com o hash da URL)
-	var hash = window.location.hash;
-	hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-	$(".tab-pane.active").find(".input input").first().focus();
+            $( element ).slider({
+              range: "min",
+              value: $(element).data("min"),
+              min: $(element).data("min"),
+              max: $(element).data("max"),
+              slide: function( event, ui ) {
+                var input = $(element).data("input");
+                var resultado = $(element).data("resultado");
 
-	$('.nav-tabs a').click(function (e) {
-		$(this).tab('show');
-		var scrollmem = $('body').scrollTop();
-		window.location.hash = this.hash;
-		$('html,body').scrollTop(scrollmem);
-	});
+                $(input).val( ui.value );
+                $(resultado).html( ui.value );
+              }
+            });
 
-	// Drag and drop dos inputs
-	$( "#lista-final, #lista-novo" ).sortable({
-		helper:"clone", 
-		opacity:0.5,
-		cursor:"crosshair",
-		connectWith: ".list",
-		receive: function( event, ui ){
-			if($(ui.sender).attr('id')==='lista-final' 
-			   && $('#lista-novo').children('li').length>3){
+        });
+    }
 
-				$(ui.sender).sortable('cancel');
-			}
-		}
-	});
+    setRangeSlider();
 
-	$( "#lista-final, #lista-novo" ).disableSelection();
+    // Bootstrap - Tabs (Para carregar com o hash da URL)
+    var hash = window.location.hash;
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+    $(".tab-pane.active").find(".input input").first().focus();
 
-	$( ".draggable" ).draggable({
+    $('.nav-tabs a').click(function (e) {
+        $(this).tab('show');
+        var scrollmem = $('body').scrollTop();
+        window.location.hash = this.hash;
+        $('html,body').scrollTop(scrollmem);
+    });
+
+    // Drag and drop dos inputs
+    $( "#lista-final, #lista-novo" ).sortable({
+        helper:"clone",
+        opacity:0.5,
+        cursor:"crosshair",
+        connectWith: ".list",
+        receive: function( event, ui ){
+            if($(ui.sender).attr('id')==='lista-final'
+               && $('#lista-novo').children('li').length>3){
+
+                $(ui.sender).sortable('cancel');
+            }
+        }
+    });
+
+    $( "#lista-final, #lista-novo" ).disableSelection();
+
+    $( ".draggable" ).draggable({
       connectToSortable: "#lista-final",
       helper: "clone",
       revert: "invalid"

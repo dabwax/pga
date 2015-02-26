@@ -1,12 +1,16 @@
 $(document).ready(function() {
 
-	$( '#PostContent' ).ckeditor();
+	$('select').select2();
+
+	$('.table-datatable').DataTable();
+
+            $('.ckeditor').redactor();
 
 	var hash = window.location.hash.substring(1);
 
 	if(hash == "tutor" || hash == "psico" || hash == "pais" || hash == "escola" || hash == "aluno") {
 		$(window).load(function() {
-			
+
 			$("#btn-conteudo").tab("show");
 			$("#btn-" + hash).tab("show");
 		});
@@ -108,12 +112,12 @@ $(document).ready(function() {
 
 	// Drag and drop dos inputs
 	$( "#lista-final, #lista-novo" ).sortable({
-		helper:"clone", 
+		helper:"clone",
 		opacity:0.5,
 		cursor:"crosshair",
 		connectWith: ".list",
 		receive: function( event, ui ){
-			if($(ui.sender).attr('id')==='lista-final' 
+			if($(ui.sender).attr('id')==='lista-final'
 			   && $('#lista-novo').children('li').length>3){
 
 				$(ui.sender).sortable('cancel');
@@ -130,6 +134,8 @@ $(document).ready(function() {
     });
 
     // Calendário
-    $( ".calendario" ).datepicker();
+    $( ".calendario" ).datepicker({
+    	dateFormat: "dd/mm/yy"
+    });
 
 });

@@ -12,7 +12,7 @@
 	<?php echo $this->Form->create("Message"); ?>
 
 	<?php echo $this->Form->input("name", array("label" => "Título") ); ?>
-	<?php echo $this->Form->input("content", array("label" => "Mensagem") ); ?>
+	<?php echo $this->Form->input("content", array("label" => "Mensagem", "class" => "ckeditor") ); ?>
 
 	<?php echo $this->Form->input("MessageAuthor.model", array("type" => "hidden", "value" => AuthComponent::user("Actor.model")) ); ?>
 	<?php echo $this->Form->input("MessageAuthor.prefix", array("type" => "hidden", "value" => AuthComponent::user("Actor.prefix")) ); ?>

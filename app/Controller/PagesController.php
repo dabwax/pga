@@ -38,7 +38,9 @@ class PagesController extends AppController {
 	public $uses = array();
 
 	public function index() {
-		
+		if(AuthComponent::user('User.role') == 'admin') {
+			return $this->redirect(array('plugin' => 'admin', 'controller' => 'admin', 'action' => 'index'));
+		}
 		$this->set("title_for_layout", "Página Inicial");
 	}
 
@@ -50,7 +52,7 @@ class PagesController extends AppController {
 		$posts = $this->Post->find("all");
 
 		$this->set(compact("posts"));
-		
+
 		$this->set("title_for_layout", "Página Inicial");
 	}
 

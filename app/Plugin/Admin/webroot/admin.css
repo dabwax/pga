@@ -21,10 +21,33 @@ footer p {
 
 #flashMessage {
 	margin-top: 20px;
-	background: #CCC;
+	background: #87D37C;
 	padding: 14px;
 	color: #FFF;
 	font-weight: bold;
 	font-family: "Oxygen";
 	font-size: 18px;
+}
+.nav-tabs {
+	margin: 0 auto;
+	position: relative;
+	top: 11px;
+}
+.nav-tabs a {
+	padding: 6px 11px !important;
+}
+.ui-datepicker {
+	z-index: 9999 !important;
+}
+.titulo {
+	font-family: 'Oxygen';
+}
+.redactor-toolbar, .redactor-dropdown {
+z-index: 10 !important;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+color: #FFF;
+}
+.select2-container {
+	width: 100% !important;
 }
