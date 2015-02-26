@@ -70,11 +70,11 @@
                                 Estudantes
                             </a>
                         </li>
-                        <li>
+                        <!--<li>
                             <a href="<?php echo $this->Html->url( array("controller" => "posts", "action" => "index") ); ?>">
                                 Notícias
                             </a>
-                        </li>
+                        </li>-->
                         <li>
                             <a href="<?php echo $this->Html->url( array("controller" => "charts", "action" => "index") ); ?>">
                                 Gráficos
