@@ -19,6 +19,7 @@
         echo $this->Html->css('//cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css');
         echo $this->Html->css('http://imperavi.com/js/redactor/redactor.css');
         echo $this->Html->css('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/css/select2.min.css');
+        //echo $this->Html->css('/files/chartist-js/chartist.min.css');
         echo $this->Html->css('app.css');
         echo $this->Html->css('/admin/admin.css');
 
@@ -32,6 +33,10 @@
         echo $this->Html->script('http://imperavi.com/js/redactor/redactor.js');
         echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js');
         echo $this->Html->script('/admin/admin.js');
+        //echo $this->Html->script('/files/chartist-js/chartist.min.js');
+        echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");
+        echo $this->Html->script("/files/moment.js");
+        echo $this->Html->script('graficos.js');
 
         echo $this->fetch('meta');
         echo $this->fetch('css');

@@ -40,6 +40,7 @@
                             <td><?php $datetime = new DateTime($chart['Chart']['created']); echo $datetime->format("d/m/Y"); ?>&nbsp;</td>
                             <td class="actions">
                                 <?php echo $this->Html->link(__('Editar'), array('action' => 'edit', $chart['Chart']['id']), array('class' => 'btn btn-primary') ); ?>
+                                <a href="<?php echo $this->Html->url(array('action' => 'view', $chart['Chart']['id'] )); ?>" class="btn btn-default">Pré-Visualizar</a>
                                 <?php echo $this->Form->postLink(__('Deletar'), array('action' => 'delete', $chart['Chart']['id']), array('class' => 'btn btn-danger'), __('Are you sure you want to delete # %s?', $chart['Chart']['id'])); ?>
                             </td>
                         </tr>

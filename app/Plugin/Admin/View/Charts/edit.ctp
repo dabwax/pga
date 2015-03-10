@@ -17,30 +17,45 @@
 
             <div class="panel-body">
 
-<div class="charts form">
-<?php echo $this->Form->create('Chart'); ?>
-    <?php
-        echo $this->Form->input('id');
-        echo $this->Form->input('name');
-        $options = array(
-            'bar' => 'Barra',
-            'column' => 'Coluna',
-            'line' => 'Linha',
-            'pie' => 'Pizza',
-            'donut' => 'Donut',
-            'stacked_column' => 'Coluna (Stacked)',
-        );
-        echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
-        echo $this->Form->input('student_id', array('label' => 'Estudante') );
-    ?>
+                <div class="charts form">
+                <?php echo $this->Form->create('Chart'); ?>
+                    <?php
+                        echo $this->Form->input('id');
+                        echo $this->Form->input('name');
+                        $options = array(
+                            'bar' => 'Barra',
+                            'column' => 'Coluna',
+                            'line' => 'Linha',
+                            'pie' => 'Pizza',
+                            'donut' => 'Donut',
+                            'stacked_column' => 'Coluna (Stacked)',
+                        );
+                        echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
+                        echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );
+                        echo $this->Form->input('student_id', array('label' => 'Estudante') );
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-success btn-block">Salvar Gráfico</button>
-    </div>
-<?php echo $this->Form->end(); ?>
-</div>
+                    ?>
 
-                <h3>Inputs</h3>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block">Salvar Gráfico</button>
+                    </div>
+                <?php echo $this->Form->end(); ?>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+              <div class="panel-heading">
+
+                <div class="col-md-3">
+                  <h3 class="panel-title">Inputs <small>Gerenciar</small></h3>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="panel-body">
 
                 <?php echo $this->Form->create("ChartStudentInput", array('url' => array('controller' => 'charts', 'action' => 'add_input', $this->request->data['Chart']['id'] ) ) ); ?>
                 <?php echo $this->Form->input("chart_id", array('type' => 'hidden', 'value' => $this->request->data['Chart']['id'] ) ); ?>
@@ -62,6 +77,9 @@
                                 Input
                             </th>
                             <th>
+                                Ator
+                            </th>
+                            <th>
                                 Ações
                             </th>
                         </tr>
@@ -71,6 +89,9 @@
                         <tr>
                             <td>
                                 <?php echo $csi['StudentInput']['name']; ?>
+                            </td>
+                            <td>
+                                <?php echo ucfirst($csi['StudentInput']['actor']); ?>
                             </td>
                             <td>
                                 <a href="<?php echo $this->Html->url(array('action' => 'delete_input', $csi['ChartStudentInput']['id'], $this->request->data['Chart']['id'])); ?>" class="btn btn-danger" onclick="if(!confirm('Você tem certeza disto? Esta ação é PERMANENTE!')) { return false; }">Deletar</a>

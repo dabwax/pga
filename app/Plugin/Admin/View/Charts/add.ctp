@@ -30,6 +30,7 @@
             'stacked_column' => 'Coluna (Stacked)',
         );
         echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
+        echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );
         echo $this->Form->input('student_id', array('label' => 'Estudante') );
     ?>
 
