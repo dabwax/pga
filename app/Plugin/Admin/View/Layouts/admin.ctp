@@ -32,6 +32,8 @@
         echo $this->Html->script('//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js');
         echo $this->Html->script('http://imperavi.com/js/redactor/redactor.js');
         echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-beta.3/js/select2.min.js');
+        echo $this->Html->script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js');
+        echo $this->Html->script('http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/localization/messages_pt_BR.js');
         echo $this->Html->script('/admin/admin.js');
         //echo $this->Html->script('/files/chartist-js/chartist.min.js');
         echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");
@@ -60,40 +62,26 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                     <a class="navbar-brand" href="<?php echo $this->Html->url("/"); ?>">
-                        <?php echo $this->Html->image("pga.png", array("class" => "pga", "alt" => "PGA") ); ?>
-                     </a>
-
                 </div> <!-- .navbar-header -->
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-                    <?php if(AuthComponent::user()) : ?>
                     <ul class="nav navbar-nav">
-                        <li>
-                            <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "index") ); ?>">
-                                Estudantes
-                            </a>
-                        </li>
-                        <!--<li>
-                            <a href="<?php echo $this->Html->url( array("controller" => "posts", "action" => "index") ); ?>">
-                                Notícias
-                            </a>
-                        </li>-->
-                        <li>
-                            <a href="<?php echo $this->Html->url( array("controller" => "charts", "action" => "index") ); ?>">
-                                Gráficos
-                            </a>
-                        </li>
-                    </ul>
-                    <?php endif; ?>
-
-                    <ul class="nav navbar-nav navbar-right">
                         <?php if(AuthComponent::user()) : ?>
+                        <li>
+                            <a class="navbar-brand" href="<?php echo $this->Html->url("/"); ?>">
+                                <?php echo $this->Html->image("pga.png", array("class" => "pga", "alt" => "PGA") ); ?>
+                             </a>
+                        </li>
                         <li>
                             <p style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo AuthComponent::user("User.username"); ?></p>
                         </li>
-                        <li>
+                        <?php endif; ?>
+                    </ul>
+
+                    <ul class="pull-right nav navbar-nav">
+                        <?php if(AuthComponent::user()) : ?>
+                        <li class="pull-right">
                             <a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "logout") ); ?>"><i class="fa fa-power-off"></i> Sair</a>
                         </li>
                         <?php endif; ?>

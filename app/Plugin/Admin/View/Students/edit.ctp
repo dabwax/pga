@@ -11,9 +11,10 @@
                 <div class="col-md-7">
 
                   <!-- Nav tabs -->
-                  <ul class="nav nav-tabs" role="tablist" style="width: 420px;">
+                  <ul class="nav nav-tabs" role="tablist" style="width: 500px;">
                     <li role="presentation" class="active"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
-                    <li role="presentation"><a href="#conteudo" id="btn-conteudo" role="tab" data-toggle="tab">Conteúdo</a></li>
+                    <li role="presentation"><a href="#conteudo" id="btn-conteudo" role="tab" data-toggle="tab">Inputs</a></li>
+                    <li role="presentation"><a href="#outputs" id="btn-outputs" role="tab" data-toggle="tab">Outputs</a></li>
                     <!-- <li role="presentation"><a href="#relatorios" role="tab" data-toggle="tab">Relatórios</a></li> -->
                     <!-- <li role="presentation"><a href="#alertas" role="tab" data-toggle="tab">Alertas</a></li> -->
                     <li role="presentation"><a href="#materias" role="tab" data-toggle="tab">Matérias</a></li>
@@ -44,6 +45,8 @@
                     <?php echo $this->element("Students/_tab_conteudo"); ?>
 
                     <?php echo $this->element("Students/_tab_inputs"); ?>
+
+                    <?php echo $this->element("Students/_tab_outputs"); ?>
 
                     <?php echo $this->element("Students/_tab_materias"); ?>
 

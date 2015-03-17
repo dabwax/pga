@@ -1,109 +1,131 @@
 <div class="row">
     <div class="col-md-12">
 
-          <div class="panel panel-default">
-              <div class="panel-heading">
-
-                <div class="col-md-3">
-                  <h3 class="panel-title">Gráficos <small>Editar</small></h3>
-                </div>
-
-                <div class="col-md-9">
-                    <?php echo $this->Html->link(__('Voltar'), array('action' => 'index'), array( "class" => "btn btn-primary pull-right") ); ?>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-
             <div class="panel-body">
 
-                <div class="charts form">
-                <?php echo $this->Form->create('Chart'); ?>
-                    <?php
-                        echo $this->Form->input('id');
-                        echo $this->Form->input('name');
-                        $options = array(
-                            'bar' => 'Barra',
-                            'column' => 'Coluna',
-                            'line' => 'Linha',
-                            'pie' => 'Pizza',
-                            'donut' => 'Donut',
-                            'stacked_column' => 'Coluna (Stacked)',
-                        );
-                        echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
-                        echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );
-                        echo $this->Form->input('student_id', array('label' => 'Estudante') );
+                <div class="row">
+                    <div class="col-md-12">
 
-                    ?>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-block">Salvar Gráfico</button>
-                    </div>
-                <?php echo $this->Form->end(); ?>
-                </div>
+                              <div class="panel panel-default">
 
-            </div>
-        </div>
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      <i class="fa fa-caret-down"></i> Passo 1
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                  <div class="panel-body">
 
-        <div class="panel panel-default">
-              <div class="panel-heading">
+                                   <?php echo $this->Form->create('Chart'); ?>
+                                        <?php
+                                            echo $this->Form->input('id');
+                                            echo $this->Form->input('name');
+                                            $options = array(
+                                                'bar' => 'Barra',
+                                                'column' => 'Coluna',
+                                                'line' => 'Linha',
+                                                'pie' => 'Pizza',
+                                                'donut' => 'Donut',
+                                            );
+                                            echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
+                                            echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );
 
-                <div class="col-md-3">
-                  <h3 class="panel-title">Inputs <small>Gerenciar</small></h3>
-                </div>
+                                        ?>
 
-                <div class="clearfix"></div>
-            </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success btn-block">Alterar Gráfico</button>
+                                        </div>
+                                    <?php echo $this->Form->end(); ?>
 
-            <div class="panel-body">
+                                   </div>
+                                </div>
 
-                <?php echo $this->Form->create("ChartStudentInput", array('url' => array('controller' => 'charts', 'action' => 'add_input', $this->request->data['Chart']['id'] ) ) ); ?>
-                <?php echo $this->Form->input("chart_id", array('type' => 'hidden', 'value' => $this->request->data['Chart']['id'] ) ); ?>
+                              </div> <!-- .panel -->
 
-                <div class="form-group">
-                    <?php echo $this->Form->input("student_input_id", array('label' => 'Campo', 'type' => 'select', 'options' => $student_inputs, 'empty' => 'Selecionar' ) ); ?>
-                </div> <!-- .form-group -->
+                              <div class="panel panel-default">
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-block">Adicionar Campo</button>
-                </div>
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                  <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      <i class="fa fa-caret-down"></i> Passo 2
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                                  <div class="panel-body">
 
-                <?php echo $this->Form->end(); ?>
 
-                <table class="table table-datatable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Input
-                            </th>
-                            <th>
-                                Ator
-                            </th>
-                            <th>
-                                Ações
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($chart_student_inputs as $csi) : ?>
-                        <tr>
-                            <td>
-                                <?php echo $csi['StudentInput']['name']; ?>
-                            </td>
-                            <td>
-                                <?php echo ucfirst($csi['StudentInput']['actor']); ?>
-                            </td>
-                            <td>
-                                <a href="<?php echo $this->Html->url(array('action' => 'delete_input', $csi['ChartStudentInput']['id'], $this->request->data['Chart']['id'])); ?>" class="btn btn-danger" onclick="if(!confirm('Você tem certeza disto? Esta ação é PERMANENTE!')) { return false; }">Deletar</a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                    <?php echo $this->Form->create("ChartStudentInput", array('class' => 'form-validar', 'url' => array('controller' => 'charts', 'action' => 'add_input', $this->request->data['Chart']['id'] ) ) ); ?>
+                                    <?php echo $this->Form->input("chart_id", array('type' => 'hidden', 'value' => $this->request->data['Chart']['id'] ) ); ?>
+                                    <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Chart']['student_id'] ) ); ?>
 
-            </div>
+                                    <div class="form-group">
+                                        <?php echo $this->Form->input("student_input_id", array('label' => 'Campo', 'type' => 'select', 'options' => $student_inputs, 'empty' => 'Selecionar', 'class' => 'required') ); ?>
+                                    </div> <!-- .form-group -->
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success btn-block">Concluir Edição</button>
+                                    </div>
+
+                                    <?php echo $this->Form->end(); ?>
+
+                                    <table class="table table-datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Input
+                                                </th>
+                                                <th>
+                                                    Ator
+                                                </th>
+                                                <th>
+                                                    Ações
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($chart_student_inputs as $csi) : ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $csi['StudentInput']['name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo ucfirst($csi['StudentInput']['actor']); ?>
+                                                </td>
+                                                <td>
+                                                    <a href="<?php echo $this->Html->url(array('action' => 'delete_input', $csi['ChartStudentInput']['id'], $this->request->data['Chart']['id'])); ?>" class="btn btn-danger btn-xs" onclick="if(!confirm('Você tem certeza disto? Esta ação é PERMANENTE!')) { return false; }">Deletar</a>
+                                                </td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+
+
+
+                                    </div>
+                                </div>
+
+                              </div> <!-- .panel -->
+
+                        </div> <!-- .panel-group -->
+
+
+                    </div> <!-- .col-md-6 -->
+
+                </div> <!-- .row -->
+
 
         </div>
 
     </div>
 </div>
+
+<style type="text/css">
+    body {
+        padding-top: 0px !important;
+    }
+</style>

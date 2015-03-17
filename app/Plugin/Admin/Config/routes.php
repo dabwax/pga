@@ -1,3 +1,3 @@
 <?php
 
-Router::connect('/admin', array('controller' => 'admin', 'action' => 'index', 'plugin' => 'admin'));
+Router::connect('/admin', array('controller' => 'students', 'action' => 'index', 'plugin' => 'admin'));

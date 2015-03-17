@@ -1,7 +1,7 @@
 <div role="tabpanel" class="tab-pane" id="conteudo">
 
 	<!-- Nav tabs -->
-	<ul class="nav nav-tabs" role="tablist" style="width: 304px;">
+	<ul class="nav nav-tabs nav-conteudo-atores" role="tablist">
 		<?php foreach($atores as $a) : ?>
 	  	<li><a href="#<?php echo strtolower($a); ?>" id="btn-<?php echo strtolower($a); ?>" role="tab" data-toggle="tab"><?php echo $a; ?></a></li>
 		<?php endforeach; ?>
@@ -17,10 +17,10 @@
                 <thead>
                   <tr>
                     <th>
-                      Input
+                      Opções de Input
                     </th>
                     <th>
-                      Ações
+
                     </th>
                   </tr>
                 </thead>
@@ -31,8 +31,8 @@
                       <?php echo $i["Input"]["name"]; ?>
                     </td>
                     <td>
-                      <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "add_input", $i["Input"]["id"], $this->request->data["Student"]["id"], strtolower($a) ) ); ?>" class="btn btn-default fancybox">
-                        Adicionar
+                      <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "add_input", $i["Input"]["id"], $this->request->data["Student"]["id"], strtolower($a) ) ); ?>" class="btn btn-default btn-incluir-input fancybox">
+                        <i class="fa fa-plus-square"></i> Incluir
                       </a>
                     </td>
                   </tr>

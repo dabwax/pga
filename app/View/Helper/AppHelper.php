@@ -31,6 +31,27 @@ App::uses('Helper', 'View');
  */
 class AppHelper extends Helper {
 
+	public function formatChartType($type = null) {
+
+		switch($type) {
+			case 'line':
+				return "Linha";
+				break;
+			case 'pie':
+				return "Pizza";
+				break;
+			case 'bar':
+				return "Barra";
+				break;
+			case 'column':
+				return "Coluna";
+				break;
+			case 'donut':
+				return "Donut";
+				break;
+		}
+	}
+
 	/**
 	 * Dicionário dos inputs.
 	 *

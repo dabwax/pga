@@ -157,6 +157,10 @@ class StudentInputValue extends AppModel {
             }
         } // FIM - if gráfico de linha
 
-        return $chart_config;
+        if(!empty($chart_config)) {
+            return $chart_config;
+        } else {
+            return false;
+        }
     }
 }

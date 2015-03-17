@@ -115,6 +115,13 @@ class StudentsController extends AdminAppController {
 
         $inputs = $this->Input->find("all");
         $options = array(
+            'conditions' => array(
+                'Input.name !=' => array('Texto', 'Texto Privativo')
+            )
+        );
+        $inputs_o = $this->Input->find("list", $options);
+
+        $options = array(
             'fields' => array(
                 'StudentInput.id',
                 'StudentInput.name'
@@ -157,7 +164,48 @@ class StudentsController extends AdminAppController {
 
         $o_student_lessons = $this->Student->StudentLesson->find("list");
 
-        $this->set(compact("options_inputs", "options_lessons", "atores", "inputs", "student_inputs", "aulas", "student_lessons", "o_student_lessons", "student_exercises"));
+        $this->loadModel("Admin.Chart");
+
+        $options = array(
+            'conditions' => array(
+                'Chart.student_id' => $id
+            ),
+            'contain' => array(
+                'ChartStudentInput' => array(
+                    'StudentInput' => array(
+                        'Input'
+                    )
+                )
+            )
+        );
+        $charts = $this->Chart->find("all", $options);
+
+        $student_inputs_o = array();
+
+        foreach($charts as $chart) {
+
+            $options = array(
+                'conditions' => array(
+                    'StudentInput.student_id' => $chart['Chart']['student_id'],
+                    'StudentInput.input_id' => $chart['Chart']['input_id'],
+                )
+            );
+
+            $tmp = $this->Chart->Student->StudentInput->find("all", $options);
+
+            foreach($tmp as $t) {
+
+                if(!in_array($t['StudentInput']['id'], $student_inputs_o)) {
+                    $chart_id = $chart['Chart']['id'];
+                    $student_input_id = $t['StudentInput']['id'];
+
+                    $student_inputs_o[$chart_id][$student_input_id] = $t['StudentInput']['name'] . ' (' . $t['StudentInput']['actor'] . ')';
+                }
+            }
+
+        } // fim - charts
+
+        $this->set(compact("student_inputs_o", "inputs_o", "charts", "options_inputs", "options_lessons", "atores", "inputs", "student_inputs", "aulas", "student_lessons", "o_student_lessons", "student_exercises"));
     }
 
 /**
@@ -172,11 +220,10 @@ class StudentsController extends AdminAppController {
         if (!$this->Student->exists()) {
             throw new NotFoundException(__('Invalid student'));
         }
-        $this->request->allowMethod('post', 'delete');
         if ($this->Student->delete()) {
-            $this->Session->setFlash(__('The student has been deleted.'));
+            $this->Session->setFlash(__('O estudante foi removido.'));
         } else {
-            $this->Session->setFlash(__('The student could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Não foi possível remover o estudante.'));
         }
         return $this->redirect(array('action' => 'index'));
     }

@@ -22,9 +22,9 @@ class ChartsController extends AdminAppController {
 
             $this->Session->setFlash(__('O input foi adicionado ao gráfico.'));
 
-            return $this->redirect( array('action' => 'edit', $id) );
+            return $this->redirect( array('controller' => 'charts', 'action' => 'edit', $this->request->data['ChartStudentInput']['chart_id'], '#' => 'grafico-' . $this->request->data['ChartStudentInput']['chart_id']) );
         } else {
-            return $this->redirect( array('action' => 'edit', $id) );
+            return $this->redirect( array('controller' => 'charts', 'action' => 'edit', $this->request->data['ChartStudentInput']['chart_id'], '#' => 'grafico-' . $this->request->data['ChartStudentInput']['chart_id']) );
         }
     }
 
@@ -47,10 +47,9 @@ class ChartsController extends AdminAppController {
         if ($this->request->is('post')) {
             $this->Chart->create();
             if ($this->Chart->save($this->request->data)) {
-                $this->Session->setFlash(__('O gráfico foi adicionado.'));
-                return $this->redirect(array('action' => 'edit', $this->Chart->getInsertID() ));
+                $this->Session->setFlash(__('O output foi adicionado.'));
             } else {
-                $this->Session->setFlash(__('Não foi possível adicionar o gráfico.'));
+                $this->Session->setFlash(__('Não foi possível adicionar o output.'));
             }
         }
         $students = $this->Chart->Student->find('list');
@@ -63,6 +62,8 @@ class ChartsController extends AdminAppController {
         );
         $inputs = $this->Chart->Input->find('list', $options);
         $this->set(compact('students', 'inputs'));
+
+        return $this->redirect(array('controller' => 'students', 'action' => 'edit', $this->request->data['Chart']['student_id'], '#' => 'outputs' ));
     }
 
 /**
@@ -73,19 +74,38 @@ class ChartsController extends AdminAppController {
  * @return void
  */
     public function edit($id = null) {
+        $this->layout = "iframe";
+
+        $options = array('conditions' => array('Chart.' . $this->Chart->primaryKey => $id));
+        $old_chart = $this->Chart->find('first', $options);
+
         if (!$this->Chart->exists($id)) {
             throw new NotFoundException(__('Invalid chart'));
         }
         if ($this->request->is(array('post', 'put'))) {
+
             if ($this->Chart->save($this->request->data)) {
-                $this->Session->setFlash(__('The chart has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+
+                // se trocar o tipo de input, deletar todos os chart_student_input antigos
+                if($this->request->data['Chart']['input_id'] != $old_chart['Chart']['input_id']) {
+                    $this->loadModel("ChartStudentInput");
+
+                    $this->ChartStudentInput->deleteAll(array(
+                        'ChartStudentInput.chart_id' => $id
+                    ));
+
+                    $this->Session->setFlash(__('O gráfico foi salvo e os inputs antigos foram deletados.'));
+                } else {
+
+                    $this->Session->setFlash(__('O gráfico foi salvo.'));
+                }
+                return $this->redirect(array('action' => 'edit', $id, '#' => 'passo-2'));
             } else {
-                $this->Session->setFlash(__('The chart could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Não foi possível salvar o gráfico. Tente novamente.'));
+                return $this->redirect(array('action' => 'edit', $id, '#' => 'passo-2'));
             }
         } else {
-            $options = array('conditions' => array('Chart.' . $this->Chart->primaryKey => $id));
-            $this->request->data = $this->Chart->find('first', $options);
+            $this->request->data = $old_chart;
         }
         $students = $this->Chart->Student->find('list');
 
@@ -107,6 +127,9 @@ class ChartsController extends AdminAppController {
         }
 
         $options = array(
+            'conditions' => array(
+                'ChartStudentInput.chart_id' => $id
+            ),
             'contain' => array(
                 'StudentInput'
             )
@@ -137,16 +160,17 @@ class ChartsController extends AdminAppController {
  */
     public function delete($id = null) {
         $this->Chart->id = $id;
+        $chart = $this->Chart->read();
+
         if (!$this->Chart->exists()) {
             throw new NotFoundException(__('Invalid chart'));
         }
-        $this->request->allowMethod('post', 'delete');
         if ($this->Chart->delete()) {
-            $this->Session->setFlash(__('The chart has been deleted.'));
+            $this->Session->setFlash(__('O gráfico foi deletado.'));
         } else {
-            $this->Session->setFlash(__('The chart could not be deleted. Please, try again.'));
+            $this->Session->setFlash(__('Não foi possível deletar o gráfico.'));
         }
-        return $this->redirect(array('action' => 'index'));
+        return $this->redirect(array('controller' => 'students', 'action' => 'edit', $chart['Chart']['student_id'], '#' => ''));
     }
 
     public function delete_input($id = null, $chart_id = null) {

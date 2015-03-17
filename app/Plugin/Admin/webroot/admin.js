@@ -1,10 +1,26 @@
 $(document).ready(function() {
 
+  $('.form-validar').validate();
+
+  $(".btn-excluir-aluno-confirmacao").click(function() {
+    var name = $(this).data("name");
+
+    if(prompt("Confirme o nome do aluno para removê-lo. OBS: CAIXA ALTA! " + name) == name) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
     $('select').select2();
 
-    $('.table-datatable').DataTable();
+    $('.table-datatable').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Portuguese-Brasil.json"
+        }
+    });
 
-            $('.ckeditor').redactor();
+    $('.ckeditor').redactor();
 
     var hash = window.location.hash.substring(1);
 
@@ -16,10 +32,28 @@ $(document).ready(function() {
         });
     }
 
+    if(hash == "conteudo") {
+      $(window).load(function() {
+
+            $("#btn-tutor").tab("show");
+
+      });
+    }
+
+    if(hash.indexOf('grafico-') > -1) {
+      $(window).load(function() {
+
+            $("#btn-outputs").tab("show");
+            $("#btn-" + hash).tab("show");
+
+      });
+    }
+
     $(".fancybox").fancybox({
         maxWidth    : 800,
         maxHeight   : 600,
-        type: 'iframe'
+        type: 'iframe',
+        padding: 0
     });
 
     jQuery.timeago.settings.strings = {
@@ -108,6 +142,11 @@ $(document).ready(function() {
         var scrollmem = $('body').scrollTop();
         window.location.hash = this.hash;
         $('html,body').scrollTop(scrollmem);
+
+        if($(this).attr("id") == "btn-conteudo") {
+
+            $("#btn-tutor").tab("show");
+        }
     });
 
     // Drag and drop dos inputs
