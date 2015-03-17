@@ -9,6 +9,7 @@
                     <?php echo $this->Form->create("Chart", array('url' => array('controller' => 'charts', 'action' => 'add') ) ); ?>
 
                     <?php echo $this->Form->input("name", array('label' => 'Nome') ); ?>
+                    <?php echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'options' => $inputs_o, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-tipo-de-input') ); ?>
                     <?php
                         $options = array(
                             'bar' => 'Barra',
@@ -17,9 +18,8 @@
                             'pie' => 'Pizza',
                             'donut' => 'Donut',
                         );
-                        echo $this->Form->input('type', array('label' => 'Gráfico', 'options' => $options, 'empty' => 'Selecionar') ); ?>
-                        <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Student']['id']) ); ?>
-                        <?php echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'options' => $inputs_o, 'empty' => 'Selecionar') ); ?>
+                        echo $this->Form->input('type', array('label' => 'Gráfico', 'options' => $options, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-tipo-grafico') ); ?>
+                      <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Student']['id']) ); ?>
 
                           <button type="submit" class="btn btn-default btn-incluir-input btn-block" style="margin-top: 20px;">
                             <i class="fa fa-plus-square"></i> Criar Gráfico

@@ -1,5 +1,24 @@
 $(document).ready(function() {
 
+  $(".select-tipo-de-input").change(function() {
+    var value = $(this).val();
+
+    if(value == 5) {
+      $(".select-tipo-grafico").find('[value="column"]').remove();
+      $(".select-tipo-grafico").find('[value="line"]').remove();
+    } else {
+
+      if( $(".select-tipo-grafico").find('[value="line"]').length == 0) {
+        $(".select-tipo-grafico").append("<option value='line'>Linha</option>");
+      }
+
+      if( $(".select-tipo-grafico").find('[value="column"]').length == 0) {
+        $(".select-tipo-grafico").append("<option value='column'>Coluna</option>");
+      }
+
+    }
+  });
+
   $('.form-validar').validate();
 
   $(".btn-excluir-aluno-confirmacao").click(function() {
@@ -12,7 +31,13 @@ $(document).ready(function() {
     }
   });
 
-    $('select').select2();
+    $('select').each(function() {
+      var data_disable_select = $(this).data('disable-select');
+
+      if(!data_disable_select) {
+        $(this).select2();
+      }
+    });
 
     $('.table-datatable').DataTable({
         "language": {
