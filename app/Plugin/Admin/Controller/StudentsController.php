@@ -176,6 +176,9 @@ class StudentsController extends AdminAppController {
                         'Input'
                     )
                 )
+            ),
+            'order' => array(
+                'Chart.order ASC'
             )
         );
         $charts = $this->Chart->find("all", $options);

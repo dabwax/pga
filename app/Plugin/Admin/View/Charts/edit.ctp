@@ -35,6 +35,8 @@
                                             echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );
 
                                         ?>
+                                            <?php echo $this->Form->input("columns", array('label' => 'Colunas', 'type' => 'select', 'options' => array(3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10, 12 =>  12)  ) ); ?>
+                                            <?php echo $this->Form->input("order", array('label' => 'Ordem', 'class' => 'form-control', 'type' => 'text' ) ); ?>
 
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success btn-block">Alterar Gráfico</button>
