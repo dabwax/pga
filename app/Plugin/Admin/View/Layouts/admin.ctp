@@ -74,10 +74,13 @@
                              </a>
                         </li>
                         <li>
-                            <p style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo AuthComponent::user("User.username"); ?></p>
                         </li>
                         <?php endif; ?>
                     </ul>
+
+                    <div class="col-md-10 text-center">
+                        <p style="color: #FFF; margin-top: 16px; margin-left: 12px;">Olá, <?php echo AuthComponent::user("User.username"); ?></p>
+                    </div>
 
                     <ul class="pull-right nav navbar-nav">
                         <?php if(AuthComponent::user()) : ?>
@@ -105,15 +108,12 @@
 
     </div>
 
-    <footer>
+
+    <footer class="login">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <p>Copyright <?php echo date("Y"); ?> PGA.</p><strong class="label label-danger">ADMIN</strong>
-                </div>
-            </div>
+            <p class="login">Plataforma de gestão de alunos</p>
         </div>
-    </footer> <!-- footer -->
+    </footer>
 
 </body>
 </html>

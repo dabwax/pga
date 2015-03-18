@@ -76,3 +76,12 @@ color: #FFF;
     border: none !important;
     box-shadow: none;
 }
+.campo-studentinput {
+    padding: 4px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid #CCC;
+}
+.icone-sucesso {
+    color: green;
+}

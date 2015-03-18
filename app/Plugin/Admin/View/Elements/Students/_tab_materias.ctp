@@ -1,16 +1,33 @@
 <div role="tabpanel" class="tab-pane" id="materias">
 
     <div class="row">
-        <div class="col-md-6">
+
+        <div class="col-md-3">
+
+            <?php echo $this->Form->create("StudentLesson", array("url" => array("controller" => "students", "action" => "add_student_lesson") ) ); ?>
+
+            <?php echo $this->Form->input("student_id", array("type" => "hidden", "value" => $this->request->data["Student"]["id"] ) ); ?>
+
+            <?php echo $this->Form->input("name"); ?>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block">Salvar Disciplina</button>
+            </div>
+
+            <?php echo $this->Form->end(); ?>
+
+        </div>
+
+        <div class="col-md-9">
 
             <table class="table">
                     <thead>
                         <tr>
                             <th>
-                                Nome
+                                Disciplinas
                             </th>
                             <th class="text-right">
-                                Ações
+
                             </th>
                         </tr>
                     </thead>
@@ -29,22 +46,6 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
-        </div>
-
-        <div class="col-md-6">
-
-            <?php echo $this->Form->create("StudentLesson", array("url" => array("controller" => "students", "action" => "add_student_lesson") ) ); ?>
-
-            <?php echo $this->Form->input("student_id", array("type" => "hidden", "value" => $this->request->data["Student"]["id"] ) ); ?>
-
-            <?php echo $this->Form->input("name"); ?>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-success btn-block">Salvar Matéria</button>
-            </div>
-
-            <?php echo $this->Form->end(); ?>
 
         </div>
     </div>

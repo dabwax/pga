@@ -1,5 +1,27 @@
 $(document).ready(function() {
 
+  $(".campo-studentinput").blur(function() {
+    var value = $(this).val();
+    var url = $(this).data("url");
+    var id = $(this).data("id");
+    var icone = $(this).parent().parent().find(".icone-ajax");
+    var icone2 = $(this).parent().parent().find(".icone-sucesso");
+
+    $(icone).fadeIn(200);
+    $(".icone-sucesso").fadeOut(200);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {value: value, id: id},
+      success: function(data) {
+        $(icone).fadeOut(200);
+        $(icone2).fadeIn(200);
+
+      }
+    });
+  });
+
   $(".select-tipo-de-input").change(function() {
     var value = $(this).val();
 

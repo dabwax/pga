@@ -40,7 +40,7 @@
 				<div class="clearfix"></div>
 
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="alerta">
-					
+
 				</div>
 
 				<div class="clearfix"></div>
@@ -48,7 +48,7 @@
 				<input type="submit" value="Entrar" class="btn btn-success btn-lg btn-block" id="btn-entrar" disabled="disabled" />
 
 			</div>
-			
+
 		<?php echo $this->Form->end(); ?>
 
 	</div>

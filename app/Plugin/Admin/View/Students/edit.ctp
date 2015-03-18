@@ -17,7 +17,7 @@
                     <li role="presentation"><a href="#outputs" id="btn-outputs" role="tab" data-toggle="tab">Outputs</a></li>
                     <!-- <li role="presentation"><a href="#relatorios" role="tab" data-toggle="tab">Relatórios</a></li> -->
                     <!-- <li role="presentation"><a href="#alertas" role="tab" data-toggle="tab">Alertas</a></li> -->
-                    <li role="presentation"><a href="#materias" role="tab" data-toggle="tab">Matérias</a></li>
+                    <li role="presentation"><a href="#materias" role="tab" data-toggle="tab">Disciplinas</a></li>
                     <li role="presentation"><a href="#exercicios" role="tab" data-toggle="tab">Exercícios</a></li>
                     <li role="presentation"><a href="#inputs" role="tab" data-toggle="tab">Exportação</a></li>
                   </ul>

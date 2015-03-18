@@ -48,7 +48,16 @@
 				<ul class="list-group">
 				<?php if($si["StudentInput"]["actor"] == strtolower($a)) : ?>
 					<li class="list-group-item">
-						<strong><?php echo $si["StudentInput"]["name"]; ?> <small style="color: #999;"><?php echo $si["Input"]["name"]; ?></small></strong>
+
+                                      <span class="icone-ajax" style="display: none;">
+                                        <i class="fa fa-spin fa-spinner"></i>
+                                      </span>
+
+                                      <span class="icone-sucesso" style="display: none;">
+                                        <i class="fa fa-check"></i>
+                                      </span>
+
+						<strong> <input type="text" value="<?php echo $si["StudentInput"]["name"]; ?>" data-id="<?php echo $si["StudentInput"]["id"]; ?>" data-url="<?php echo $this->Html->url( array('controller' => 'students', 'action' => 'ajax_edit_student_input') ); ?>" class="campo-studentinput" /> <small style="color: #999;"><?php echo $si["Input"]["name"]; ?></small></strong>
 
             <?php if($si["Input"]["id"] == $this->Html->getInputId("Escala Numérica") ) : ?>
                 <span class="label label-default" style="margin-right: 4px;">

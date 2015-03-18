@@ -34,12 +34,19 @@
             <?php echo $this->Form->input('Student.description', array('class' => 'form-control ckeditor') ); ?>
         </div>
     </div>
+
+    <div class="col-md-12">
+        <div class="form-group">
+            <?php echo $this->Form->input('Student.school_grade', array('label' => 'Série Escolar', 'class' => 'form-control') ); ?>
+        </div>
+    </div>
+
     </div>
 
     <fieldset>
 
         <div class="col-md-6">
-            <legend>Psico</legend>
+            <legend>Terapeuta</legend>
             <?php echo $this->Form->input("StudentPsychiatrist.id"); ?>
             <div class="form-group">
              <?php echo $this->Form->input('StudentPsychiatrist.name', array('class' => 'form-control') ); ?>

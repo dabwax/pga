@@ -3,13 +3,6 @@ class StudentsController extends AdminAppController {
     public $uses = array("Student", "Input");
 
 /**
- * Components
- *
- * @var array
- */
-    public $components = array('Paginator');
-
-/**
  * index method
  *
  * @return void
@@ -18,6 +11,30 @@ class StudentsController extends AdminAppController {
         $this->set('students', $this->Student->find("all"));
     }
 
+    public function download_student_exercise($id = null) {
+        $this->autoRender = false;
+
+        $student_exercise = $this->Student->StudentExercise->findById($id);
+
+        $this->response->file(WWW_ROOT.'img'. DS . $student_exercise['StudentExercise']['attachment'], array('download' => true, 'name' => $student_exercise['StudentExercise']['attachment']));
+    }
+
+    public function ajax_edit_student_input() {
+        $this->layout = "ajax";
+        $this->autoRender = false;
+
+        $id = $_POST["id"];
+        $value = $_POST["value"];
+
+        $this->loadModel("StudentInput");
+
+        $this->StudentInput->save(array(
+            'id'    =>  $id,
+            'name'  => $value
+        ));
+
+        echo "O nome do input foi alterado.";
+    }
 /**
  * add method
  *
@@ -135,6 +152,9 @@ class StudentsController extends AdminAppController {
             ),
             'conditions' => array(
                 'StudentLesson.student_id' =>$id
+            ),
+            'order' => array(
+                'StudentLesson.name ASC'
             )
         );
         $options_lessons = $this->Student->StudentLesson->find("list", $options);
@@ -152,6 +172,9 @@ class StudentsController extends AdminAppController {
             "conditions" => array(
                 "StudentLesson.student_id" => $id
             ),
+            'order' => array(
+                'StudentLesson.name ASC'
+            )
         ) );
 
         $student_exercises = $this->Student->StudentExercise->find("all", array(
@@ -162,7 +185,7 @@ class StudentsController extends AdminAppController {
 
         $aulas = $this->Student->StudentInput->StudentInputValue->findGroup($id);
 
-        $o_student_lessons = $this->Student->StudentLesson->find("list");
+        $o_student_lessons = $options_lessons;
 
         $this->loadModel("Admin.Chart");
 
@@ -247,6 +270,22 @@ class StudentsController extends AdminAppController {
 
     }
 
+    public function edit_student_exercise($id = null) {
+
+        if($this->request->is("post")) {
+
+            $this->request->data['StudentExercise']['id'] = $id;
+
+            $this->Student->StudentExercise->save($this->request->data);
+
+            $this->Session->setFlash(__('O exercício foi editado.'));
+
+            return $this->redirect( array("action" => "edit", $this->request->data["StudentExercise"]["student_id"], "#" => "exercicios") );
+
+        } // - post
+
+    }
+
     public function add_input($input_id, $student_id, $actor) {
         $this->layout = "iframe";
 
@@ -294,7 +333,7 @@ class StudentsController extends AdminAppController {
 
             $this->Student->StudentLesson->save($this->request->data);
 
-            $this->Session->setFlash(__('A nova matéria foi salva.'));
+            $this->Session->setFlash(__('A nova disciplina foi salva.'));
 
             return $this->redirect( array("action" => "edit", $this->request->data["StudentLesson"]["student_id"], "#" => "materias") );
 
@@ -307,17 +346,21 @@ class StudentsController extends AdminAppController {
     }
 
     public function delete_student_input($student_input_id, $student_id) {
+        $this->Student->StudentInput->id = $student_input_id;
+
+        $si = $this->Student->StudentInput->read();
+
         $this->Student->StudentInput->delete($student_input_id);
 
         $this->Session->setFlash(__('O input foi deletado.'));
 
-        return $this->redirect( array("action" => "edit", $student_id, "#" => "conteudo") );
+        return $this->redirect( array("action" => "edit", $student_id, "#" => $si['StudentInput']['actor']) );
     }
 
     public function delete_student_lesson($student_lesson_id, $student_id) {
         $this->Student->StudentLesson->delete($student_lesson_id);
 
-        $this->Session->setFlash(__('A matéria foi deletada.'));
+        $this->Session->setFlash(__('A disciplina foi deletada.'));
 
         return $this->redirect( array("action" => "edit", $student_id, "#" => "materias") );
     }
