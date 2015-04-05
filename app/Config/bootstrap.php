@@ -107,4 +107,11 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-CakePlugin::loadAll( array("Admin" => array("routes" => true), "Student" => array("routes" => true) ) );
+CakePlugin::loadAll( array(
+	"Admin" => array(
+		"routes" => true
+	),
+	"Student" => array(
+		"routes" => true
+	),
+) );

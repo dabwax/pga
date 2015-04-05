@@ -351,7 +351,11 @@ class UsersController extends AppController {
                 return $this->redirect( array("action" => "set_student") );
             // se não houver nenhum ator
             } else {
-                $this->Session->setFlash("Não há nenhum ator com este e-mail e senha.");
+                $this->Session->setFlash(__("Não há nenhum ator com este e-mail e senha."), 'alert', array(
+                    'plugin' => 'BoostCake',
+                    'class' => 'alert-danger'
+                ));
+
             }
 
         }

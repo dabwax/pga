@@ -33,8 +33,9 @@
 <body class="body-login">
 
 	<div class="container">
-		<?php echo $this->Session->flash(); ?>
-
+		<div style="margin-top: 40px;">
+			<?php echo $this->Session->flash(); ?>
+		</div>
 		<?php echo $this->fetch('content'); ?>
 	</div> <!-- .container -->
 
