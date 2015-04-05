@@ -81,6 +81,8 @@ class StudentsController extends AdminAppController {
 
             $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
         }
+
+        return $this->redirect( array('action' => 'edit', $id) );
     }
 
     public function download_student_exercise($id = null) {
