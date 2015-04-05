@@ -221,14 +221,13 @@ p.since {
     margin-right: 20px;
 }
 .z-content-inner .btn-group {
-    text-align: right;
+    text-align: left;
     width: 100%;
-    position: absolute;
-    right: 8px;
-    top: 8px;
+    position: relative;
+    top: -3px;
 }
 .z-content-inner .btn-group a {
-    border-radius: 20px;
+    border-radius: 6px;
     display: inline-block;
     float: none;
     margin-left: -6px !important;
@@ -236,8 +235,9 @@ p.since {
     font-weight: 300;
 }
 .z-content-inner .btn-group a.btn-info {
-    background: #34495E;
-    border-color: #34495E;
+    background: #52B3D9;
+    border-color: #52B3D9;
+    font-weight: bold;
 }
 .z-tabs.flat.vertical.contained > .z-container > .z-content > .z-content-inner {
     padding: 0px;
@@ -320,8 +320,8 @@ p.since {
     list-style: none;
     display: inline-block;
     width: 100%;
-    height: 40px;
-    line-height: 40px;
+    height: 28px;
+    line-height: 28px;
     text-align: right;
     background: #EEEEEE;
     border-bottom: 1px solid #D2D7D3;
@@ -342,9 +342,12 @@ p.since {
     width: 25px;
     text-align: left;
 }
+.col-avatar {
+    text-align: center;
+}
 .col-avatar img {
-    border: 6px solid #3498db;
-    box-shadow: -6px 10px 0px #6C7A89, 6px -10px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 1px 16px rgba(0, 0, 0, 0.3);
+    max-width: 62%;
 }
 .line-legend {
     margin: 0px;
@@ -391,4 +394,43 @@ footer.login p {
     font-size: 16px;
     color: #d8e0e0 !important;
     padding: 3px;
+}
+.col-student h2 {
+    font-size: 22px;
+    text-transform: none;
+}
+.z-tabs.vertical > ul{
+    width: 17% !important;
+}
+.grafico {
+    float: left;
+    display: inline;
+    width: 100%;
+    height: auto;
+    padding-bottom: 40px;
+    background: #DADFE1;
+}
+.grafico .titulo {
+    float: left;
+    display: inline;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 36px;
+    font-family: "Oxygen";
+    font-weight: 300;
+    background: #C9CFD1;
+}
+.canvasjs-chart-canvas {
+    width: 100%;
+}
+.canvasjs-chart-container {
+position: relative;
+text-align: left;
+cursor: auto;
+float: left;
+width: 90%;
+margin-left: 5%;
+height: 100%;
 }

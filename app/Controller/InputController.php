@@ -124,8 +124,12 @@ class InputController extends AppController {
 			// joga o input para o feed
 			$this->Feed->generate($input_date, $this->request->data["StudentInputValue"]);
 		}
-
 		$this->Session->setFlash(__('O novo registro de input foi salvo.'));
+
+		$this->Session->setFlash(__("O novo input foi adicionado ao estudante."), 'alert', array(
+	                    'plugin' => 'BoostCake',
+	                    'class' => 'alert-success'
+	                ));
 
 		return $this->redirect( array("controller" => "input", "action" => "archive") );
 	}

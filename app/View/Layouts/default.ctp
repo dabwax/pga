@@ -127,6 +127,7 @@
 		</div> <!-- .row -->
 
 
+		<?php echo $this->Session->flash(); ?>
 
 		<div id='tabbed-nav' data-role='z-tabs' data-options='{"orientation":"vertical","theme": "flat-peter-river", "animation": {"duration": 500, "effects": "slideV"}}'>
 		  <ul>
@@ -150,8 +151,6 @@
 		  </div>
 		</div>
 		<?php endif; ?>
-
-		<?php echo $this->Session->flash(); ?>
 
 		<?php echo $this->fetch('content'); ?>
 	</div> <!-- .container -->

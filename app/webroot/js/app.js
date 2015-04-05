@@ -1,7 +1,21 @@
 $(document).ready(function() {
 
+    $(".btn-enviar-inputs").click(function() {
+        var url = $("#StudentInputValueCreateForm").attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#StudentInputValueCreateForm").serialize(),
+            success: function(data) {
+                location.reload();
+            }
+        });
+        return false;
+    });
+
     function loadEditors() {
-        if(typeof redactor == 'function') {
+        if(jQuery().redactor) {
             $('.ckeditor').redactor();
         }
     }
@@ -124,6 +138,13 @@ $(document).ready(function() {
 
     $(".btn-selecionar-materia").click(function() {
         $(this).parent().toggleClass("ativo");
+        if($(this).parent().find("input[type='checkbox']").is(":checked")) {
+            $(this).parent().find("input[type='checkbox']").prop('checked', false);
+            $(this).parent().find("textarea").val("");
+        } else {
+            $(this).parent().find("input[type='checkbox']").prop('checked', true);
+            $(this).parent().find("textarea").val(" ");
+        }
         $(this).parent().find(".toggle").toggleClass("hide");
     });
 
