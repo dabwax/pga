@@ -1,9 +1,6 @@
-<h2 class="titulo-tab">
-	<i class="fa fa-comments"></i> Fluxo
-</h2>
-
-<div class="row">
+<div class="titulo-tab" style="height: 54px;">
 	<div class="btn-group">
+		<a href="<?php echo $this->Html->url( array("action" => "index") ); ?>" class="btn btn-info">Arquivo</a>
 		<a href="<?php echo $this->Html->url( array("action" => "create") ); ?>" class="btn btn-default">Criar Mensagem</a>
 	</div>
 </div>

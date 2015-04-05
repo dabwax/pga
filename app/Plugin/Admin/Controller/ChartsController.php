@@ -170,7 +170,7 @@ class ChartsController extends AdminAppController {
         } else {
             $this->Session->setFlash(__('Não foi possível deletar o gráfico.'));
         }
-        return $this->redirect(array('controller' => 'students', 'action' => 'edit', $chart['Chart']['student_id'], '#' => ''));
+        return $this->redirect(array('controller' => 'students', 'action' => 'edit', $chart['Chart']['student_id'], '#' => 'outputs'));
     }
 
     public function delete_input($id = null, $chart_id = null) {

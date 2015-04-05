@@ -33,6 +33,8 @@
 		echo $this->Html->script('/files/zozo-tabs/js/zozo.tabs.js');
 		echo $this->Html->script('/files/timeline/javascript/scriptgates.js');
 		echo $this->Html->script('http://imperavi.com/js/redactor/redactor.js');
+		echo $this->Html->script('/files/canvasjs/jquery.canvasjs.min.js');
+		echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
@@ -65,17 +67,11 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 
 					<?php if(AuthComponent::user()) : ?>
-					<ul class="nav navbar-nav">
-						<li>
-							<p class="p-ator" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
-						</li>
-					</ul>
+					<p class="p-ator col-md-10" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
+
 					<?php endif; ?>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="<?php echo $this->Html->url( array("controller" => "pages", "action" => "display", "sobre") ); ?>"><i class="fa fa-question-circle"></i> O que é o PGA?</a>
-						</li>
 						<?php if(AuthComponent::user()) : ?>
 						<li>
 							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "logout") ); ?>"><i class="fa fa-power-off"></i> Sair</a>
@@ -96,16 +92,16 @@
 
 		<div class="row" style="margin-top: 20px;">
 
-			<div class="col-xs-2 col-avatar">
+			<div class="col-xs-6 col-md-2 col-avatar">
 				<img src="https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694" class="img-circle" alt="">
 			</div> <!-- .col-avatar -->
 
-			<div class="col-xs-6 col-student">
-				<h2 class="text-right"><?php echo $this->Html->getStudentInfo("name"); ?></h2>
-				<p class="since"><i class="fa fa-clock-o"></i> Desde <?php echo date_format(date_create($this->Html->getStudentInfo("created")), "d/m/Y"); ?></p>
+			<div class="col-xs-6 col-md-6 col-student">
+				<h2 class="text-left"><?php echo $this->Html->getStudentInfo("name"); ?></h2>
+				<p class="since pull-left"><i class="fa fa-clock-o"></i> Desde <?php echo date_format(date_create($this->Html->getStudentInfo("created")), "d/m/Y"); ?></p>
 			</div> <!-- .col-student -->
 
-			<div class="col-xs-4 col-actors">
+			<div class="col-md-4 col-actors">
 
 				<ul>
 					<li>
@@ -164,7 +160,7 @@
 	<footer class="footer">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-md-12">
 					<p>PGA <?php echo date("Y"); ?> - TODOS OS DIREITOS RESERVADOS.</p>
 				</div>
 			</div>

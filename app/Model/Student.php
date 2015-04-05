@@ -27,7 +27,7 @@ class Student extends AppModel {
             );
         }
 
-        if (isset($this->data[$this->alias]['date_of_birth'])) {
+        if (!empty($this->data[$this->alias]['date_of_birth'])) {
             $oDateTime = DateTime::createFromFormat("d/m/Y", $this->data[$this->alias]['date_of_birth']);
             $this->data[$this->alias]['date_of_birth'] = $oDateTime->format("Y-m-d");
         }

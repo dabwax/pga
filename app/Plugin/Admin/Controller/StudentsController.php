@@ -16,7 +16,7 @@ class StudentsController extends AdminAppController {
 
         $student_exercise = $this->Student->StudentExercise->findById($id);
 
-        $this->response->file(WWW_ROOT.'img'. DS . $student_exercise['StudentExercise']['attachment'], array('download' => true, 'name' => $student_exercise['StudentExercise']['attachment']));
+        $this->response->file(WWW_ROOT.'files'. DS . $student_exercise['StudentExercise']['attachment'], array('download' => true, 'name' => $student_exercise['StudentExercise']['attachment']));
     }
 
     public function ajax_edit_student_input() {
@@ -54,42 +54,42 @@ class StudentsController extends AdminAppController {
                 $destinatario = $this->request->data["StudentPsychiatrist"]["email"];
                 $ator = "psicopedagogo(a)";
 
-                $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+                #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
                 ### MEDIADOR ###
                 $nome = $this->request->data["StudentSchool"]["mediator_name"];
                 $destinatario = $this->request->data["StudentSchool"]["mediator_email"];
                 $ator = "mediador(a)";
 
-                $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+                #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
                 ### COORDENADOR ###
                 $nome = $this->request->data["StudentSchool"]["coordinator_name"];
                 $destinatario = $this->request->data["StudentSchool"]["coordinator_email"];
                 $ator = "coordenador(a)";
 
-                $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+                #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
                 ### PAI ###
                 $nome = $this->request->data["StudentParent"]["dad_name"];
                 $destinatario = $this->request->data["StudentParent"]["dad_email"];
                 $ator = "pai";
 
-                $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+                #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
                 ### MAE ###
                 $nome = $this->request->data["StudentParent"]["mom_name"];
                 $destinatario = $this->request->data["StudentParent"]["mom_email"];
                 $ator = "mãe";
 
-                $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+                #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
                 ### TUTOR ###
                 $nome = $this->request->data["StudentParent"]["tutor_name"];
                 $destinatario = $this->request->data["StudentParent"]["tutor_email"];
                 $ator = "tutor";
 
-                $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+                #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 
                 $this->Session->setFlash(__('The student has been saved.'));
                 return $this->redirect(array('action' => 'index'));

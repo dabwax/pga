@@ -1,17 +1,17 @@
-<h2 class="titulo-tab">
-	<i class="fa fa-pencil"></i> Input <small>Criar Novo Registro</small>
-</h2>
-
-<div class="row">
+<div class="titulo-tab" style="height: 54px;">
 	<div class="btn-group">
 		<a href="<?php echo $this->Html->url( array("action" => "create") ); ?>" class="btn btn-info">Criar Novo Registro</a>
 		<a href="<?php echo $this->Html->url( array("action" => "archive") ); ?>" class="btn btn-default">Arquivo</a>
 	</div>
+	<div class="clearfix"></div>
 </div>
+
 
 <?php if(!$has_input) : ?>
 <div class="row">
-	<?php echo $this->Form->create("StudentInputValue", array("url" => array("controller" => "input", "action" => "add_student_input_value") ) ); ?>
+<?php echo $this->Form->create("StudentInputValue", array("url" => array("controller" => "input", "action" => "add_student_input_value") ) ); ?>
+
+	<div class="col-md-6">
 
 	<?php echo $this->Form->input("StudentInputValue.date", array("type" => "text", "class" => "calendario", "value" => date("d/m/Y"), "label" => "Data da Aula") ); ?>
 
@@ -128,8 +128,19 @@
 
 	<?php endforeach; ?>
 
-	<h2>Matérias</h2>
-	<ul class="list-group">
+	<?php if(empty($campos[$actor])) : ?>
+		<div class="alert alert-info">
+			Não há inputs para este ator.
+		</div>
+	<?php endif; ?>
+
+
+</div>
+
+<div class="col-md-6">
+
+	<label style="margin-top: 14px;">Matérias</label>
+	<ul class="list-group" style="margin-top: 0px;">
 	<!-- Matérias -->
 	<?php $i_materias = 0; foreach($student_lessons as $sl) : ?>
 		<li class="list-group-item">
@@ -148,16 +159,16 @@
 		</li>
 	<?php $i_materias++; endforeach; ?>
 	</ul>
+</div>
 
-	<?php if(empty($campos[$actor])) : ?>
-		<div class="alert alert-info">
-			Não há inputs para este ator.
-		</div>
-	<?php endif; ?>
+<div class="clearfix"></div>
 
-<button type="submit" class="btn btn-success">Salvar Registro</button>
+<div class="col-md-12">
 
+<button type="submit" class="btn btn-success btn-block"><i class="fa fa-paper-plane"></i> Enviar Inputs</button>
+</div>
 <?php echo $this->Form->end(); ?>
+
 </div>
 <?php else : ?>
 	<div class="alert alert-info">Você já inseriu input para a aula de hoje.</div>

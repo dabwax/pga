@@ -39,7 +39,7 @@ class StudentExercise extends AppModel {
         return $results;
     }
 
-    public function upload($imagem = array(), $dir = 'img') {
+    public function upload($imagem = array(), $dir = 'files') {
         $dir = WWW_ROOT.$dir.DS;
 
         if(($imagem['error']!=0) and ($imagem['size']==0)) {

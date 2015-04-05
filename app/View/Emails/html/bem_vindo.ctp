@@ -7,5 +7,5 @@ A sua primeira visita ao site irá definir a sua senha permanente.
 </p>
 
 <p style="font-size: 17px; line-height: 24px; font-family: Georgia, 'Times New Roman', Times, serif; color: #333; margin: 10px;">
-Para visitá-lo, <a href="http://pga.com.br">clique aqui</a>.
+Para visitá-lo, <a href="http://redepga.com.br">clique aqui</a>.
 </p>
