@@ -408,7 +408,6 @@ footer.login p {
     width: 100%;
     height: auto;
     padding-bottom: 40px;
-    background: #DADFE1;
 }
 .grafico .titulo {
     float: left;
@@ -433,4 +432,7 @@ float: left;
 width: 90%;
 margin-left: 5%;
 height: 100%;
+}
+.canvasjs-chart-credit {
+    display: none;
 }

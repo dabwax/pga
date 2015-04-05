@@ -116,7 +116,7 @@
 						"label" => false,
 						"type" => "hidden",
 						"id" => "CampoEscalaTexto" . $si["StudentInput"]["id"],
-						"value" => 1,
+						"value" => $si["StudentInput"]["config"][1]['name'],
 					));
 				?>
 

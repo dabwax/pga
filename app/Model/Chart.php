@@ -27,8 +27,11 @@ class Chart extends AppModel {
         'ChartStudentInput'
     );
 
+    public function datapointEscalaTexto($c) {
+    }
+
     public function datapointPie($c) {
-        // prepara array de data
+                // prepara array de data
                 $data = array();
 
                 // itera cada um dos campos incluídos no gráfico
@@ -41,16 +44,25 @@ class Chart extends AppModel {
 
                     // itera as configurações do campo, para adicionar as opções da escala (muito, pouco, extravagante, etc) no $data
                     foreach($csi['StudentInput']['config'] as $i => $config_i) {
-                        $sub_label = $config_i['name'];
+                        if(is_array($config_i)) {
+                            $sub_label = $config_i['name'];
+                        } else {
+                            $sub_label = $config_i;
+                        }
 
                         $sub_labels[$i] = $sub_label;
 
-                        $data[$label][$sub_label] = 0;
+                        $data[$label][$sub_label] = 1;
                     }
 
                     // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
                     foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
-                        $data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+
+                        if(!empty($data[$label][$siv['value']])) {
+                            $data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        } else {
+                            $data[$label][$siv['value']] = $data[$label][$siv['value']];
+                        }
                     }
 
                 }
@@ -60,7 +72,14 @@ class Chart extends AppModel {
 
                         if($y > 0) {
                             $dataPoints[] = array(
-                                'y' => $y,
+                                'y' => $y + 1,
+                                'legendText' => $sub_label,
+                                'indexLabel' => $label . ': ' .$sub_label . ' (' . $y . ')',
+                            );
+                        } else if($y == 0) {
+
+                            $dataPoints[] = array(
+                                'y' => 1,
                                 'legendText' => $sub_label,
                                 'indexLabel' => $sub_label . ' (' . $y . ')',
                             );
@@ -99,4 +118,53 @@ class Chart extends AppModel {
         return array('dataPoints' => $dataPoints);
     }
 
+    public function datapointColumn($c) {
+        $dataPoints = array();
+
+        $data = array();
+
+        // itera cada um dos campos incluídos no gráfico
+        foreach($c['ChartStudentInput'] as $csi) {
+            // nome do campo
+            $label = $csi['StudentInput']['name'];
+
+            // inclui o campo no array de data
+            $data[$label] = array();
+            
+            // se não for do tipo escala texto
+            if($csi['StudentInput']['Input']['id'] != 5) {
+                // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
+                foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                }
+            // se for do tipo escala texto
+            } else {
+                 // itera as configurações do campo, para adicionar as opções da escala (muito, pouco, extravagante, etc) no $data
+                    foreach($csi['StudentInput']['config'] as $i => $config_i) {
+                        $sub_label = $config_i['name'];
+
+                        $sub_labels[$i] = $sub_label;
+
+                        $data[$label][$sub_label] = 1;
+                    }
+
+                    // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
+                    foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                        if(!empty($data[$label][$siv['value']])) {
+                            $data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        } else {
+                            $data[$label][$siv['value']] = 1;
+                        }
+                    }
+            }
+        }
+
+        foreach($data as $label => $dados) {
+            foreach($dados as $y => $total) {
+                $dataPoints[] = array('y' => $total, 'label' => $label . ': ' . $y);
+            }
+        }
+
+        return array('dataPoints' => $dataPoints);
+    }
 }

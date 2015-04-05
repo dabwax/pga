@@ -54,9 +54,17 @@ class EvolutionController extends AppController {
                 $dataPoints = $tmp['dataPoints'];
             }
 
+            // SE FOR COLUNA, DATAPOINT DE COLUNA
+            if($c['Chart']['type'] == 'column') {
+                $tmp = $this->Chart->datapointColumn($c);
+
+                $dataPoints = $tmp['dataPoints'];
+            }
+
             // gera o array de configurações do CanvasJS
             $config = array(
                 'backgroundColor' => 'transparent',
+                'toolTip' => array('enabled' => false),
                 'title'                      => array(
                     'text'                  => $c['Chart']['name']
                 ),
