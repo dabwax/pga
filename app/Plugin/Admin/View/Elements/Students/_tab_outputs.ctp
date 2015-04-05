@@ -22,6 +22,7 @@
                       <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Student']['id']) ); ?>
                       <?php echo $this->Form->input("columns", array('label' => 'Colunas', 'type' => 'select', 'options' => array(3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10, 12 =>  12)  ) ); ?>
                       <?php echo $this->Form->input("order", array('label' => 'Ordem', 'value' => 0, 'class' => 'form-control', 'type' => 'text' ) ); ?>
+                      <?php echo $this->Form->input("height", array('label' => 'Altura (em pixels)', 'class' => 'form-control', 'type' => 'text', 'value' => 300 ) ); ?>
 
                           <button type="submit" class="btn btn-default btn-incluir-input btn-block" style="margin-top: 20px;">
                             <i class="fa fa-plus-square"></i> Criar Gráfico

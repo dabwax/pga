@@ -6,7 +6,7 @@
         <div class="col-md-<?php echo $c['Chart']['columns']; ?>">
             <div class="grafico">
 
-                <div id="grafico<?php echo $c['Chart']['id']; ?>" style="height: 300px; width: 100%;"></div>
+                <div id="grafico<?php echo $c['Chart']['id']; ?>" style="height: <?php echo $c['Chart']['height']; ?>px; width: 100%;"></div>
             </div> <!-- .grafico -->
         </div>
     <?php endforeach; ?>
