@@ -11,6 +11,78 @@ class StudentsController extends AdminAppController {
         $this->set('students', $this->Student->find("all"));
     }
 
+    public function send_welcome_email($id = null, $actor = null) {
+        $this->autoRender = false;
+
+        $options = array(
+            'conditions' => array(
+                'Student.id' => $id,
+            ),
+            'contain' => array(
+                'StudentPsychiatrist',
+                'StudentSchool',
+                'StudentParent',
+            )
+        );
+        $this->request->data = $this->Student->find("first", $options);
+
+        $aluno = $this->request->data['Student']['name'];
+
+        if($actor == "psiquiatra") {
+            ### PSICO ###
+            $nome = $this->request->data["StudentPsychiatrist"]["name"];
+            $destinatario = $this->request->data["StudentPsychiatrist"]["email"];
+            $ator = "psicopedagogo(a)";
+
+            $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+        }
+
+        if($actor == "mediador") {
+            ### MEDIADOR ###
+            $nome = $this->request->data["StudentSchool"]["mediator_name"];
+            $destinatario = $this->request->data["StudentSchool"]["mediator_email"];
+            $ator = "mediador(a)";
+
+            $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+        }
+
+        if($actor == "coordenador") {
+            ### COORDENADOR ###
+            $nome = $this->request->data["StudentSchool"]["coordinator_name"];
+            $destinatario = $this->request->data["StudentSchool"]["coordinator_email"];
+            $ator = "coordenador(a)";
+
+            $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+        }
+
+        if($actor == "pai") {
+            ### PAI ###
+            $nome = $this->request->data["StudentParent"]["dad_name"];
+            $destinatario = $this->request->data["StudentParent"]["dad_email"];
+            $ator = "pai";
+
+            $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+        }
+
+        if($actor == "mae") {
+            ### MAE ###
+            $nome = $this->request->data["StudentParent"]["mom_name"];
+            $destinatario = $this->request->data["StudentParent"]["mom_email"];
+            $ator = "mãe";
+
+            $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+        }
+
+        if($actor == "tutor") {
+            ### TUTOR ###
+            $nome = $this->request->data["StudentParent"]["tutor_name"];
+            $destinatario = $this->request->data["StudentParent"]["tutor_email"];
+            $ator = "tutor";
+
+            $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
+        }
+    }
+
     public function download_student_exercise($id = null) {
         $this->autoRender = false;
 

@@ -46,7 +46,7 @@
     <fieldset>
 
         <div class="col-md-6">
-            <legend>Terapeuta</legend>
+            <legend>Terapeuta <a href="<?php echo $this->Html->url( array('action' => 'send_welcome_email', $this->request->data['Student']['id'], 'psiquiatra') ); ?>" class="btn btn-primary">Disparar E-mail de Boas Vindas</a></legend>
             <?php echo $this->Form->input("StudentPsychiatrist.id"); ?>
             <div class="form-group">
              <?php echo $this->Form->input('StudentPsychiatrist.name', array('class' => 'form-control') ); ?>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="col-md-6">
-            <legend>Escola <span class="label label-default">Mediador</span></legend>
+            <legend>Escola <span class="label label-default">Mediador</span> <a href="<?php echo $this->Html->url( array('action' => 'send_welcome_email', $this->request->data['Student']['id'], 'mediador') ); ?>" class="btn btn-primary">Disparar E-mail de Boas Vindas</a></legend>
             <?php echo $this->Form->input("StudentSchool.id"); ?>
             <div class="form-group">
             <?php echo $this->Form->input('StudentSchool.mediator_name', array('class' => 'form-control', 'label' => 'Nome') ); ?>
@@ -74,7 +74,7 @@
         </div>
 
         <div class="col-md-6">
-            <legend>Escola <span class="label label-default">Coordenador</span></legend>
+            <legend>Escola <span class="label label-default">Coordenador</span> <a href="<?php echo $this->Html->url( array('action' => 'send_welcome_email', $this->request->data['Student']['id'], 'coordenador') ); ?>" class="btn btn-primary">Disparar E-mail de Boas Vindas</a></legend>
             <?php echo $this->Form->input("StudentSchool.id"); ?>
 
             <div class="form-group">
@@ -91,7 +91,7 @@
         </div>
 
         <div class="col-md-6">
-            <legend>Responsável <span class="label label-default">Pai</span></legend>
+            <legend>Responsável <span class="label label-default">Pai</span> <a href="<?php echo $this->Html->url( array('action' => 'send_welcome_email', $this->request->data['Student']['id'], 'pai') ); ?>" class="btn btn-primary">Disparar E-mail de Boas Vindas</a></legend>
             <?php echo $this->Form->input("StudentParent.id"); ?>
 
             <?php
@@ -112,7 +112,7 @@
         </div>
 
         <div class="col-md-6">
-            <legend>Responsável <span class="label label-default">Mãe</span></legend>
+            <legend>Responsável <span class="label label-default">Mãe</span>  <a href="<?php echo $this->Html->url( array('action' => 'send_welcome_email', $this->request->data['Student']['id'], 'mae') ); ?>" class="btn btn-primary">Disparar E-mail de Boas Vindas</a></legend>
 
             <div class="form-group">
                 <?php echo $this->Form->input('StudentParent.mom_name', array('class' => 'form-control', 'label' => 'Nome') ); ?>
@@ -129,7 +129,7 @@
 
 
         <div class="col-md-6">
-            <legend>Tutor</legend>
+            <legend>Tutor <a href="<?php echo $this->Html->url( array('action' => 'send_welcome_email', $this->request->data['Student']['id'], 'tutor') ); ?>" class="btn btn-primary">Disparar E-mail de Boas Vindas</a></legend>
 
             <div class="form-group">
             <?php echo $this->Form->input('StudentParent.tutor_name', array('class' => 'form-control', 'label' => 'Nome') ); ?>

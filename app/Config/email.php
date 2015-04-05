@@ -41,7 +41,7 @@ class EmailConfig {
 
 	public $smtp = array(
 		'transport' => 'Smtp',
-		'from' => array('contato@pga.com.br' => 'PGA'),
+		'from' => array('no-reply@redepga.com.br' => 'Rede PGA'),
 		'host' => 'smtp.mandrillapp.com',
 		'port' => 587,
 		'timeout' => 30,
