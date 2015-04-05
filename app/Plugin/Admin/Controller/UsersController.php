@@ -2,9 +2,8 @@
 class UsersController extends AdminAppController {
 	public $uses = array("Admin.User");
 
-	public function index() {
-        $this->User->recursive = 0;
-        $this->set('users', $this->paginate());
+    public function index() {
+        $this->set('users', $this->User->find("all"));
     }
 
     public function add() {

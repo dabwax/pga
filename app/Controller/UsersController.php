@@ -217,18 +217,29 @@ class UsersController extends AppController {
                 )
             ) );
 
+            $usuario_valido = false;
+
             foreach($users as $u) {
                 // checa se a senha inserida é a mesma que a senha do usuário
                 $result = $hasher->check($password, $u["User"]["password"]);
 
                 // se for a mesma senha, redireciona ele para o admin
                 if($result) {
+
+                    $usuario_valido = true;
+
                     // força o login
                     $this->Auth->login($u);
 
                     // redireciona para a dashboard de admin
                     return $this->redirect( array("controller" => "admin", "action" => "index", "plugin" => "admin") );
                 }
+            }
+
+            if(!$usuario_valido && !empty($users)) {
+                $this->Session->setFlash("A senha inserida não é válida para nenhum usuário encontrado.");
+
+                return $this->redirect( array("controller" => "users", "action" => "login", "plugin" => false) );
             }
 
             // verifica se o usuário é o aluno
@@ -291,6 +302,7 @@ class UsersController extends AppController {
 
             $actors = $this->User->getActors($email);
 
+
             // verificar quais atores estão com a senha correta
             foreach($actors as $a_key => $a) {
 
@@ -339,7 +351,7 @@ class UsersController extends AppController {
                 return $this->redirect( array("action" => "set_student") );
             // se não houver nenhum ator
             } else {
-                $this->Session->setFlash("Não há nenhum ator com este e-mail.");
+                $this->Session->setFlash("Não há nenhum ator com este e-mail e senha.");
             }
 
         }

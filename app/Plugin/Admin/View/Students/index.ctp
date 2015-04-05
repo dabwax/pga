@@ -10,6 +10,7 @@
 
                 <div class="col-md-9">
                     <?php echo $this->Html->link(__('Adicionar Novo Estudante'), array('action' => 'add'), array( "class" => "btn btn-primary pull-right") ); ?>
+                    <?php echo $this->Html->link(__('Listar Usuários'), array('controller' => 'users', 'action' => 'index'), array( "class" => "btn btn-primary pull-right") ); ?>
                 </div>
 
                 <div class="clearfix"></div>
