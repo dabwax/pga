@@ -1,5 +1,14 @@
 $(document).ready(function() {
 
+    $(".checkbox-materia").change(function() {
+
+        if($(this).is(":checked")) {
+            $(this).prop("checked", false);
+        } else {
+            $(this).prop("checked", true);
+        }
+        $(this).parent().find(".btn-selecionar-materia").click();
+    });
     $(".btn-enviar-inputs").click(function() {
         var url = $("#StudentInputValueCreateForm").attr("action");
 

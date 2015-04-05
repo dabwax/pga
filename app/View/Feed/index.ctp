@@ -2,7 +2,6 @@
 $timeline = array();
 
 	foreach($feed as $f) :
-
 		$actor = $f["Feed"]["actor"];
 
         $tmp = array(
@@ -24,7 +23,7 @@ $timeline = array();
 				if(!empty($c["student_input_id"])) :
                 	$strong = $student_inputs[$c["student_input_id"]];
             	else :
-            		$strong = $student_lessons[$c["student_lesson_id"]];
+            		$strong = "Matéria: " . $student_lessons[$c["student_lesson_id"]];
             	endif;
 
 

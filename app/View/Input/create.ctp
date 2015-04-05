@@ -145,7 +145,7 @@
 	<?php $i_materias = 0; foreach($student_lessons as $sl) : ?>
 		<li class="list-group-item">
 
-			<input type="checkbox" />
+			<input type="checkbox" class="checkbox-materia" />
 			<a class="btn-selecionar-materia" href="javascript:;"><?php echo $sl["StudentLesson"]["name"]; ?></a>
 
 			<div class="toggle hide">
