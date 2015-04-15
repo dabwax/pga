@@ -281,6 +281,10 @@ $(document).ready(function() {
     });
 
     // Calendário
-    $( ".calendario" ).datepicker();
+    $( ".calendario" ).datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+
+    $(".calendario").datepicker("option", $.datepicker.regional[ "pt-BR" ]);
 
 });
