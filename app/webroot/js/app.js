@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    $(".btn-editar-feed").fancybox({
+        type: 'iframe'
+    });
+
     //Only number and one dot
     function onlyDecimal(element, decimals)
     {
@@ -230,9 +234,15 @@ $(document).ready(function() {
         // Ranges (Escala Texto)
         $( ".range-texto-slider" ).each(function(index, element) {
 
+            var value = $(element).data("value");
+
+            if(!value) {
+                value = $(element).data("min");
+            }
+
             $( element ).slider({
               range: "min",
-              value: $(element).data("min"),
+              value: value,
               min: $(element).data("min"),
               max: $(element).data("max"),
               slide: function( event, ui ) {
@@ -250,9 +260,15 @@ $(document).ready(function() {
         // Ranges (Escala Numérica)
         $( ".range-slider" ).each(function(index, element) {
 
+            var value = $(element).data("value");
+
+            if(!value) {
+                value = $(element).data("min");
+            }
+
             $( element ).slider({
               range: "min",
-              value: $(element).data("min"),
+              value: value,
               min: $(element).data("min"),
               max: $(element).data("max"),
               slide: function( event, ui ) {

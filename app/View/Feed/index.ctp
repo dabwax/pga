@@ -64,10 +64,12 @@ $timeline = array();
         $content .= "<div class='participantes'>";
 
         foreach($participantes as $participante) {
-        $content .= "<img class='imagem-perfil-peq' src='https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694' />";
+        $content .= "<img class='imagem-perfil-peq' src='https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694' title='" . $participante . "' />";
         }
 
         $content .= "</div>";
+
+        $content .= '<a href="' . $this->Html->url( array('action' => 'edit', $f['Feed']['id']) ) . '" class="btn-editar-feed disable-ajax" style="font-size: 22px !important;"><i class="fa fa-pencil"></i></a>';
 
         $tmp["content"] = $content;
 

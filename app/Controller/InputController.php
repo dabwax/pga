@@ -101,6 +101,8 @@ class InputController extends AppController {
 
 					$this->Student->StudentInput->StudentInputValue->save($input_value);
 
+					$this->request->data['StudentInputValue'][$k]['student_input_value_id'] = $this->Student->StudentInput->StudentInputValue->getInsertID();
+
 				}
 
 			}
@@ -123,6 +125,8 @@ class InputController extends AppController {
 					$this->Student->StudentInput->StudentInputValue->create();
 
 					$this->Student->StudentInput->StudentInputValue->save($input_value);
+					
+					$this->request->data['StudentInputValue'][$k]['student_input_value_id'] = $this->Student->StudentInput->StudentInputValue->getInsertID();
 
 				}
 

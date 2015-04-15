@@ -146,6 +146,13 @@ body {
     position: relative;
     top: 2px;
 }
+
+.btn-editar-feed {
+  position: absolute;
+  right: 16px;
+  top: 0px;
+  color: #666 !important;
+}
 .panel-login {
     position: fixed;
     width: 40%;

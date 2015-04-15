@@ -20,6 +20,7 @@
 		echo $this->Html->css('/files/zozo-tabs/css/zozo.tabs.min.css');
 		echo $this->Html->css('/files/zozo-tabs/css/zozo.tabs.flat.min.css');
 		echo $this->Html->css('/files/timeline/css/timeline.css');
+		echo $this->Html->css('/files/fancybox/jquery.fancybox.css');
 		echo $this->Html->css('http://imperavi.com/js/redactor/redactor.css');
 		echo $this->Html->css('app.css');
 
@@ -36,6 +37,7 @@
 		echo $this->Html->script('http://imperavi.com/js/redactor/redactor.js');
 		echo $this->Html->script('/files/canvasjs/jquery.canvasjs.min.js');
 		echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");
+		echo $this->Html->script('/files/fancybox/jquery.fancybox.pack.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
