@@ -1,5 +1,36 @@
 $(document).ready(function() {
 
+    $("#MessageReplyViewForm").submit(function() {
+        var url = $(this).attr("action");
+        var data = $(this).serialize();
+
+        $container = $("#tabbed-nav").find("> div");
+        $container.append('<span class="z-spinner"></span>');
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data,
+            success: function(data) {
+
+                    $(".z-content.z-active").find(".z-content-inner").html(data);
+                    $container.find(">.z-spinner").remove();
+
+                    $("#tabbed-nav").data('zozoTabs').refresh();
+            }
+        });
+
+        return false;
+    });
+
+    $("#tabbed-nav").zozoTabs({
+        animation: {
+            duration: 500,
+            effects: "slideV"
+        },
+        deeplinking: true
+    });
+
     $(".checkbox-materia").change(function() {
 
         if($(this).is(":checked")) {
@@ -54,6 +85,8 @@ $(document).ready(function() {
                 success: function(data) {
                     $(".z-content.z-active").find(".z-content-inner").html(data);
                     $container.find(">.z-spinner").remove();
+
+                    $("#tabbed-nav").data('zozoTabs').refresh();
                 }
             });
 

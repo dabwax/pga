@@ -26,7 +26,7 @@
             'column' => 'Coluna',
             'line' => 'Linha',
             'pie' => 'Pizza',
-            'donut' => 'Donut',
+            'doughnut' => 'Donut',
             'stacked_column' => 'Coluna (Stacked)',
         );
         echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );

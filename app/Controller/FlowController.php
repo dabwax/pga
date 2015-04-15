@@ -127,7 +127,7 @@ class FlowController extends AppController {
 			
 			$this->Session->setFlash("Aqui está a mensagem criada. Os destinatários receberão uma notificação.");
 
-			return $this->redirect( array("action" => "view", $this->Message->getInsertID() ) );
+			return $this->redirect( '/#mensagem');
 		}
 	}
 

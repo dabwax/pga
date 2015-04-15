@@ -129,13 +129,13 @@
 
 		<?php echo $this->Session->flash(); ?>
 
-		<div id='tabbed-nav' data-role='z-tabs' data-options='{"orientation":"vertical","theme": "flat-peter-river", "animation": {"duration": 500, "effects": "slideV"}}'>
+		<div id='tabbed-nav'>
 		  <ul>
 	        <!--<li><a><i class="fa fa-home"></i> Home</a></li>-->
-	        <li><a><i class="fa fa-pencil"></i> Input</a></li>
-	        <li><a><i class="fa fa-bars"></i> Feed</a></li>
-	        <li><a><i class="fa fa-line-chart"></i> Evolução</a></li>
-	        <li><a><i class="fa fa-comments"></i> Fluxo</a></li>
+	        <li><a id="btn-input"><i class="fa fa-pencil"></i> Input</a></li>
+	        <li><a id="btn-feed"><i class="fa fa-bars"></i> Feed</a></li>
+	        <li><a id="btn-evolucao"><i class="fa fa-line-chart"></i> Evolução</a></li>
+	        <li data-link="mensagem"><a><i class="fa fa-comments"></i> Fluxo</a></li>
 		  </ul>
 		  <div>
 		  	<!--<div data-content-url="<?php echo $this->Html->url( array("controller" => "pages", "action" => "home") ); ?>">

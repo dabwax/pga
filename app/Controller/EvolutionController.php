@@ -22,6 +22,9 @@ class EvolutionController extends AppController {
                         'Input'
                     )
                 )
+            ),
+            'order' => array(
+                'Chart.order DESC'
             )
         );
         $charts = $this->Chart->find("all", $options);
@@ -39,12 +42,19 @@ class EvolutionController extends AppController {
                 $dataPoints = $tmp['dataPoints'];
             }
 
+            // SE FOR DONUT, DATAPOINT DE DONUT
+            if($c['Chart']['type'] == 'doughnut') {
+                $tmp = $this->Chart->datapointPie($c);
+
+                $data = $tmp['data'];
+                $dataPoints = $tmp['dataPoints'];
+            }
+
             // SE FOR LINHA, DATAPOINT DE LINHA
             if($c['Chart']['type'] == 'line') {
-                $dataPoints = '';
+                $tmp = $this->Chart->datapointLine($c);
 
-                $dataPoints .= '{x: new Date(2012, 00, 1), y: 450}';
-                $dataPoints .= ',{x: new Date(2012, 00, 3), y: 340}';
+                $dataPoints = $tmp['dataPoints'];
             }
             
             // SE FOR BARRA, DATAPOINT DE BARRA
@@ -77,7 +87,9 @@ class EvolutionController extends AppController {
             );
 
             // inclui as configs em JSON de cada gráfico
-            $charts[$x]['config'] = json_encode($config);
+            if(!empty($dataPoints)) {
+                $charts[$x]['config'] = json_encode($config);
+            }
         }
 
         // envia os gráficos pra view

@@ -27,7 +27,33 @@ class Chart extends AppModel {
         'ChartStudentInput'
     );
 
-    public function datapointEscalaTexto($c) {
+    public function datapointLine($c) {
+
+        $dataPoints = array();
+
+        $data = array();
+
+        // itera cada um dos campos incluídos no gráfico
+        foreach($c['ChartStudentInput'] as $csi) {
+            // nome do campo
+            $label = $csi['StudentInput']['name'];
+
+            // inclui o campo no array de data
+            $data[$label] = array();
+            
+            // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
+            foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+            }
+        }
+
+        foreach($data as $label => $dados) {
+            foreach($dados as $y => $total) {
+                $dataPoints[] = array('y' => $total, 'label' => $label . ': ' . $y);
+            }
+        }
+
+        return array('dataPoints' => $dataPoints);
     }
 
     public function datapointPie($c) {
@@ -61,7 +87,7 @@ class Chart extends AppModel {
                         if(!empty($data[$label][$siv['value']])) {
                             $data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                         } else {
-                            $data[$label][$siv['value']] = $data[$label][$siv['value']];
+                            $data[$label][$siv['value']] = 1;
                         }
                     }
 

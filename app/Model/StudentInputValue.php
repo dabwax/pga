@@ -57,8 +57,8 @@ class StudentInputValue extends AppModel {
         );
         $csi = $oChart->find("first", $options);
 
-        // se for de pie ou donut
-        if($csi['Chart']['type'] == 'pie' || $csi['Chart']['type'] == 'donut') {
+        // se for de pie ou doughnut
+        if($csi['Chart']['type'] == 'pie' || $csi['Chart']['type'] == 'doughnut') {
             $dados = array();
 
             // itera cada registro de aula

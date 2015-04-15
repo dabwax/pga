@@ -16,7 +16,7 @@
                             'column' => 'Coluna',
                             'line' => 'Linha',
                             'pie' => 'Pizza',
-                            'donut' => 'Donut',
+                            'doughnut' => 'Donut',
                         );
                         echo $this->Form->input('type', array('label' => 'Gráfico', 'options' => $options, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-tipo-grafico') ); ?>
                       <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Student']['id']) ); ?>

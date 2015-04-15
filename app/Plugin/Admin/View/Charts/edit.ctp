@@ -29,7 +29,7 @@
                                                 'column' => 'Coluna',
                                                 'line' => 'Linha',
                                                 'pie' => 'Pizza',
-                                                'donut' => 'Donut',
+                                                'doughnut' => 'Donut',
                                             );
                                             echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
                                             echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );

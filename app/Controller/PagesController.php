@@ -38,6 +38,9 @@ class PagesController extends AppController {
     public $uses = array();
 
     public function index() {
+        if(empty(AuthComponent::user())) {
+            return $this->redirect(array('plugin' => false, 'controller' => 'users', 'action' => 'login'));
+        }
         if(AuthComponent::user('User.role') == 'admin') {
             return $this->redirect(array('plugin' => 'admin', 'controller' => 'admin', 'action' => 'index'));
         }
