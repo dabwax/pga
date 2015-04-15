@@ -2,7 +2,6 @@
 $timeline = array();
 
 	foreach($feed as $f) :
-		$actor = $f["Feed"]["actor"];
 
         $tmp = array(
             "date" => $f['Feed']['created'],
@@ -10,15 +9,42 @@ $timeline = array();
             "title" => (new DateTime($f['Feed']['created']))->format('d/m/Y'),
         );
 
-        $content = "<div class='conteudo-esquerda'>";
+        $content = "<div class='container-feed'> <div class='conteudo-esquerda'>";
 
-        $content .= "<img class='imagem-perfil' src='https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/c13.13.164.164/s50x50/13240_393598124084394_768161798_n.png?oh=a4427b14b5241e2dc00fb1a523a2a986&oe=550B4F64&__gda__=1427044825_173302d512885e532ec87c7416b0146a' />";
-
-        $content .= "</div>";
-
-        $content .= "<div class='conteudo-direita'>";
+                                        $participantes = array();
 
 			foreach($f["Feed"]["content"] as $c) :
+
+                                        switch($c['actor']) {
+                                            case 'pais':
+                                                $model = "StudentParent";
+                                                $atores = array("dad_", "mom_");
+                                                break;
+                                            case 'tutor':
+                                                $model = "StudentParent";
+                                                $atores = array("tutor_");
+                                                break;
+                                            case 'psico':
+                                                $model = "StudentPsychiatrist";
+                                                $atores = array("");
+                                                break;
+                                            case 'escola':
+                                                $model = "StudentSchool";
+                                                $atores = array("mediator_", "coordinator_");
+                                                break;
+                                            case 'aluno':
+                                                $model = "Student";
+                                                $atores = array("");
+                                                break;
+                                        }
+
+                                        foreach($atores as $ator) {
+                                            $name = AuthComponent::user('Student.' . $model . '.' . $ator . 'name');
+
+                                            if(!in_array($name, $participantes)) {
+                                                $participantes[] = $name;
+                                            }
+                                        }
 
 				if(!empty($c["student_input_id"])) :
                 	$strong = $student_inputs[$c["student_input_id"]];
@@ -27,10 +53,19 @@ $timeline = array();
             	endif;
 
 
+                $content .= "<small class='ator-autor'>" . ucfirst($c['actor']) . "</small>";
                 $content .= "<strong>" . $strong . "</strong>";
                 $content .= "<p>" . $c["value"] . "</p>";
                 $content .= "<div class='clearfix'></div>";
             endforeach;
+
+        $content .= "</div>";
+
+        $content .= "<div class='participantes'>";
+
+        foreach($participantes as $participante) {
+        $content .= "<img class='imagem-perfil-peq' src='https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694' />";
+        }
 
         $content .= "</div>";
 
@@ -60,5 +95,5 @@ endforeach;
 </script>
 
 <div class="row">
-	<div id="timeline"></div>
+	<div id="timeline" class="timeline-feed"></div>
 </div>

@@ -99,12 +99,13 @@ class StudentsController extends AdminAppController {
 
         $id = $_POST["id"];
         $value = $_POST["value"];
+        $field = $_POST["field"];
 
         $this->loadModel("StudentInput");
 
         $this->StudentInput->save(array(
             'id'    =>  $id,
-            'name'  => $value
+            $field  => $value
         ));
 
         echo "O nome do input foi alterado.";
@@ -239,6 +240,9 @@ class StudentsController extends AdminAppController {
             ),
             "contain" => array(
                 "Input"
+            ),
+            "order" => array(
+                "StudentInput.order ASC"
             )
         ) );
 

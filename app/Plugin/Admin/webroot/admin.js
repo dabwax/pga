@@ -1,9 +1,16 @@
 $(document).ready(function() {
 
+  $(".campo-studentinput").on("keypress", function(event) {
+    if(event.which == 13) {
+      $(this).blur();
+    }
+  });
   $(".campo-studentinput").blur(function() {
     var value = $(this).val();
     var url = $(this).data("url");
     var id = $(this).data("id");
+    var field = $(this).data("field");
+    var reload = $(this).data("reload");
     var icone = $(this).parent().parent().find(".icone-ajax");
     var icone2 = $(this).parent().parent().find(".icone-sucesso");
 
@@ -13,10 +20,14 @@ $(document).ready(function() {
     $.ajax({
       type: "POST",
       url: url,
-      data: {value: value, id: id},
+      data: {value: value, id: id, field: field},
       success: function(data) {
         $(icone).fadeOut(200);
         $(icone2).fadeIn(200);
+
+        if(reload == true) {
+          window.location.reload();
+        }
 
       }
     });

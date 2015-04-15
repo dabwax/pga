@@ -27,14 +27,20 @@ foreach($aulas as $data => $_aulas) :
 
         //$content .= "</div>";
 
-        $content .= "<div class='conteudo-direita'>";
+        $content .= "<div class='conteudo-direita' style='width: 100%;'>";
 
             foreach($_aula as $_a) :
                 $strong = (!empty($_a["StudentInput"]["name"])) ? $_a["StudentInput"]["name"] : "Matéria: " . $_a["StudentLesson"]["name"];
 
+
+                if($_a['StudentInput']['input_id'] == 6) {
+                    $_a["StudentInputValue"]["value"] = str_replace(".", ",", $_a["StudentInputValue"]["value"]);
+                }
+                $content .= "<div class='col-md-6 text-center'>";
                 $content .= "<strong>" . $strong . "</strong>";
                 $content .= "<p>" . $_a["StudentInputValue"]["value"] . "</p>";
                 $content .= "<div class='clearfix'></div>";
+                $content .= "</div>";
             endforeach;
 
         $content .= "</div>";

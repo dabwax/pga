@@ -563,3 +563,50 @@ form label {
   margin-top: 12px !important;
   margin-bottom: 2px !important;
 }
+.btn-enviar-inputs {
+  margin-top: 20px;
+}
+.table-intervalo {
+  margin-bottom: 4px !important;
+}
+.table-intervalo th {
+  border-bottom: none !important;
+  padding-bottom: 2px !important;
+  font-weight: normal !important;
+}
+.fwb {
+  font-weight: bold;
+  font-size: 16px;
+}
+.imagem-perfil-peq {
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  margin-left: 6px;
+  margin-right: 6px;
+  display: inline-block;
+}
+.timeline-feed .timeline_title_label {
+  text-align: left;
+}
+.timeline-feed .participantes {
+  position: absolute;
+  left: 112px;
+  top: -10px;
+}
+.timeline-feed .content {
+  position: relative;
+}
+.timeline-feed .timeline_title {
+  margin: 0px;
+  top: 12px;
+  left: 12px;
+}
+.timeline-feed .container-feed {
+  margin-top: 13px;
+}
+.ator-autor {
+  margin-right: 4px;
+  font-size: 11px;
+  color: #666;
+}

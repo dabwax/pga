@@ -31,6 +31,9 @@ class InputController extends AppController {
 			),
 			"contain" => array(
 				"Input"
+			),
+			"order" => array(
+				"StudentInput.order ASC"
 			)
 		) );
 
@@ -89,6 +92,10 @@ class InputController extends AppController {
 				if(!empty($input_value["value"]) && !empty($input_value["student_input_id"])) {
 
 					$input_value["date"] = $input_date;
+					
+					if(!empty($input_value["type"]) && $input_value["type"] == "numerico") {
+						$input_value["value"] = str_replace(",", ".", $input_value["value"]);
+					}
 
 					$this->Student->StudentInput->StudentInputValue->create();
 

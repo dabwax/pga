@@ -1,5 +1,29 @@
 $(document).ready(function() {
 
+    //Only number and one dot
+    function onlyDecimal(element, decimals)
+    {
+        $(element).keypress(function(event)
+        {
+            num = $(this).val() ;
+            num = isNaN(num) || num === '' || num === null ? 0.00 : num ;
+            if ((event.which != 44 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57))
+            {
+                event.preventDefault();
+
+            }
+            if($(this).val() == parseFloat(num).toFixed(decimals))
+            {
+                event.preventDefault();
+            }
+
+            var atualizado = num.replace(".", ",");
+            $(this).val(atualizado);
+        });
+    }
+
+    onlyDecimal(".numero", 2);
+
     $("#MessageReplyViewForm").submit(function() {
         var url = $(this).attr("action");
         var data = $(this).serialize();
@@ -177,7 +201,7 @@ $(document).ready(function() {
     }
 
     if (jQuery().mask) {
-        $('.numero').mask('09999');
+        //$('.numero').mask('09999');
     }
 
     $(".btn-selecionar-materia").click(function() {

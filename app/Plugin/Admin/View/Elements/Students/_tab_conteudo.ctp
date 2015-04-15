@@ -57,7 +57,11 @@
                                         <i class="fa fa-check"></i>
                                       </span>
 
-						<strong> <input type="text" value="<?php echo $si["StudentInput"]["name"]; ?>" data-id="<?php echo $si["StudentInput"]["id"]; ?>" data-url="<?php echo $this->Html->url( array('controller' => 'students', 'action' => 'ajax_edit_student_input') ); ?>" class="campo-studentinput" /> <small style="color: #999;"><?php echo $si["Input"]["name"]; ?></small></strong>
+						<strong>
+                                                <input type="text" value="<?php echo $si["StudentInput"]["order"]; ?>" data-id="<?php echo $si["StudentInput"]["id"]; ?>" data-url="<?php echo $this->Html->url( array('controller' => 'students', 'action' => 'ajax_edit_student_input') ); ?>" data-field="order" data-reload="true" class="campo-studentinput" style="width: 60px;" />
+                                                <input type="text" value="<?php echo $si["StudentInput"]["name"]; ?>" data-id="<?php echo $si["StudentInput"]["id"]; ?>" data-url="<?php echo $this->Html->url( array('controller' => 'students', 'action' => 'ajax_edit_student_input') ); ?>" data-field="name" class="campo-studentinput" />
+                                                <small style="color: #999;"><?php echo $si["Input"]["name"]; ?></small>
+                                              </strong>
 
             <?php if($si["Input"]["id"] == $this->Html->getInputId("Escala Numérica") ) : ?>
                 <span class="label label-default" style="margin-right: 4px;">

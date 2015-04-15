@@ -35,6 +35,7 @@
 
 			<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Número") ) : ?>
 
+				<?php echo $this->Form->input("StudentInputValue." . $k . ".type", array("type" => "hidden", "value" => "numerico" ) ); ?>
 				<?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "numero", "type" => "text" ) ); ?>
 
 			<?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Intervalo de Tempo") ) : ?>
@@ -56,14 +57,14 @@
 
 				<!-- Começo - label -->
 
-				<table class="table">
+				<table class="table table-intervalo">
 					<thead>
 						<tr>
 							<th class="text-left">
 								De <?php echo $si["StudentInput"]["config"]["range_start"] ?> a <?php echo $si["StudentInput"]["config"]["range_end"] ?>
 							</th>
 							<th class="text-right">
-								Atual: <span id='<?php echo "ResultadoEscalaNumerica" . $si["StudentInput"]["id"]; ?>'>1</span>
+								Atual: <span id='<?php echo "ResultadoEscalaNumerica" . $si["StudentInput"]["id"]; ?>' class="fwb">1</span>
 							</th>
 						</tr>
 					</thead>
