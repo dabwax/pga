@@ -7,31 +7,31 @@
     <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->Form->input('Student.name', array('class' => 'form-control') ); ?>
+            <?php echo $this->Form->input('Student.name', array('class' => 'form-control', 'label' => 'Nome') ); ?>
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->Form->input('Student.date_of_birth', array('type' => 'text', 'class' => 'form-control calendario') ); ?>
+            <?php echo $this->Form->input('Student.date_of_birth', array('type' => 'text', 'class' => 'form-control calendario', 'label' => 'Data de Aniversário') ); ?>
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->Form->input('Student.school', array('class' => 'form-control') ); ?>
+            <?php echo $this->Form->input('Student.school', array('class' => 'form-control', 'label' => 'Escola') ); ?>
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->Form->input('Student.clinical_condition', array('class' => 'form-control') ); ?>
+            <?php echo $this->Form->input('Student.clinical_condition', array('class' => 'form-control', 'label' => 'Condição Clínica') ); ?>
         </div>
     </div>
 
     <div class="col-md-12">
         <div class="form-group">
-            <?php echo $this->Form->input('Student.description', array('class' => 'form-control ckeditor') ); ?>
+            <?php echo $this->Form->input('Student.description', array('class' => 'form-control ckeditor', 'label' => 'Descrição') ); ?>
         </div>
     </div>
 

@@ -23,13 +23,15 @@ $(document).ready(function() {
         return false;
     });
 
-    $("#tabbed-nav").zozoTabs({
-        animation: {
-            duration: 500,
-            effects: "slideV"
-        },
-        deeplinking: true
-    });
+    if(jQuery().zozoTabs) {
+        $("#tabbed-nav").zozoTabs({
+            animation: {
+                duration: 500,
+                effects: "slideV"
+            },
+            deeplinking: true
+        });
+    }
 
     $(".checkbox-materia").change(function() {
 

@@ -4,7 +4,15 @@ class StudentInputValue extends AppModel {
 
     public function findGroup($student_id) {
         $return = array();
-        $all = $this->find("all", array("contain" => array("StudentInput", "StudentLesson") ) );
+        $all = $this->find("all", array(
+            "contain" => array(
+                "StudentInput",
+                "StudentLesson"
+            ),
+            "conditions" => array(
+                "StudentInputValue.student_id" => $student_id
+            )
+         ) );
 
         foreach($all as $e) {
 

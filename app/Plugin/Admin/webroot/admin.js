@@ -224,4 +224,6 @@ $(document).ready(function() {
         dateFormat: "dd/mm/yy"
     });
 
+    $(".calendario").datepicker("option", $.datepicker.regional[ "pt-BR" ]);
+
 });

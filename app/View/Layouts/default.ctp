@@ -132,9 +132,9 @@
 		<div id='tabbed-nav'>
 		  <ul>
 	        <!--<li><a><i class="fa fa-home"></i> Home</a></li>-->
-	        <li><a id="btn-input"><i class="fa fa-pencil"></i> Input</a></li>
-	        <li><a id="btn-feed"><i class="fa fa-bars"></i> Feed</a></li>
-	        <li><a id="btn-evolucao"><i class="fa fa-line-chart"></i> Evolução</a></li>
+	        <li data-link="input"><a id="btn-input"><i class="fa fa-pencil"></i> Input</a></li>
+	        <li data-link="feed"><a id="btn-feed"><i class="fa fa-bars"></i> Feed</a></li>
+	        <li data-link="evolucao"><a id="btn-evolucao"><i class="fa fa-line-chart"></i> Evolução</a></li>
 	        <li data-link="mensagem"><a><i class="fa fa-comments"></i> Fluxo</a></li>
 		  </ul>
 		  <div>

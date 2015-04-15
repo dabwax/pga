@@ -12,11 +12,14 @@ class ExportacaoController extends AdminAppController {
         $data_final = $this->request->data['Input']['date_end'];
         $inputs = $this->request->data['Input']['student_input_id'];
         $materias = $this->request->data['Input']['student_lesson_id'];
+        $student_id = $this->request->data['Input']['student_id'];
         $formato = $this->request->data['Input']['formato'];
 
         $options = array(
             'conditions' => array(
-                'AND' => array(),
+                'AND' => array(
+                    'StudentInputValue.student_id' => $student_id
+                ),
                 'OR' => array()
             ),
             'contain' => array(
@@ -83,9 +86,9 @@ class ExportacaoController extends AdminAppController {
         $i = 2;
         foreach($find as $f) :
             // Também podemos escolher a posição exata aonde o dado será inserido (coluna, linha, dado);
-            $datetime = new DateTime($f['StudentInputValue']['date']);
+            $datetime = DateTime::createFromFormat("d/m/Y", $f['StudentInputValue']['date']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(0, $i, $i);
-            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $i, $datetime->format("m/d/Y"));
+            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(1, $i, $datetime->format("d/m/Y"));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(2, $i, $f['Student']['name']);
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $i, ucfirst($f['StudentInputValue']['actor']));
             $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(4, $i, $f['StudentLesson']['name']);
