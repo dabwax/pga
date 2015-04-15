@@ -36,8 +36,10 @@ class FeedController extends AppController {
 
         $student_input_value_ids = array();
 
-        foreach($f['Feed']['content'] as $c) {
-            $student_input_value_ids[] = $c['student_input_value_id'];
+        if(!empty($f['Feed']['content'])) {
+            foreach($f['Feed']['content'] as $c) {
+                $student_input_value_ids[] = $c['student_input_value_id'];
+            }
         }
 
         $this->loadModel("StudentInputValue");
@@ -53,7 +55,7 @@ class FeedController extends AppController {
         );
         $student_input_values = $this->StudentInputValue->find("all", $options);
 
-        $this->set(compact("student_input_values", "actor", "student_id"));
+        $this->set(compact("student_input_values", "actor", "student_id", "id"));
 
         if($this->request->is("post")) {
             foreach($this->request->data['StudentInputValue'] as $siv) {
@@ -70,5 +72,20 @@ class FeedController extends AppController {
 
         return $this->redirect( array("action" => "edit", $id) );
         }
+    }
+
+    public function delete($id = null) {
+        $this->Feed->id = $id;
+        $Feed = $this->Feed->read();
+
+        if (!$this->Feed->exists()) {
+            throw new NotFoundException(__('Invalid Feed'));
+        }
+        if ($this->Feed->delete()) {
+            $this->Session->setFlash(__('O feed foi removido.'));
+        } else {
+            $this->Session->setFlash(__('Não foi possível removido o feed.'));
+        }
+        return $this->redirect(array('action' => 'edit', $id));
     }
 }

@@ -122,9 +122,19 @@ if($si["StudentInput"]["actor"] == strtolower($actor)) : $campos[$actor][] = $si
     <div class="container">
     <div class="row">
     <div class="col-md-12">
+
+     <?php if(!empty($student_input_values)) : ?>
         <button type="submit" class="btn btn-lg btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar Edição</button>
+
+        <a href="<?php echo $this->Html->url( array('action' => 'delete', $id) ); ?>" onclick="if(!confirm('Você tem certeza disto?')) { return false; }">ou mover registro para lixeira</a>
+
+    <?php endif; ?>
     </div>
     </div>
     </div>
 
     <?php echo $this->Form->end(); ?>
+
+    <?php if(empty($student_input_values)) : ?>
+    <div class="alert alert-warning">Não há nenhuma entrada para este feed. Feche a janela, por favor!</div>
+    <?php endif; ?>
