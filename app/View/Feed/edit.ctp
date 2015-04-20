@@ -2,6 +2,8 @@
 
 <div class="row">
 
+<?php echo $this->Form->input("StudentInputValue.date", array("type" => "text", "class" => "calendario", "value" => $student_input_values[0]['StudentInputValue']['date'], "label" => "Data da Aula") ); ?>
+
 <?php 
 
 $campos = array();

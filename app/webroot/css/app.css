@@ -617,3 +617,6 @@ form label {
   font-size: 11px;
   color: #666;
 }
+.imagem-pais {
+  border: 3px solid green;
+}

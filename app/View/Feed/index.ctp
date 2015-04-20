@@ -42,7 +42,7 @@ $timeline = array();
                                             $name = AuthComponent::user('Student.' . $model . '.' . $ator . 'name');
 
                                             if(!in_array($name, $participantes)) {
-                                                $participantes[] = $name;
+                                                $participantes[$c['actor']] = $name;
                                             }
                                         }
 
@@ -52,8 +52,6 @@ $timeline = array();
             		$strong = "Matéria: " . $student_lessons[$c["student_lesson_id"]];
             	endif;
 
-
-                $content .= "<small class='ator-autor'>" . ucfirst($c['actor']) . "</small>";
                 $content .= "<strong>" . $strong . "</strong>";
                 $content .= "<p>" . $c["value"] . "</p>";
                 $content .= "<div class='clearfix'></div>";
@@ -63,8 +61,8 @@ $timeline = array();
 
         $content .= "<div class='participantes'>";
 
-        foreach($participantes as $participante) {
-        $content .= "<img class='imagem-perfil-peq' src='https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694' title='" . $participante . "' />";
+        foreach($participantes as $ator => $participante) {
+        $content .= "<img class='imagem-perfil-peq imagem-" . strtolower($ator) . "' src='https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694' title='" . $participante . "' />";
         }
 
         $content .= "</div>";

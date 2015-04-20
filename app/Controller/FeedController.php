@@ -11,10 +11,7 @@ class FeedController extends AppController {
             "conditions" => array(
                 "Feed.student_id" => AuthComponent::user("Student.Student.id")
             ),
-            "order" => array(
-                "Feed.created DESC",
-                "Feed.date DESC"
-            )
+            "order" => "Feed.date DESC, Feed.created DESC"
         ) );
         $student_inputs = $this->Feed->Student->StudentInput->find("list");
         $student_lessons = $this->Feed->Student->StudentLesson->find("list");
@@ -58,13 +55,36 @@ class FeedController extends AppController {
         $this->set(compact("student_input_values", "actor", "student_id", "id"));
 
         if($this->request->is("post")) {
-            foreach($this->request->data['StudentInputValue'] as $siv) {
+            $date = $this->request->data['StudentInputValue']['date'];
 
-                $this->StudentInputValue->save(array(
-                    'id' => $siv['id'],
-                    'value' => $siv['value'],
-                ));
+            $content = array();
+
+            foreach($this->request->data['StudentInputValue'] as $x => $siv) {
+                if(is_numeric($x)) {
+                    $this->StudentInputValue->save(array(
+                        'id' => $siv['id'],
+                        'value' => $siv['value'],
+                        'date' => $date,
+                    ));
+
+                    foreach($student_input_values as $siv2) {
+                        if($siv2['StudentInputValue']['id'] == $siv['id']) {
+                            $tmp = $siv2['StudentInputValue'];
+                        }
+                    }
+
+                    $tmp = array_merge($tmp, array('value' => $siv['value'], 'date' => $date, 'student_input_value_id' => $siv['id']) );
+
+                    $content[] = $tmp;
+                }
             }
+
+            $this->Feed->save(array(
+                'id' => $f['Feed']['id'],
+                'content' => $content,
+                'date' => $date
+            ));
+
         $this->Session->setFlash(__("O feed foi editado com sucesso."), 'alert', array(
                         'plugin' => 'BoostCake',
                         'class' => 'alert-success'

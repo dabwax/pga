@@ -1,8 +1,19 @@
 $(document).ready(function() {
 
-    $(".btn-editar-feed").fancybox({
-        type: 'iframe'
+    $(".btn-hashtag").on("click", function() {
+        var id = $(this).data("id");
+        var value = $(this).html();
+        window.parent.$("#StudentInputValue" + id + "Value").redactor('code.set', "" + value);
+        window.parent.$.fancybox.close();
+
+        return false;
     });
+
+    if(jQuery().fancybox) {
+        $(".btn-editar-feed,.btn-iframe").fancybox({
+            type: 'iframe'
+        });
+    }
 
     //Only number and one dot
     function onlyDecimal(element, decimals)
