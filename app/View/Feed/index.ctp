@@ -99,9 +99,7 @@ endforeach;
     <div class="col-md-8 pull-right text-right">
         <div class="row">
 
-            <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'index') ) ); ?>
-
-            <?php echo $this->Form->input("target", array('type' => 'hidden', 'value' =>    'calendario') ); ?>
+            <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'feed_index') ) ); ?>
 
             <div class="col-md-5" style="padding: 0px;">
                 <?php echo $this->Form->input("date_start", array('label' => false, 'div' => false, 'placeholder' => 'Data Inicial', 'class' => 'form-control calendario', 'value' => $date_start->format("d/m/Y") ) ); ?>
@@ -117,22 +115,21 @@ endforeach;
 
             <?php echo $this->Form->end(); ?>
 
-            <?php echo $this->Form->create("Search", array('class' => 'form-busca hide col-md-6') ); ?>
-
-            <?php echo $this->Form->input("target", array('type' => 'hidden', 'value' =>    'busca') ); ?>
+            <?php echo $this->Form->create("Search", array('class' => 'form-busca hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'feed_busca') ) ); ?>
 
             <div class="col-md-10" style="padding: 0px;">
                 <?php echo $this->Form->input("s", array('label' => false, 'div' => false, 'placeholder' => 'Pesquisar', 'class' => 'form-control') ); ?>
             </div>
 
             <div class="col-md-1 text-right" style="padding: 0px;">
-                <button href="#" class="btn btn-default btn-enviar-calendario"><i class="fa fa-check-square"></i></button>
+                <button href="#" class="btn btn-default btn-enviar-busca"><i class="fa fa-check-square"></i></button>
             </div>
 
             <?php echo $this->Form->end(); ?>
 
             <a href="#" class="btn btn-default btn-pesquisar" data-target="calendario"><i class="fa fa-calendar"></i></a>
             <a href="#" class="btn btn-default btn-pesquisar" data-target="busca"><i class="fa fa-search"></i></a>
+            <a href="#" class="btn btn-default btn-limpar-busca">Limpar Busca</a>
 
         </div>
     </div>

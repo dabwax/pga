@@ -9,6 +9,7 @@ class FeedController extends AppController {
 
         $date_start = $this->Session->read("date_start");
         $date_finish = $this->Session->read("date_finish");
+        $s = $this->Session->read("s");
 
         $conditions = array(
             "Feed.student_id" => AuthComponent::user("Student.Student.id")
@@ -25,6 +26,12 @@ class FeedController extends AppController {
 
             $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
             $date_finish    = $dateTime;
+        }
+
+        if(!empty($s)) {
+            $conditions['Feed.content LIKE'] = '%' . $s . '%';
+
+            $this->Session->delete("s");
         }
 
         $this->set(compact("date_start", "date_finish"));

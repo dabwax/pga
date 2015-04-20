@@ -8,6 +8,14 @@ $(document).ready(function() {
 
         return false;
     });
+    $(".btn-enviar-busca").on("click", function() {
+        $(this).html('<i class="fa fa-times-circle"></i>');
+        $(this).removeClass("btn-enviar-busca").addClass("btn-fechar-calendario");
+
+        $(".form-busca").submit();
+
+        return false;
+    });
 
     $(".btn-fechar-calendario").on("click", function() {
         $(this).html('<i class="fa fa-check-square"></i>');
