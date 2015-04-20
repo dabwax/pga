@@ -40,7 +40,64 @@ foreach($aulas as $data => $_aulas) :
                 $content .= "<strong>" . $strong . "</strong>";
                 $content .= "<p>" . $_a["StudentInputValue"]["value"] . "</p>";
                 $content .= "<div class='clearfix'></div>";
+
                 $content .= "</div>";
+
+                // é matéria
+                if(empty($_a["StudentInput"]["name"])) {
+                    if(!empty($_a['StudentInputValue']['nota_1'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Teste <small>Esperado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_1'] . "</p>";
+                        $content .= "</div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_2'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Teste <small>Alcançado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_2'] . "</p>";
+                        $content .= "</div>";
+                        $content .= "<div class='clearfix'></div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_3'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Prova <small>Esperado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_3'] . "</p>";
+                        $content .= "</div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_4'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Prova <small>Alcançado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_4'] . "</p>";
+                        $content .= "</div>";
+                        $content .= "<div class='clearfix'></div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_5'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Trabalho <small>Esperado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_5'] . "</p>";
+                        $content .= "</div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_6'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Trabalho <small>Alcançado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_6'] . "</p>";
+                        $content .= "</div>";
+                        $content .= "<div class='clearfix'></div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_7'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Nota Bimestral <small>Esperado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_7'] . "</p>";
+                        $content .= "</div>";
+                    }
+                    if(!empty($_a['StudentInputValue']['nota_8'])) {
+                         $content .= "<div class='col-md-6 text-center'>";
+                        $content .= "<strong>Nota Bimestral <small>Alcançado</small> </strong>";
+                        $content .= "<p>" . $_a['StudentInputValue']['nota_8'] . "</p>";
+                        $content .= "</div>";
+                        $content .= "<div class='clearfix'></div>";
+                    }
+                }
             endforeach;
 
         $content .= "</div>";

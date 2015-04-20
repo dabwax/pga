@@ -185,6 +185,8 @@ class InputController extends AppController {
 
             }
 
+            CakeLog::write('activity', 'input_date ' . $input_date);
+
             // joga o input para o feed
             $this->Feed->generate($input_date, $this->request->data["StudentInputValue"]);
         }

@@ -74,7 +74,8 @@ class EvolutionController extends AppController {
             // gera o array de configurações do CanvasJS
             $config = array(
                 'backgroundColor' => 'transparent',
-                'toolTip' => array('enabled' => false),
+                'height' => $c['Chart']['height'],
+                'toolTip' => array('enabled' => true),
                 'title'                      => array(
                     'text'                  => $c['Chart']['name']
                 ),

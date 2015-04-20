@@ -45,6 +45,8 @@ class Feed extends AppModel {
 
 	public function generate($date, $content, $type = "input") {
 
+		$datetime = DateTime::createFromFormat("d/m/Y", $date);
+
 		if(AuthComponent::user("Actor")) {
 			$actor = AuthComponent::user("Actor");
 		} else {
@@ -58,7 +60,7 @@ class Feed extends AppModel {
 		$feed = array(
 			"student_id" => AuthComponent::user("Student.Student.id"),
 			"actor" => $actor,
-			"date" => $date,
+			"date" => $datetime->format("Y-m-d"),
 			"content" => $content,
 			"sidebar" => "",
 			"type" => $type

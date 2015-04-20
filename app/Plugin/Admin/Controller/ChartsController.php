@@ -46,6 +46,11 @@ class ChartsController extends AdminAppController {
         $inputs_para_excluir = array(3, 7);
         if ($this->request->is('post')) {
             $this->Chart->create();
+
+            if($this->request->data['Chart']['type'] == "line") {
+                $this->request->data['Chart']['display_mode'] = "mes_a_mes";
+            }
+            
             if ($this->Chart->save($this->request->data)) {
                 $this->Session->setFlash(__('O output foi adicionado.'));
             } else {

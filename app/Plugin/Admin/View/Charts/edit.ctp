@@ -39,6 +39,12 @@
                                             <?php echo $this->Form->input("order", array('label' => 'Ordem', 'class' => 'form-control', 'type' => 'text' ) ); ?>
                                             <?php echo $this->Form->input("height", array('label' => 'Altura (em pixels)', 'class' => 'form-control', 'type' => 'text' ) ); ?>
 
+                                            <?php
+                                                if($this->request->data['Chart']['type'] == 'line') {
+                                                    echo $this->Form->input("display_mode", array('label' => 'Modo de Visualização', 'type' => 'select', 'options' => array('mes_a_mes' => 'Mês a mês', 'dia_a_dia' => 'Dia a dia'), ) );
+                                                }
+                                            ?>
+
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success btn-block">Alterar Gráfico</button>
                                         </div>

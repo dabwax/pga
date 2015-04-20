@@ -43,13 +43,53 @@ class Chart extends AppModel {
             
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
-                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                if($c['Chart']['display_mode'] == "mes_a_mes") {
+                    $x = DateTime::createFromFormat("d/m/Y", $siv['date']);
+
+                    $ano = $x->format("Y");
+
+                    if(!empty($data[$label][$x->format('m')])) {
+                        $data[$label][$x->format('m')] = array('value' => $data[$label][$x->format('m')]['value'] + $siv['value'], 'date' => $x->format("01/m/Y"));
+                    } else {
+                        $data[$label][$x->format('m')] = array('value' => $siv['value'],'date' => $siv['date']);
+                    }
+                } else {
+                    @$data[$label][] = array('value' => $siv['value'], 'date' => $siv['date']);
+
+                    $dia = "01";
+                }
+            }
+        }
+
+
+        if($c['Chart']['display_mode'] == "mes_a_mes") {
+            foreach($c['ChartStudentInput'] as $csi) {
+                // nome do campo
+                $label = $csi['StudentInput']['name'];
+
+                $meses = 12;
+
+                for($i =1; $i <= $meses; $i++) {
+                    $i = str_pad($i, 2, '0', STR_PAD_LEFT);
+
+                    if(empty($data[$label][$i])) {
+                        $data[$label][$i] = array('value' => 0, 'date' => "01/" . $i . "/" . $ano);
+                    }
+                }
+                ksort($data[$label]);
             }
         }
 
         foreach($data as $label => $dados) {
             foreach($dados as $y => $total) {
-                $dataPoints[] = array('y' => $total, 'label' => $label . ': ' . $y);
+                $x = DateTime::createFromFormat("d/m/Y", $total['date']);
+                $ano = $x->format('Y');
+                $mes = $x->format("m");
+                $dia = $x->format("d");
+
+                $x = array($ano, $mes, $dia);
+
+                $dataPoints[] = array('y' => $total['value'], 'label' => $label . ': ' . $y, 'x' => $x);
             }
         }
 
@@ -137,7 +177,7 @@ class Chart extends AppModel {
 
         foreach($data as $label => $dados) {
             foreach($dados as $y => $total) {
-                $dataPoints[] = array('y' => $total, 'label' => $label . ': ' . $y);
+                $dataPoints[] = array('y' => $y, 'label' => $label . ': ' . $y);
             }
         }
 

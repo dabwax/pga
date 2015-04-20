@@ -7,24 +7,24 @@ class Chart extends AdminAppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'Student' => array(
-			'className' => 'Student',
-			'foreignKey' => 'student_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Input'
-	);
+    public $belongsTo = array(
+        'Student' => array(
+            'className' => 'Student',
+            'foreignKey' => 'student_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
+        'Input'
+    );
 
 /**
  * hasMany associations
  *
  * @var array
  */
-	public $hasMany = array(
-		'ChartStudentInput'
-	);
+    public $hasMany = array(
+        'ChartStudentInput'
+    );
 
 }

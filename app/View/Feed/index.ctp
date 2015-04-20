@@ -4,9 +4,9 @@ $timeline = array();
 	foreach($feed as $f) :
 
         $tmp = array(
-            "date" => $f['Feed']['created'],
+            "date" => $f['Feed']['date'],
             "type" => 'blog_post',
-            "title" => (new DateTime($f['Feed']['created']))->format('d/m/Y'),
+            "title" => (new DateTime($f['Feed']['date']))->format('d/m/Y'),
         );
 
         $content = "<div class='container-feed'> <div class='conteudo-esquerda'>";
