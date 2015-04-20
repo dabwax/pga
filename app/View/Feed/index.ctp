@@ -95,5 +95,25 @@ endforeach;
 </script>
 
 <div class="row">
+    
+    <div class="col-md-6 pull-right text-right">
+        <div class="row">
+            <a href="#" class="btn btn-default btn-pesquisar pull-right"><i class="fa fa-calendar"></i></a>
+            <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide') ); ?>
+            <div class="col-md-5" style="padding: 0px;">
+                <?php $dateTime = new DateTime(); ?>
+                <?php echo $this->Form->input("date_start", array('label' => false, 'div' => false, 'placeholder' => 'Data Inicial', 'class' => 'form-control', 'value' => '01' . $dateTime->format('/m/Y') ) ); ?>
+            </div>
+            <div class="col-md-5" style="padding: 0px;">
+            <?php echo $this->Form->input("date_finish", array('label' => false, 'div' => false, 'placeholder' => 'Data Final', 'class' => 'form-control', 'value' => $dateTime->format('d/m/Y') ) ); ?>
+            </div>
+            <div class="col-md-1 text-right" style="padding: 0px;">
+                <button href="#" class="btn btn-default btn-enviar-calendario"><i class="fa fa-check-square"></i></button>
+            </div>
+            <?php echo $this->Form->end(); ?>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
 	<div id="timeline" class="timeline-feed"></div>
 </div>

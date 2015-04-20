@@ -1,5 +1,24 @@
 $(document).ready(function() {
 
+    $("body").on("click", ".btn-enviar-calendario", function() {
+        $(this).html('<i class="fa fa-times-circle"></i>');
+        $(this).removeClass("btn-enviar-calendario").addClass("btn-fechar-calendario");
+        return false;
+    });
+
+    $("body").on("click", ".btn-fechar-calendario", function() {
+        $(this).html('<i class="fa fa-check-square"></i>');
+        $(this).removeClass("btn-fechar-calendario").addClass("btn-enviar-calendario");
+        $(".form-pesquisar").addClass("hide");
+        $(".btn-pesquisar").removeClass("hide");
+        return false;
+    });
+
+    $(".btn-pesquisar").click(function() {
+        $(".form-pesquisar").toggleClass("hide");
+        $(this).toggleClass("hide");
+    });
+
     $(".btn-hashtag").on("click", function() {
         var id = $(this).data("id");
         var value = $(this).html();
