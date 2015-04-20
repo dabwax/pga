@@ -6,11 +6,32 @@ class FeedController extends AppController {
 
     public function index() {
         $this->layout = "ajax";
+
+        $date_start = $this->Session->read("date_start");
+        $date_finish = $this->Session->read("date_finish");
+
+        $conditions = array(
+            "Feed.student_id" => AuthComponent::user("Student.Student.id")
+        );
+
+        if(!empty($date_start) && !empty($date_finish)) {
+            $conditions['Feed.date >='] = $date_start->format("Y-m-d");
+            $conditions['Feed.date <='] = $date_finish->format("Y-m-d");
+
+            $this->Session->delete("date_start");
+            $this->Session->delete("date_finish");
+        } else {
+            $dateTime = new DateTime();
+
+            $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
+            $date_finish    = $dateTime;
+        }
+
+        $this->set(compact("date_start", "date_finish"));
+
         $feed = $this->Feed->find("all", array(
             "limit" => 100,
-            "conditions" => array(
-                "Feed.student_id" => AuthComponent::user("Student.Student.id")
-            ),
+            "conditions" => $conditions,
             "order" => "Feed.date DESC, Feed.created DESC"
         ) );
         $student_inputs = $this->Feed->Student->StudentInput->find("list");
@@ -86,9 +107,9 @@ class FeedController extends AppController {
             ));
 
         $this->Session->setFlash(__("O feed foi editado com sucesso."), 'alert', array(
-                        'plugin' => 'BoostCake',
-                        'class' => 'alert-success'
-                    ));
+            'plugin' => 'BoostCake',
+            'class' => 'alert-success'
+        ));
 
         return $this->redirect( array("action" => "edit", $id) );
         }

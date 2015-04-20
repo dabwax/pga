@@ -1,12 +1,15 @@
 $(document).ready(function() {
 
-    $("body").on("click", ".btn-enviar-calendario", function() {
+    $(".btn-enviar-calendario").on("click", function() {
         $(this).html('<i class="fa fa-times-circle"></i>');
         $(this).removeClass("btn-enviar-calendario").addClass("btn-fechar-calendario");
+
+        $(".form-pesquisar").submit();
+
         return false;
     });
 
-    $("body").on("click", ".btn-fechar-calendario", function() {
+    $(".btn-fechar-calendario").on("click", function() {
         $(this).html('<i class="fa fa-check-square"></i>');
         $(this).removeClass("btn-fechar-calendario").addClass("btn-enviar-calendario");
         $(".form-pesquisar").addClass("hide");
@@ -14,9 +17,17 @@ $(document).ready(function() {
         return false;
     });
 
-    $(".btn-pesquisar").click(function() {
-        $(".form-pesquisar").toggleClass("hide");
+    $(".btn-pesquisar").on("click", function() {
+        var target = $(this).data("target");
+
+        if(target == "calendario") {
+            $(".form-pesquisar").toggleClass("hide");
+        } else {
+            $(".form-busca").toggleClass("hide");
+        }
         $(this).toggleClass("hide");
+
+        return false;
     });
 
     $(".btn-hashtag").on("click", function() {
