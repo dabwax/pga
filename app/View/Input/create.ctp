@@ -1,5 +1,5 @@
 <div class="titulo-tab" style="height: 54px;">
-    <div class="btn-group">
+    <div class="btn-group" style="text-align: right;">
         <a href="<?php echo $this->Html->url( array("action" => "create") ); ?>" class="btn btn-info">Criar Novo Registro</a>
         <a href="<?php echo $this->Html->url( array("action" => "archive") ); ?>" class="btn btn-default btn-arquivo-input">Arquivo</a>
     </div>

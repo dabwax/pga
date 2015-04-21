@@ -73,6 +73,11 @@ class Chart extends AppModel {
                     $i = str_pad($i, 2, '0', STR_PAD_LEFT);
 
                     if(empty($data[$label][$i])) {
+
+                        if(empty($ano)) {
+                            $ano = date("Y");
+                        }
+                        
                         $data[$label][$i] = array('value' => 0, 'date' => "01/" . $i . "/" . $ano);
                     }
                 }

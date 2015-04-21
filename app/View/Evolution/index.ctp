@@ -1,5 +1,26 @@
-<h2 class="titulo-tab" style="height: 50px;">
-</h2>
+
+<div class="col-md-8 pull-right text-right" style="margin-right: 0px; padding-right: 0px;">
+
+    <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'evolution_index') ) ); ?>
+
+    <div class="col-md-5" style="padding: 0px;">
+        <?php echo $this->Form->input("date_start", array('label' => false, 'div' => false, 'placeholder' => 'Data Inicial', 'class' => 'form-control calendario', 'value' => $date_start->format("d/m/Y") ) ); ?>
+    </div>
+
+    <div class="col-md-5" style="padding: 0px;">
+        <?php echo $this->Form->input("date_finish", array('label' => false, 'div' => false, 'placeholder' => 'Data Final', 'class' => 'form-control calendario', 'value' => $date_finish->format("d/m/Y") ) ); ?>
+    </div>
+
+    <div class="col-md-1 text-right" style="padding: 0px;">
+        <button href="#" class="btn btn-default btn-enviar-calendario"><i class="fa fa-check-square"></i></button>
+    </div>
+
+    <?php echo $this->Form->end(); ?>
+
+    <a href="#" class="btn btn-default btn-pesquisar" data-target="calendario"><i class="fa fa-calendar"></i></a>
+    <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'evolucao') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
+
+</div>
 
 <div class="row">
     <?php foreach($charts as $c) : ?>
@@ -19,7 +40,9 @@ $(document).ready(function() {
 
         <?php if($c['Chart']['type'] != "line") : ?>
 
-            var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
+            <?php if(!empty($c['config'])) : ?>
+                var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
+            <?php endif; ?>
 
         <?php else: ?>
 
@@ -51,7 +74,10 @@ $(document).ready(function() {
             var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico" + id, config);
 
         <?php endif; ?>
+
+            <?php if(!empty($c['config'])) : ?>
     chart<?php echo $c['Chart']['id']; ?>.render();
+    <?php endif; ?>
     <?php endforeach; ?>
 });
 </script>

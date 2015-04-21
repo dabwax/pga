@@ -93,11 +93,8 @@ endforeach;
         timeline.display();
 	});
 </script>
-
-<div class="row">
     
-    <div class="col-md-8 pull-right text-right">
-        <div class="row">
+    <div class="col-md-8 pull-right text-right" style="margin-right: 0px; padding-right: 0px;">
 
             <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'feed_index') ) ); ?>
 
@@ -132,8 +129,9 @@ endforeach;
             <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'feed') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
 
         </div>
-    </div>
 
     <div class="clearfix"></div>
+    
+<div class="row">
 	<div id="timeline" class="timeline-feed"></div>
 </div>

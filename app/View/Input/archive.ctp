@@ -1,5 +1,5 @@
 <div class="titulo-tab" style="height: 54px;">
-        <div class="btn-group">
+        <div class="btn-group" style="text-align: right;">
             <a href="<?php echo $this->Html->url( array("action" => "create") ); ?>" class="btn btn-default">Criar Novo Registro</a>
             <a href="<?php echo $this->Html->url( array("action" => "archive") ); ?>" class="btn btn-info">Arquivo</a>
         </div>
@@ -128,11 +128,8 @@ endforeach;
 	});
 </script>
 
-
-<div class="row">
     
-    <div class="col-md-8 pull-right text-right">
-        <div class="row">
+    <div class="col-md-8 pull-right text-right" style="padding-right: 0px; margin-right: 0px;">
 
             <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'input_index') ) ); ?>
 
@@ -166,10 +163,9 @@ endforeach;
             <a href="#" class="btn btn-default btn-pesquisar" data-target="busca"><i class="fa fa-search"></i></a>
             <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'input_arquivo') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
 
-        </div>
     </div>
-</div>
 
+<div class="clearfix"></div>
 <div class="row" style="margin-top: 20px;">
 
 	<div id="timeline"></div>

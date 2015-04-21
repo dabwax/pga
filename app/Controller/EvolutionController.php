@@ -11,6 +11,31 @@ class EvolutionController extends AppController {
 
         $student_id = AuthComponent::user("Student.Student.id");
 
+        $date_start = $this->Session->read("date_start");
+        $date_finish = $this->Session->read("date_finish");
+
+        $conditions = array(
+            "StudentInputValue.student_id" => $student_id
+        );
+
+        if(!empty($date_start) && !empty($date_finish)) {
+            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
+            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+        } else {
+            $dateTime = new DateTime("now");
+
+            $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
+            $date_finish    = $dateTime;
+            
+            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
+            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+        }
+
+        $this->set(compact("date_start", "date_finish"));
+        $conditions = array(
+            'StudentInputValue.date BETWEEN ? AND ?' => array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d")),
+        );
+
         $options = array(
             'conditions' => array(
                 'Chart.student_id'  => $student_id
@@ -18,7 +43,9 @@ class EvolutionController extends AppController {
             'contain' => array(
                 'ChartStudentInput' => array(
                     'StudentInput' => array(
-                        'StudentInputValue',
+                        'StudentInputValue' => array(
+                            'conditions' => $conditions
+                        ),
                         'Input'
                     )
                 )

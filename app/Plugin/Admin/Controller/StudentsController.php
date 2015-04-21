@@ -261,7 +261,11 @@ class StudentsController extends AdminAppController {
             ),
         ) );
 
-        $aulas = $this->Student->StudentInput->StudentInputValue->findGroup($id);
+        $conditions = array(
+            "StudentInputValue.student_id" => $id
+        );
+
+        $aulas = $this->Student->StudentInput->StudentInputValue->findGroup($id, $conditions);
 
         $o_student_lessons = $options_lessons;
 
