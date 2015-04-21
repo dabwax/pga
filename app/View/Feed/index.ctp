@@ -129,7 +129,7 @@ endforeach;
 
             <a href="#" class="btn btn-default btn-pesquisar" data-target="calendario"><i class="fa fa-calendar"></i></a>
             <a href="#" class="btn btn-default btn-pesquisar" data-target="busca"><i class="fa fa-search"></i></a>
-            <a href="#" class="btn btn-default btn-limpar-busca">Limpar Busca</a>
+            <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'feed') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
 
         </div>
     </div>

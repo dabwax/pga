@@ -70,7 +70,35 @@ class InputController extends AppController {
         $this->layout = "ajax";
         $this->set("title_for_layout", "Arquivo de Inputs");
 
-        $aulas = $this->Student->StudentInput->StudentInputValue->findGroup(AuthComponent::user("Student.Student.id"));
+
+        $date_start = $this->Session->read("date_start");
+        $date_finish = $this->Session->read("date_finish");
+        $s = $this->Session->read("s");
+
+        $conditions = array(
+            "StudentInputValue.student_id" => AuthComponent::user("Student.Student.id")
+        );
+
+
+        if(!empty($date_start) && !empty($date_finish)) {
+            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
+            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+        } else {
+            $dateTime = new DateTime();
+
+            $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
+            $date_finish    = $dateTime;
+            
+            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
+            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+        }
+
+        if(!empty($s)) {
+            $conditions['StudentInputValue.value LIKE'] = '%' . $s . '%';
+        }
+        $this->set(compact("date_start", "date_finish"));
+
+        $aulas = $this->Student->StudentInput->StudentInputValue->findGroup(AuthComponent::user("Student.Student.id"), $conditions);
 
         $this->set(compact("aulas"));
     }

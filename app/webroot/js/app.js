@@ -101,12 +101,18 @@ $(document).ready(function() {
     });
 
     if(jQuery().zozoTabs) {
+        var hash = window.location.hash;
         $("#tabbed-nav").zozoTabs({
             animation: {
                 duration: 500,
                 effects: "slideV"
             },
-            deeplinking: true
+            deeplinking: true,
+            select: function(event, item) {
+                if(hash == "#input_arquivo") {
+                    $(".btn-arquivo-input").click();
+                }
+            }
         });
     }
 
@@ -336,6 +342,11 @@ $(document).ready(function() {
 
     // Bootstrap - Tabs (Para carregar com o hash da URL)
     var hash = window.location.hash;
+
+    if(hash == "#input_arquivo") {
+        $("#tabbed-nav").data('zozoTabs').select(0);
+    }
+
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
     $(".tab-pane.active").find(".input input").first().focus();
 

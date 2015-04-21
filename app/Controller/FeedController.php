@@ -26,6 +26,9 @@ class FeedController extends AppController {
 
             $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
             $date_finish    = $dateTime;
+            
+            $conditions['Feed.date >='] = $date_start->format("Y-m-d");
+            $conditions['Feed.date <='] = $date_finish->format("Y-m-d");
         }
 
         if(!empty($s)) {
