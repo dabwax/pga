@@ -102,6 +102,7 @@ $(document).ready(function() {
 
     if(jQuery().zozoTabs) {
         var hash = window.location.hash;
+
         $("#tabbed-nav").zozoTabs({
             animation: {
                 duration: 500,
@@ -114,6 +115,10 @@ $(document).ready(function() {
                 }
             }
         });
+        
+        if(hash == "") {
+            $("#tabbed-nav").data('zozoTabs').select(0);
+        }
     }
 
     $(".checkbox-materia").change(function() {
