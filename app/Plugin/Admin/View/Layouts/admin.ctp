@@ -112,7 +112,8 @@
 
     <footer class="login">
         <div class="container">
-            <p class="login">Plataforma de gestão de alunos</p>
+            <p class="login" style="display: inline-block;">Plataforma de gestão de alunos</p>
+            <a class="btn btn-default btn-xs" href="<?php echo $this->Html->url( array('controller' => 'backup', 'action' => 'download') ); ?>">Fazer Backup</p>
         </div>
     </footer>
 
