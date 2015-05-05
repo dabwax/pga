@@ -9,7 +9,7 @@ $timeline = array();
             "title" => (new DateTime($f['Feed']['date']))->format('d/m/Y'),
         );
 
-        $content = "<div class='container-feed'> <div class='conteudo-esquerda'>";
+        $content = "<div class='container-feed'> <div class='conteudo-esquerda' style='width: 100%;'>";
 
                                         $participantes = array();
 
@@ -141,3 +141,12 @@ endforeach;
     <?php endif; ?>
 	<div id="timeline" class="timeline-feed"></div>
 </div>
+
+<script type="text/javascript">
+    $(window).load(function() {
+
+        <?php if($tem_busca == true) : ?>
+        $('body').highlight('<?php echo $s; ?>');
+        <?php endif; ?>
+    });
+</script>

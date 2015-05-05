@@ -29,7 +29,7 @@ class FeedController extends AppController {
             $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
             $date_finish    = $dateTime;
             
-            $conditions['Feed.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-t"));
+            #$conditions['Feed.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-t"));
 
             $date_finish = new DateTime($date_finish->format("Y-m-t"));
         }
@@ -38,6 +38,10 @@ class FeedController extends AppController {
 
         if(!empty($s)) {
             $conditions['Feed.content LIKE'] = '%' . $s . '%';
+
+            unset($conditions['Feed.date BETWEEN ? AND ?']);
+
+            $tem_busca = true;
 
             $this->Session->delete("s");
         }
@@ -52,7 +56,7 @@ class FeedController extends AppController {
         $student_inputs = $this->Feed->Student->StudentInput->find("list");
         $student_lessons = $this->Feed->Student->StudentLesson->find("list");
 
-        $this->set(compact("feed", "student_inputs", "student_lessons", "tem_busca"));
+        $this->set(compact("feed", "student_inputs", "student_lessons", "tem_busca", "s"));
     }
 
     public function edit($id = null) {

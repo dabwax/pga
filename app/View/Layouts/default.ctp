@@ -38,6 +38,7 @@
 		echo $this->Html->script('/files/canvasjs/jquery.canvasjs.min.js');
 		echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");
 		echo $this->Html->script('/files/fancybox/jquery.fancybox.pack.js');
+		echo $this->Html->script('/files/jquery.highlight-5.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
