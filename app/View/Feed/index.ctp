@@ -126,12 +126,18 @@ endforeach;
 
             <a href="#" class="btn btn-default btn-pesquisar" data-target="calendario"><i class="fa fa-calendar"></i></a>
             <a href="#" class="btn btn-default btn-pesquisar" data-target="busca"><i class="fa fa-search"></i></a>
+
+        <?php if($tem_busca == true) : ?>
             <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'feed') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
+        <?php endif; ?>
 
         </div>
 
     <div class="clearfix"></div>
     
 <div class="row">
+        <?php if($tem_busca == true) : ?>
+        <h2 style="margin: 0px; color: #BDC3C7; font-weight: 300; text-align: center; margin-bottom: 12px;">De <?php echo $date_start->format("d/m/Y"); ?> a <?php echo $date_finish->format("d/m/Y"); ?></h2>
+    <?php endif; ?>
 	<div id="timeline" class="timeline-feed"></div>
 </div>

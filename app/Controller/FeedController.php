@@ -16,20 +16,25 @@ class FeedController extends AppController {
         );
 
         if(!empty($date_start) && !empty($date_finish)) {
-            $conditions['Feed.date >='] = $date_start->format("Y-m-d");
-            $conditions['Feed.date <='] = $date_finish->format("Y-m-d");
+            $conditions['Feed.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
+
+            $tem_busca = true;
 
             $this->Session->delete("date_start");
             $this->Session->delete("date_finish");
         } else {
+            $tem_busca = false;
             $dateTime = new DateTime();
 
             $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
             $date_finish    = $dateTime;
             
-            $conditions['Feed.date >='] = $date_start->format("Y-m-d");
-            $conditions['Feed.date <='] = $date_finish->format("Y-m-d");
+            $conditions['Feed.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-t"));
+
+            $date_finish = new DateTime($date_finish->format("Y-m-t"));
         }
+
+
 
         if(!empty($s)) {
             $conditions['Feed.content LIKE'] = '%' . $s . '%';
@@ -47,7 +52,7 @@ class FeedController extends AppController {
         $student_inputs = $this->Feed->Student->StudentInput->find("list");
         $student_lessons = $this->Feed->Student->StudentLesson->find("list");
 
-        $this->set(compact("feed", "student_inputs", "student_lessons"));
+        $this->set(compact("feed", "student_inputs", "student_lessons", "tem_busca"));
     }
 
     public function edit($id = null) {
