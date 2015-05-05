@@ -84,13 +84,18 @@ endforeach;
                 animation:   true,
                 lightbox:    true,
                 separator:   'year',
-                columnMode:  'dual',
-                responsive_width: 700
+                columnMode:  'center',
+                responsive_width: 700,
             };
+
+            <?php if($tem_busca == true) : ?>
+            options['showHighlight'] = "<?php echo $s; ?>";
+            <?php endif; ?>
 
             var timeline = new Timeline($('#timeline'), timeline_data);
         timeline.setOptions(options);
         timeline.display();
+        
 	});
 </script>
     
@@ -136,17 +141,8 @@ endforeach;
     <div class="clearfix"></div>
     
 <div class="row">
-        <?php if($tem_busca == true) : ?>
+        <?php if($busca_de_data == true) : ?>
         <h2 style="margin: 0px; color: #BDC3C7; font-weight: 300; text-align: center; margin-bottom: 12px;">De <?php echo $date_start->format("d/m/Y"); ?> a <?php echo $date_finish->format("d/m/Y"); ?></h2>
     <?php endif; ?>
 	<div id="timeline" class="timeline-feed"></div>
 </div>
-
-<script type="text/javascript">
-    $(window).load(function() {
-
-        <?php if($tem_busca == true) : ?>
-        $('body').highlight('<?php echo $s; ?>');
-        <?php endif; ?>
-    });
-</script>

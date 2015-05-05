@@ -149,8 +149,16 @@ body {
 
 .btn-editar-feed {
   position: absolute;
-  right: 16px;
-  top: 0px;
+  right: 27px;
+  top: -25px;
+  color: #666 !important;
+  padding: 6px;
+  background: #FFF;
+  border: 1px solid #CCC;
+  border-radius: 6px;
+}
+.btn-editar-feed:hover {
+  background: #CCC !important;
   color: #666 !important;
 }
 .panel-login {
@@ -599,7 +607,7 @@ form label {
 .timeline-feed .participantes {
   position: absolute;
   left: 112px;
-  top: -10px;
+  top: -36px;
 }
 .timeline-feed .content {
   position: relative;

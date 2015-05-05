@@ -109,7 +109,7 @@
 
 				<ul>
 					<li>
-						<strong><i class="fa fa-users"></i> Pais</strong>
+						<strong ><i class="fa fa-users"></i> <span class="hidden-xs hidden-sm">Pais</span></strong>
 						<?php echo $this->Html->getParentsName(); ?>
 					</li>
 

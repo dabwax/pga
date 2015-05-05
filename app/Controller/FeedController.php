@@ -11,6 +11,8 @@ class FeedController extends AppController {
         $date_finish = $this->Session->read("date_finish");
         $s = $this->Session->read("s");
 
+            $busca_de_data = false;
+
         $conditions = array(
             "Feed.student_id" => AuthComponent::user("Student.Student.id")
         );
@@ -19,6 +21,7 @@ class FeedController extends AppController {
             $conditions['Feed.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
 
             $tem_busca = true;
+            $busca_de_data = true;
 
             $this->Session->delete("date_start");
             $this->Session->delete("date_finish");
@@ -56,7 +59,7 @@ class FeedController extends AppController {
         $student_inputs = $this->Feed->Student->StudentInput->find("list");
         $student_lessons = $this->Feed->Student->StudentLesson->find("list");
 
-        $this->set(compact("feed", "student_inputs", "student_lessons", "tem_busca", "s"));
+        $this->set(compact("feed", "student_inputs", "student_lessons", "tem_busca", "s", "busca_de_data"));
     }
 
     public function edit($id = null) {
