@@ -68,6 +68,8 @@ class ChartsController extends AdminAppController {
         $inputs = $this->Chart->Input->find('list', $options);
         $this->set(compact('students', 'inputs'));
 
+        $this->Session->write("houve_criacao", $this->Chart->getLastInsertID());
+
         return $this->redirect(array('controller' => 'students', 'action' => 'edit', $this->request->data['Chart']['student_id'], '#' => 'outputs' ));
     }
 

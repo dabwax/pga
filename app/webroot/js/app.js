@@ -198,6 +198,12 @@ $(document).ready(function() {
       return regex.test(email);
     }
 
+    $("#UserPassword").keyup(function() {
+        if($(this).val().length > 3) {
+            $("#btn-entrar").attr("disabled", false);
+        }
+    });
+
     function checkUsername(obj) {
         var val = $(obj).val();
         var url = $(obj).data("url");
@@ -223,6 +229,10 @@ $(document).ready(function() {
                         $(".form-password").removeClass("hide");
                     } else {
                         $(".form-password").addClass("hide");
+                        $("#btn-entrar").attr("disabled", true);
+                    }
+
+                    if(data.tipo == "sem_senha") {
                         $("#btn-entrar").attr("disabled", true);
                     }
                 }

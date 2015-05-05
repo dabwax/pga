@@ -313,6 +313,14 @@ class StudentsController extends AdminAppController {
 
         } // fim - charts
 
+        $houve_criacao = $this->Session->read("houve_criacao");
+
+        if($houve_criacao) {
+            $this->Session->delete("houve_criacao");
+
+            $this->set(compact("houve_criacao"));
+        }
+
         $this->set(compact("student_inputs_o", "inputs_o", "charts", "options_inputs", "options_lessons", "atores", "inputs", "student_inputs", "aulas", "student_lessons", "o_student_lessons", "student_exercises"));
     }
 

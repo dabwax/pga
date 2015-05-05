@@ -50,7 +50,12 @@
                 <?php echo $this->Form->input("StudentInputValue." . $k . ".type", array("type" => "hidden", "value" => "texto" ) ); ?>
                 <?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "class" => "ckeditor", "div" => array("style" => "margin-bottom: 0px;") ) ); ?>
 
+
+                <div class="clearfix"></div>
+                
                 <a href="<?php echo $this->Html->url( array('controller' => 'hashtags', 'action' => 'lightbox', $student_id, $k) ); ?>" class="btn btn-default btn-iframe disable-ajax">#</a>
+
+                <div class="clearfix"></div>
 
             <?php elseif ( $si["Input"]["id"] == $this->Html->getInputId("Texto Privativo") ) : ?>
 

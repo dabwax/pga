@@ -1,3 +1,12 @@
+<?php if(!empty($houve_criacao)) : ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $(".btn-editar-<?php echo $houve_criacao; ?>").click();
+    });
+</script>
+<?php endif; ?>
+
 <div role="tabpanel" class="tab-pane" id="outputs">
     <div class="tab-content">
 
@@ -52,7 +61,7 @@
                             <td><?php echo $this->Html->formatChartType($chart['Chart']['type']); ?>&nbsp;</td>
                             <td><?php $datetime = new DateTime($chart['Chart']['created']); echo $datetime->format("d/m/Y"); ?>&nbsp;</td>
                             <td class="actions">
-                                <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'edit', $chart['Chart']['id'] )); ?>" class="btn btn-default fancybox">
+                                <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'edit', $chart['Chart']['id'] )); ?>" class="btn btn-default btn-editar-<?php echo $chart['Chart']['id']; ?> fancybox">
                                     <i class="fa fa-pencil"></i> Editar
                                 </a>
                                 <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'view', $chart['Chart']['id'] )); ?>" class="btn btn-primary fancybox">
