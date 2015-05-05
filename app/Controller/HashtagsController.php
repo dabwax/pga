@@ -1,7 +1,7 @@
 <?php
 class HashtagsController extends AppController {
     
-    public function lightbox($student_id = null, $student_input_id = null) {
+    public function lightbox($student_id = null, $student_input_id = null, $tipo = "input") {
         $this->layout = "iframe";
         
         $options = array(
@@ -12,6 +12,6 @@ class HashtagsController extends AppController {
 
         $hashtags = $this->Hashtag->find("all", $options);
 
-        $this->set(compact("hashtags", "student_input_id"));
+        $this->set(compact("hashtags", "student_input_id", "tipo"));
     }
 }

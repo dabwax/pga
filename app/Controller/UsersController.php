@@ -11,6 +11,52 @@ class UsersController extends AppController {
         $this->Auth->allow("ajax_check_username");
     }
 
+    public function edit($show_form = false) {
+        if($show_form) {
+            $this->layout = "ajax";
+        }
+
+        if($this->request->is("post")) {
+            $model = $this->request->data['User']['model'];
+            $prefix = $this->request->data['User']['prefix'];
+            $id = $this->request->data['User']['id'];
+
+            $this->loadModel($model);
+
+            $dados = array(
+                'id' => $id,
+                $prefix . 'name' => $this->request->data['User']['name'],
+                $prefix . 'email' => $this->request->data['User']['email'],
+                'prefix' => $prefix,
+                'avatar' => $this->request->data['User']['avatar'],
+            );
+
+            if(!empty($this->request->data['User']['password'])) {
+                $dados[$prefix . 'password'] = $this->request->data['User']['password'];
+            }
+            
+            $this->$model->save($dados);
+
+
+                $this->Session->setFlash(__("Seus dados foram alterados com sucesso!"), 'alert', array(
+                    'plugin' => 'BoostCake',
+                    'class' => 'alert-success'
+                ));
+
+            return $this->redirect(array('action' => 'edit', false));
+        } else {
+            $id = AuthComponent::user('Actor.id');
+            $model = AuthComponent::user('Actor.model');
+            $prefix = AuthComponent::user('Actor.prefix');
+
+            $this->loadModel($model);
+            $tmp = $this->$model->findById($id);
+
+            $this->request->data['User']['name'] = $tmp[$model][$prefix . 'name'];
+            $this->request->data['User']['email'] = $tmp[$model][$prefix . 'email'];
+        }
+        $this->set(compact("show_form"));
+    }
     public function ajax_check_username() {
         $this->autoRender = false;
         $this->layout = "ajax";
@@ -237,7 +283,11 @@ class UsersController extends AppController {
             }
 
             if(!$usuario_valido && !empty($users)) {
-                $this->Session->setFlash("A senha inserida não é válida para nenhum usuário encontrado.");
+
+                $this->Session->setFlash(__("A senha inserida não é válida para nenhum usuário encontrado."), 'alert', array(
+                    'plugin' => 'BoostCake',
+                    'class' => 'alert-danger'
+                ));
 
                 return $this->redirect( array("controller" => "users", "action" => "login", "plugin" => false) );
             }

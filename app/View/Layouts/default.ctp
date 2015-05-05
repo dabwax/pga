@@ -71,12 +71,15 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 
 					<?php if(AuthComponent::user()) : ?>
-					<p class="p-ator col-md-10" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->getActorInfo("name"); ?></p>
+					<p class="p-ator col-md-8" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->url('/uploads/' . $ator_atualizado[$ator_atualizado['prefix'] . 'name']); ?></p>
 
 					<?php endif; ?>
 
 					<ul class="nav navbar-nav navbar-right">
 						<?php if(AuthComponent::user()) : ?>
+						<li>
+							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "edit") ); ?>"><i class="fa fa-pencil"></i> Perfil</a>
+						</li>
 						<li>
 							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "logout") ); ?>"><i class="fa fa-power-off"></i> Sair</a>
 						</li>
@@ -97,7 +100,7 @@
 		<div class="row" style="margin-top: 20px;">
 
 			<div class="col-xs-6 col-md-2 col-avatar">
-				<img src="https://scontent-mia.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10897095_1391792897788211_8200672264827065811_n.jpg?oh=c0b254f8d67a5fd1790e80d4ec8a4c90&oe=554CE694" class="img-circle" alt="">
+				<img src="<?php echo $this->Html->url('/uploads/' . $ator_atualizado[$ator_atualizado['prefix'] . 'avatar']); ?>" class="img-circle" alt="">
 			</div> <!-- .col-avatar -->
 
 			<div class="col-xs-6 col-md-6 col-student">
@@ -132,7 +135,7 @@
 
 
 		<?php echo $this->Session->flash(); ?>
-
+		<?php if ($this->here == $this->webroot) { ?>
 		<div id='tabbed-nav'>
 		  <ul>
 	        <!--<li><a><i class="fa fa-home"></i> Home</a></li>-->
@@ -154,6 +157,7 @@
 		  	</div>
 		  </div>
 		</div>
+		<?php } ?>
 		<?php endif; ?>
 
 		<?php echo $this->fetch('content'); ?>

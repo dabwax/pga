@@ -40,8 +40,17 @@ $(document).ready(function() {
 
     $(".btn-hashtag").on("click", function() {
         var id = $(this).data("id");
+        var tipo = $(this).data("tipo");
         var value = $(this).html();
-        window.parent.$("#StudentInputValue" + id + "Value").redactor('code.set', "" + value);
+
+        if(tipo == "input") {
+            window.parent.$("#StudentInputValue" + id + "Value").redactor('code.set', "" + value);
+        }
+
+        if(tipo == "busca") {
+            window.parent.$("#SearchS").val(value).focus();
+        }
+
         window.parent.$.fancybox.close();
 
         return false;

@@ -106,7 +106,7 @@ class AppHelper extends Helper {
 	 * auxílio mágico - INFO: daltro.inq
 	 */
 	public function getActorInfo($field = null) {
-		$info = "Actor." . AuthComponent::user("Actor.prefix") . "name";
+		$info = "Actor." . AuthComponent::user("Actor.prefix") . $field;
 
 		return AuthComponent::user($info);
 	}

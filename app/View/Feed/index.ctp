@@ -119,12 +119,16 @@ endforeach;
 
             <?php echo $this->Form->create("Search", array('class' => 'form-busca hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'feed_busca') ) ); ?>
 
-            <div class="col-md-10" style="padding: 0px;">
+            <div class="col-md-8" style="padding: 0px;">
                 <?php echo $this->Form->input("s", array('label' => false, 'div' => false, 'placeholder' => 'Pesquisar', 'class' => 'form-control') ); ?>
             </div>
 
-            <div class="col-md-1 text-right" style="padding: 0px;">
+            <div class="col-md-2 text-right" style="padding: 0px;">
                 <button href="#" class="btn btn-default btn-enviar-busca"><i class="fa fa-check-square"></i></button>
+            </div>
+
+            <div class="col-md-2 text-left">
+                <a href="<?php echo $this->Html->url( array('controller' => 'hashtags', 'action' => 'lightbox', AuthComponent::user("Student.Student.id"), 0, 'busca') ); ?>" class="btn btn-default btn-iframe disable-ajax">#</a>
             </div>
 
             <?php echo $this->Form->end(); ?>

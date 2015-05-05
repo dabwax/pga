@@ -11,6 +11,7 @@ class User extends AppModel {
                 $this->data[$this->alias]['password']
             );
         }
+
         return true;
     }
 
