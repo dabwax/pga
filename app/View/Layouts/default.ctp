@@ -33,7 +33,7 @@
 		echo $this->Html->script('/files/select2-3.5.2/select2.min.js');
 		echo $this->Html->script('/files/select2-3.5.2/select2_locale_pt-BR.js');
 		echo $this->Html->script('/files/zozo-tabs/js/zozo.tabs.js');
-		echo $this->Html->script('/files/timeline/javascript/scriptgates.js');
+		echo $this->Html->script('/files/timeline/javascript/timeline.js');
 		echo $this->Html->script('http://imperavi.com/js/redactor/redactor.js');
 		echo $this->Html->script('/files/canvasjs/jquery.canvasjs.min.js');
 		echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");

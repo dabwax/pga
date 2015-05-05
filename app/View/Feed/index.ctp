@@ -84,7 +84,7 @@ endforeach;
                 animation:   true,
                 lightbox:    true,
                 separator:   'year',
-                columnMode:  'center',
+                columnMode:  'dual',
                 responsive_width: 700,
             };
 
