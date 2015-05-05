@@ -44,11 +44,17 @@ class User extends AppModel {
                 break;
         }
 
-        if($type == "model")
-            return $model;
+        if($type == "model") {
+            if(!empty($model)) {
+                return $model;
+            }
+        }
 
-        if($type == "prefix")
-            return $prefix;
+        if($type == "prefix") {
+            if(!empty($prefix)) {
+              return $prefix;
+            }
+        }
     }
 
 	public function getActors($email) {

@@ -1,5 +1,23 @@
 $(document).ready(function() {
 
+    $("#timeline").on("click", ".ler-mais-feed", function(){
+        var toggle = $(this).data("toggle");
+            var restante = $(this).parent().find(".restante");
+
+        if(toggle == false) {
+            $(this).data("toggle", true);
+
+
+            $(restante).show();
+            $(this).text("esconder");    
+        } else {
+            $(this).data("toggle", false);
+
+            $(restante).hide();
+            $(this).text("ver mais");    
+        }
+    });
+
     $(".btn-enviar-calendario").on("click", function() {
         $(this).html('<i class="fa fa-times-circle"></i>');
         $(this).removeClass("btn-enviar-calendario").addClass("btn-fechar-calendario");
@@ -197,9 +215,7 @@ $(document).ready(function() {
         $("select").select2();
 
 
-        $("#MessageRecipientRecipients").select2({
-            maximumSelectionSize: 3
-        });
+        $("#MessageRecipientRecipients").select2();
     }
 
     function IsEmail(email) {

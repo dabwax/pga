@@ -46,6 +46,8 @@ class FlowController extends AppController {
 		// limpa o array de destinatários
 		$recipients = array();
 
+		$recipients['todos'] = "Todos";
+
 		// pais
 		$parents = AuthComponent::user("Student.StudentParent");
 
@@ -91,6 +93,7 @@ class FlowController extends AppController {
 		$this->set("recipientes", $recipients);
 
 		if($this->request->is("post")) {
+			$tmp_recipients = $recipients;
 			$recipients = array();
 
 			$i = 1;
@@ -98,21 +101,47 @@ class FlowController extends AppController {
 			$destinatarios = array();
 
 			foreach($this->request->data["MessageRecipient"]["recipients"] as $r) {
-				$explode = explode(",", $r);
-				$nome = $explode[3];
-				$email = $explode[2];
-				$actor = $explode[1];
-				$foreign_key = $explode[0];
-				$model = $this->User->getActorInfo($actor, "model");
-				$prefix = $this->User->getActorInfo($actor, "prefix");
 
-				$destinatarios[] = array("nome" => $nome, "email" => $email);
+				if($r == "todos") {
+					
+					unset($tmp_recipients['todos']);
 
-				$recipients["recipient_" . $i . "_model"] = $model;
-				$recipients["recipient_" . $i . "_prefix"] = $prefix;
-				$recipients["recipient_" . $i . "_foreign_key"] = $foreign_key;
+					foreach($tmp_recipients as $tmp_r => $tmp_r2) {
 
-				$i++;
+						$explode = explode(",", $tmp_r);
+						$nome = $explode[3];
+						$email = $explode[2];
+						$actor = $explode[1];
+						$foreign_key = $explode[0];
+						$model = $this->User->getActorInfo($actor, "model");
+						$prefix = $this->User->getActorInfo($actor, "prefix");
+
+						$destinatarios[] = array("nome" => $nome, "email" => $email);
+
+						$recipients["recipient_" . $i . "_model"] = $model;
+						$recipients["recipient_" . $i . "_prefix"] = $prefix;
+						$recipients["recipient_" . $i . "_foreign_key"] = $foreign_key;
+
+						$i++;
+					}
+
+				} else {
+					$explode = explode(",", $r);
+					$nome = $explode[3];
+					$email = $explode[2];
+					$actor = $explode[1];
+					$foreign_key = $explode[0];
+					$model = $this->User->getActorInfo($actor, "model");
+					$prefix = $this->User->getActorInfo($actor, "prefix");
+
+					$destinatarios[] = array("nome" => $nome, "email" => $email);
+
+					$recipients["recipient_" . $i . "_model"] = $model;
+					$recipients["recipient_" . $i . "_prefix"] = $prefix;
+					$recipients["recipient_" . $i . "_foreign_key"] = $foreign_key;
+
+					$i++;
+				}
 			}
 
 			$this->request->data["Message"]["student_id"] = AuthComponent::user("Student.Student.id");

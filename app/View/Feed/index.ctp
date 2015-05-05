@@ -9,6 +9,9 @@ $timeline = array();
             "title" => (new DateTime($f['Feed']['date']))->format('d/m/Y'),
         );
 
+        $texto = "";
+        $ja_adicionou_a_classe = false;
+
         $content = "<div class='container-feed'> <div class='conteudo-esquerda' style='width: 100%;'>";
 
                                         $participantes = array();
@@ -52,10 +55,28 @@ $timeline = array();
             		$strong = "Matéria: " . $student_lessons[$c["student_lesson_id"]];
             	endif;
 
-                $content .= "<strong>" . $strong . "</strong>";
-                $content .= "<p>" . $c["value"] . "</p>";
-                $content .= "<div class='clearfix'></div>";
+                $sub_texto = "";
+
+                $sub_texto .= "<strong>" . $strong . "</strong>";
+                $sub_texto .= "<p>" . $c["value"] . "</p>";
+                $sub_texto .= "<div class='clearfix'></div>";
+
+                if(strlen($texto) > 100 && !$ja_adicionou_a_classe) {
+                    $ja_adicionou_a_classe = true;
+                    $tmp2 = "<span class='restante'>";
+                    $tmp2 .= $sub_texto;
+
+                    $sub_texto = $tmp2;
+                }
+
+                $texto .= $sub_texto;
             endforeach;
+
+            $texto .= "</span>";
+
+            $content .= $texto;
+
+            $content .= "<a href='javascript:;' class='ler-mais-feed disable-ajax' data-toggle='false'>ver mais</a>";
 
         $content .= "</div>";
 
