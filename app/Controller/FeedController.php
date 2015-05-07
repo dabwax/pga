@@ -145,10 +145,15 @@ class FeedController extends AppController {
             throw new NotFoundException(__('Invalid Feed'));
         }
         if ($this->Feed->delete()) {
-            $this->Session->setFlash(__('O feed foi removido.'));
+            $this->Session->setFlash(__('O feed foi removido.'), 'alert', array(
+            'plugin' => 'BoostCake',
+            'class' => 'alert-success'
+        ));
         } else {
-            $this->Session->setFlash(__('Não foi possível removido o feed.'));
+            $this->Session->setFlash(__('Não foi possível removido o feed.'), 'alert', array(
+            'plugin' => 'BoostCake',
+            'class' => 'alert-danger'
+        ));
         }
-        return $this->redirect(array('action' => 'edit', $id));
     }
 }

@@ -148,7 +148,9 @@ $(document).ready(function() {
         });
         
         if(hash == "") {
-            $("#tabbed-nav").data('zozoTabs').select(0);
+            if($("#tabbed-nav").length > 0) {
+                $("#tabbed-nav").data('zozoTabs').select(0);
+            }
         }
     }
 
