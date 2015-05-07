@@ -82,7 +82,7 @@
             <a title="Editar" href="<?php echo $this->Html->url( array("controller" => "exercises", "action" => "edit", $s_e["StudentExercise"]["id"]) ); ?>" data-toggle="modal" data-target="#modalEditar<?php echo $s_e['StudentExercise']['id']; ?>" class="btn btn-default btn-xs btn-editar-resposta btn-iframe disable-ajax">
               <i class="fa fa-pencil"></i>
             </a>
-            <a title="Baixar Anexo" href="<?php echo $this->Html->url( array("controller" => "exercises", "action" => "download_student_exercise", $s_e["StudentExercise"]["id"]) ); ?>" class="btn btn-default btn-xs btn-iframe disable-ajax">
+            <a title="Baixar Anexo" href="<?php echo $this->Html->url( array("controller" => "exercises", "action" => "download_student_exercise", $s_e["StudentExercise"]["id"]) ); ?>" class="btn btn-default btn-xs disable-ajax" target="_blank">
               <i class="fa fa-download"></i>
             </a>
             <a href="<?php echo $this->Html->url( array("controller" => "students", "action" => "delete_student_exercise", $s_e["StudentExercise"]["id"], $this->request->data["Student"]["id"]) ); ?>" class="btn btn-danger btn-xs" onclick="if(!confirm('Você tem certeza disto? Esta ação é PERMANENTE!')) { return false; }">

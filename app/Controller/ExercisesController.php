@@ -102,4 +102,12 @@ class ExercisesController extends AppController {
         } // - post
 
     }
+    
+    public function download_student_exercise($id = null) {
+        $this->autoRender = false;
+
+        $student_exercise = $this->Student->StudentExercise->findById($id);
+
+        $this->response->file(WWW_ROOT.'files'. DS . $student_exercise['StudentExercise']['attachment'], array('download' => true, 'name' => $student_exercise['StudentExercise']['attachment']));
+    }
 }
