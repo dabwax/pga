@@ -10,7 +10,7 @@ class StudentInputValue extends AppModel {
                 "StudentInput",
                 "StudentLesson"
             ),
-            "conditions" => $conditions
+            "conditions" => $conditions,
          ) );
 
         foreach($all as $e) {
@@ -21,6 +21,8 @@ class StudentInputValue extends AppModel {
             $return[$date][$actor][] = $e;
 
         } // - foreach
+
+        ksort($return);
 
         return $return;
     }

@@ -97,7 +97,7 @@ endforeach;
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+$(document).ready(function() {
 
         timeline_data = <?php echo json_encode($timeline); ?>;
 
@@ -108,18 +108,17 @@ endforeach;
                 columnMode:  'dual',
                 responsive_width: 700,
                 max: 5,
-                loadmore: 5
+                loadmore: 5,
+                animation: false
             };
 
             <?php if($tem_busca == true) : ?>
             options['showHighlight'] = "<?php echo $s; ?>";
             <?php endif; ?>
 
-            var timeline = new Timeline($('#timeline'), timeline_data);
-        timeline.setOptions(options);
-        timeline.display();
+            carregarTimeline(timeline_data, options);
         
-	});
+});
 </script>
     
     <div class="col-md-8 pull-right text-right" style="margin-right: 0px; padding-right: 0px;">

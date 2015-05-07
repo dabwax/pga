@@ -110,7 +110,7 @@ endforeach;
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+$(document).ready(function() {
 
         timeline_data = <?php echo json_encode($timeline); ?>;
 
@@ -119,13 +119,17 @@ endforeach;
                 lightbox:    true,
                 separator:   'year',
                 columnMode:  'dual',
-                responsive_width: 700
+                responsive_width: 700,
+                max: 5,
+                loadmore: 5,
+                animation: false
             };
-
-            var timeline = new Timeline($('#timeline'), timeline_data);
-        timeline.setOptions(options);
-        timeline.display();
-	});
+            <?php if($tem_busca == true && !empty($s)) : ?>
+            options['showHighlight'] = "<?php echo $s; ?>";
+            <?php endif; ?>
+            
+            carregarTimeline(timeline_data, options);
+});
 </script>
 
     
@@ -161,13 +165,18 @@ endforeach;
 
             <a href="#" class="btn btn-default btn-pesquisar" data-target="calendario"><i class="fa fa-calendar"></i></a>
             <a href="#" class="btn btn-default btn-pesquisar" data-target="busca"><i class="fa fa-search"></i></a>
+        <?php if($tem_busca == true) : ?>
             <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'input_arquivo') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
+    <?php endif; ?>
 
     </div>
 
 <div class="clearfix"></div>
 <div class="row" style="margin-top: 20px;">
 
+        <?php if($busca_de_data == true) : ?>
+        <h2 style="margin: 0px; color: #BDC3C7; font-weight: 300; text-align: center; margin-bottom: 12px;">De <?php echo $date_start->format("d/m/Y"); ?> a <?php echo $date_finish->format("d/m/Y"); ?></h2>
+    <?php endif; ?>
 	<div id="timeline"></div>
 
 </div>

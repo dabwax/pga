@@ -74,29 +74,40 @@ class InputController extends AppController {
         $date_start = $this->Session->read("date_start");
         $date_finish = $this->Session->read("date_finish");
         $s = $this->Session->read("s");
+        $busca_de_data = false;
 
         $conditions = array(
             "StudentInputValue.student_id" => AuthComponent::user("Student.Student.id")
         );
 
-
         if(!empty($date_start) && !empty($date_finish)) {
-            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
-            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+            $conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
+
+            $tem_busca = true;
+            $busca_de_data = true;
         } else {
+            $tem_busca = false;
             $dateTime = new DateTime();
 
             $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
             $date_finish    = $dateTime;
             
-            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
-            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+            #$conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-t"));
+
+            $date_finish = new DateTime($date_finish->format("Y-m-t"));
         }
 
+
+
         if(!empty($s)) {
-            $conditions['StudentInputValue.value LIKE'] = '%' . $s . '%';
+            $conditions['StudentInputValue.content LIKE'] = '%' . $s . '%';
+
+            unset($conditions['StudentInputValue.date BETWEEN ? AND ?']);
+
+            $tem_busca = true;
         }
-        $this->set(compact("date_start", "date_finish"));
+        
+        $this->set(compact("date_start", "date_finish", "tem_busca", "busca_de_data"));
 
         $aulas = $this->Student->StudentInput->StudentInputValue->findGroup(AuthComponent::user("Student.Student.id"), $conditions);
 
