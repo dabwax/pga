@@ -190,6 +190,9 @@
 	        <li data-link="feed"><a id="btn-feed"><i class="fa fa-bars"></i> Feed</a></li>
 	        <li data-link="evolucao"><a id="btn-evolucao"><i class="fa fa-line-chart"></i> Evolução</a></li>
 	        <li data-link="mensagem"><a><i class="fa fa-comments"></i> Fluxo</a></li>
+	        <?php if(AuthComponent::user("Actor.prefix") == "tutor_") : ?>
+	        <li data-link="exercicios"><a><i class="fa fa-comments"></i> Exercícios</a></li>
+	    <?php endif; ?>
 		  </ul>
 		  <div>
 		  	<!--<div data-content-url="<?php echo $this->Html->url( array("controller" => "pages", "action" => "home") ); ?>">
@@ -202,6 +205,10 @@
 		  	</div>
 		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "flow", "action" => "index") ); ?>">
 		  	</div>
+		        	<?php if(AuthComponent::user("Actor.prefix") == "tutor_") : ?>
+		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "exercises", "action" => "index") ); ?>">
+		  	</div>
+		    	<?php endif; ?>
 		  </div>
 		</div>
 		<?php } ?>

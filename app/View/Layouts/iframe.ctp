@@ -48,7 +48,12 @@
 <body>
 
 <div class="container">
-<?php echo $this->fetch('content'); ?>
+
+	<div style="margin-top: 20px;">
+		<?php echo $this->Session->flash(); ?>
+	</div>
+
+	<?php echo $this->fetch('content'); ?>
 </div>
 
 </body>

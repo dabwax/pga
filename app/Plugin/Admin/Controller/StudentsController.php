@@ -352,7 +352,10 @@ class StudentsController extends AdminAppController {
 
             $this->Student->StudentExercise->save($this->request->data);
 
-            $this->Session->setFlash(__('O novo exercício foi salvo.'));
+            $this->Session->setFlash(__('O novo exercício foi salvo.'), 'alert', array(
+                        'plugin' => 'BoostCake',
+                        'class' => 'alert-success'
+                    ));
 
             return $this->redirect( array("action" => "edit", $this->request->data["StudentExercise"]["student_id"], "#" => "exercicios") );
 
@@ -368,7 +371,10 @@ class StudentsController extends AdminAppController {
 
             $this->Student->StudentExercise->save($this->request->data);
 
-            $this->Session->setFlash(__('O exercício foi editado.'));
+            $this->Session->setFlash(__('O exercício foi editado.'), 'alert', array(
+                        'plugin' => 'BoostCake',
+                        'class' => 'alert-success'
+                    ));
 
             return $this->redirect( array("action" => "edit", $this->request->data["StudentExercise"]["student_id"], "#" => "exercicios") );
 
@@ -405,7 +411,10 @@ class StudentsController extends AdminAppController {
 
             $this->Student->StudentInput->save($dados);
 
-            $this->Session->setFlash(__('O novo input foi salvo.'));
+            $this->Session->setFlash(__('O novo input foi salvo.'), 'alert', array(
+                        'plugin' => 'BoostCake',
+                        'class' => 'alert-success'
+                    ));
 
         } // - post
 
@@ -423,7 +432,10 @@ class StudentsController extends AdminAppController {
 
             $this->Student->StudentLesson->save($this->request->data);
 
-            $this->Session->setFlash(__('A nova disciplina foi salva.'));
+            $this->Session->setFlash(__('A nova disciplina foi salva.'), 'alert', array(
+                        'plugin' => 'BoostCake',
+                        'class' => 'alert-success'
+                    ));
 
             return $this->redirect( array("action" => "edit", $this->request->data["StudentLesson"]["student_id"], "#" => "materias") );
 
