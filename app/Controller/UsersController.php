@@ -335,10 +335,14 @@ class UsersController extends AppController {
                             )
                         ) );
 
+                        $student['Student']['model'] = "Student";
+                        $student['Student']['prefix'] = "";
+
                         // juntar o usuário padrão com os dados do estudante
                         $session_data = array(
                             "User" => $default_user["User"],
                             "Student" => $student,
+                            "Actor" => $student['Student'],
                         );
 
                         // fazer um login manual com ambos os dados

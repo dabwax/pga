@@ -8,9 +8,6 @@ class StudentController extends StudentAppController {
 			"conditions" => array(
 				"StudentExercise.student_id" => AuthComponent::user("Student.Student.id"),
 			),
-			"order" => array(
-				"created DESC"
-			),
 			"limit" => 5
 		) );
 

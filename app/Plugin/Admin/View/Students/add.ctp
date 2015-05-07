@@ -54,7 +54,7 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            <?php echo $this->Form->input('Student.password', array('class' => 'form-control') ); ?>
+            <?php echo $this->Form->input('Student.password', array('class' => 'form-control', 'label' => 'Senha') ); ?>
         </div>
     </div>
 

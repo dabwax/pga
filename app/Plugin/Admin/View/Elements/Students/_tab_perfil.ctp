@@ -29,6 +29,18 @@
         </div>
     </div>
 
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->Form->input('Student.email', array('class' => 'form-control') ); ?>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo $this->Form->input('Student.password', array('class' => 'form-control', 'label' => 'Senha', 'value' => '') ); ?>
+        </div>
+    </div>
+
     <div class="col-md-12">
         <div class="form-group">
             <?php echo $this->Form->input('Student.description', array('class' => 'form-control ckeditor', 'label' => 'Descrição') ); ?>
