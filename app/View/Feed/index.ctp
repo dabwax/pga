@@ -107,6 +107,8 @@ endforeach;
                 separator:   'year',
                 columnMode:  'dual',
                 responsive_width: 700,
+                max: 5,
+                loadmore: 5
             };
 
             <?php if($tem_busca == true) : ?>

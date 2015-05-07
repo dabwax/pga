@@ -175,10 +175,15 @@ class Chart extends AppModel {
             $data[$label] = array();
             
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
-            foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
-                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+            if(!empty($csi['StudentInput']['StudentInputValue'])) {
+                foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                }
+            } else {
+                $data[$label][0] = 0;
             }
         }
+
 
         foreach($data as $label => $dados) {
             foreach($dados as $y => $total) {

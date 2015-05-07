@@ -70,13 +70,16 @@
 
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 
-					<?php if(AuthComponent::user()) : ?>
-					<p class="p-ator col-md-8" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $this->Html->url('/uploads/' . $ator_atualizado[$ator_atualizado['prefix'] . 'name']); ?></p>
+					<?php if(AuthComponent::user() && $this->params['action'] != "set_student") : ?>
+					<p class="p-ator col-md-7" style="color: #FFF; margin-top: 12px; margin-left: 12px;">Olá, <?php echo $ator_atualizado[$ator_atualizado['prefix'] . 'name']; ?></p>
 
 					<?php endif; ?>
 
 					<ul class="nav navbar-nav navbar-right">
-						<?php if(AuthComponent::user()) : ?>
+						<?php if(AuthComponent::user() && $this->params['action'] != "set_student") : ?>
+						<li>
+							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "set_student") ); ?>"><i class="fa fa-users"></i> Alunos</a>
+						</li>
 						<li>
 							<a href="<?php echo $this->Html->url( array("controller" => "users", "action" => "edit") ); ?>"><i class="fa fa-pencil"></i> Perfil</a>
 						</li>
@@ -95,12 +98,20 @@
 
 	<div class="container">
 
-		<?php if(AuthComponent::user()) : ?>
+		<?php if(AuthComponent::user() && $this->params['action'] != "set_student") : ?>
 
 		<div class="row" style="margin-top: 20px;">
 
-			<div class="col-xs-6 col-md-2 col-avatar">
-				<img src="<?php echo $this->Html->url('/uploads/' . $ator_atualizado[$ator_atualizado['prefix'] . 'avatar']); ?>" class="img-circle" alt="">
+			<div class="col-xs-6 col-md-2 col-avatar text-center">
+				<?php if(!empty(AuthComponent::user('Student.Student.avatar'))) : ?>
+				<div class="img-avatar img-circle" style="width: 130px; height: 130px;">
+					<img src="<?php echo $this->Html->url('/uploads/' . $ator_atualizado[$ator_atualizado['prefix'] . 'avatar']); ?>" class="img-circle" alt="">
+				</div>
+			<?php else : ?>
+				<div class="img-avatar img-circle" style="width: 130px; height: 130px;">
+					<img src="<?php echo $this->Html->url('/uploads/indisponivel.jpg'); ?>" class="img-circle" alt="">
+				</div>
+			<?php endif; ?>
 			</div> <!-- .col-avatar -->
 
 			<div class="col-xs-6 col-md-6 col-student">
@@ -111,22 +122,58 @@
 			<div class="col-md-4 col-actors">
 
 				<ul>
-					<li>
+					<li title="<?php echo $this->Html->getParentsName(); ?>">
 						<strong ><i class="fa fa-users"></i> <span class="hidden-xs hidden-sm">Pais</span></strong>
-						<?php echo $this->Html->getParentsName(); ?>
+						<?php
+						echo $this->Text->truncate($this->Html->getParentsName(),
+						    30,
+						    array(
+						        'ellipsis' => '...',
+						        'exact' => true
+						    )
+						);
+
+						?>
 					</li>
 
-					<li>
+					<li title="<?php echo $this->Html->getPsychiatristName(); ?>">
 						<strong><i class="fa fa-user-md"></i> Psico</strong>
-						<?php echo $this->Html->getPsychiatristName(); ?>
+						<?php
+						echo $this->Text->truncate($this->Html->getPsychiatristName(),
+						    30,
+						    array(
+						        'ellipsis' => '...',
+						        'exact' => true
+						    )
+						);
+
+						?>
 					</li>
-					<li>
+					<li title="<?php echo $this->Html->getSchoolName(); ?>">
 						<strong><i class="fa fa-hospital-o"></i> Escola</strong>
-						<?php echo $this->Html->getSchoolName(); ?>
+						<?php
+						echo $this->Text->truncate($this->Html->getSchoolName(),
+						    30,
+						    array(
+						        'ellipsis' => '...',
+						        'exact' => true
+						    )
+						);
+
+						?>
 					</li>
-					<li>
+					<li title="<?php echo $this->Html->getTutorName(); ?>">
 						<strong><i class="fa fa-user"></i> Tutor</strong>
-						<?php echo $this->Html->getTutorName(); ?>
+						<?php
+						echo $this->Text->truncate($this->Html->getTutorName(),
+						    30,
+						    array(
+						        'ellipsis' => '...',
+						        'exact' => true
+						    )
+						);
+
+						?>
 					</li>
 				</ul>
 

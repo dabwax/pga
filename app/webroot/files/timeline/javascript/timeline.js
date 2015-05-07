@@ -82,7 +82,7 @@ function Timeline(element, data, $, undefined) {
 
     // settings that user can't change via setOptions()
     this._readmore_text     = 'Read More';
-    this._loadmore_text     = 'Load More';
+    this._loadmore_text     = 'Ver Mais';
     this._month_translation = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; // month separators
     this._spine_margin      = 100;
 

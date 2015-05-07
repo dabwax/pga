@@ -76,20 +76,22 @@ class AppController extends Controller {
             $model = AuthComponent::user("Actor.model");
             $prefix = AuthComponent::user("Actor.prefix");
 
-            $this->loadModel($model);
+            if(!empty($model)) {
+                $this->loadModel($model);
 
-            $options = array(
-                'conditions' => array(
-                    $model . '.id' => AuthComponent::user("Actor.id")
-                )
-            );
-            $ator_atualizado = $this->$model->find("first", $options);
+                $options = array(
+                    'conditions' => array(
+                        $model . '.id' => AuthComponent::user("Actor.id")
+                    )
+                );
+                $ator_atualizado = $this->$model->find("first", $options);
 
-            $ator_atualizado = $ator_atualizado[$model];
-            $ator_atualizado['model'] = $model;
-            $ator_atualizado['prefix'] = $prefix;
+                $ator_atualizado = $ator_atualizado[$model];
+                $ator_atualizado['model'] = $model;
+                $ator_atualizado['prefix'] = $prefix;
 
-            $this->set(compact("ator_atualizado"));
+                $this->set(compact("ator_atualizado"));
+            }
         }
 
         $this->Auth->allow('display', 'set_student', 'sair');

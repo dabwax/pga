@@ -38,8 +38,9 @@ $(document).ready(function() {
 
     <?php foreach($charts as $c) : ?>
 
-        <?php if($c['Chart']['type'] != "line") : ?>
 
+        <?php if($c['Chart']['type'] != "line") : ?>
+        
             <?php if(!empty($c['config'])) : ?>
                 var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
             <?php endif; ?>
