@@ -183,12 +183,14 @@
 
 
 		<?php echo $this->Session->flash(); ?>
+
 		<?php if ($this->here == $this->webroot) { ?>
 		<div id='tabbed-nav'>
 		  <ul>
-	        <!--<li><a><i class="fa fa-home"></i> Home</a></li>-->
-	        <li data-link="input"><a id="btn-input"><i class="fa fa-pencil"></i> Input</a></li>
-	        <li data-link="feed"><a id="btn-feed"><i class="fa fa-bars"></i> Feed</a></li>
+	        <?php if(AuthComponent::user("Actor.prefix") != "dad_" && AuthComponent::user("Actor.prefix") != "mom_") : ?>
+		        <li data-link="input"><a id="btn-input"><i class="fa fa-pencil"></i> Input</a></li>
+		        <li data-link="feed"><a id="btn-feed"><i class="fa fa-bars"></i> Feed</a></li>
+	    <?php endif; ?>
 	        <li data-link="evolucao"><a id="btn-evolucao"><i class="fa fa-line-chart"></i> Evolução</a></li>
 	        <li data-link="mensagem"><a><i class="fa fa-comments"></i> Fluxo</a></li>
 	        <?php if(AuthComponent::user("Actor.prefix") == "tutor_") : ?>
@@ -196,12 +198,13 @@
 	    <?php endif; ?>
 		  </ul>
 		  <div>
-		  	<!--<div data-content-url="<?php echo $this->Html->url( array("controller" => "pages", "action" => "home") ); ?>">
-		  	</div>-->
+
+	        <?php if(AuthComponent::user("Actor.prefix") != "dad_" && AuthComponent::user("Actor.prefix") != "mom_") : ?>
 		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "input", "action" => "create") ); ?>">
 		  	</div>
 		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "feed", "action" => "index") ); ?>">
 		  	</div>
+	    <?php endif; ?>
 		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "evolution", "action" => "index") ); ?>">
 		  	</div>
 		  	<div data-content-url="<?php echo $this->Html->url( array("controller" => "flow", "action" => "index") ); ?>">

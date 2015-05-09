@@ -187,7 +187,7 @@ class Chart extends AppModel {
 
         foreach($data as $label => $dados) {
             foreach($dados as $y => $total) {
-                $dataPoints[] = array('y' => $y, 'label' => $label . ': ' . $y);
+                $dataPoints[] = array('y' => $y, 'label' => $label);
             }
         }
 
@@ -237,7 +237,7 @@ class Chart extends AppModel {
 
         foreach($data as $label => $dados) {
             foreach($dados as $y => $total) {
-                $dataPoints[] = array('y' => $total, 'label' => $label . ': ' . $y);
+                $dataPoints[] = array('y' => $total, 'label' => $label );
             }
         }
 

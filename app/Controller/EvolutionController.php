@@ -37,9 +37,6 @@ class EvolutionController extends AppController {
         }
 
         $this->set(compact("date_start", "date_finish"));
-        $conditions = array(
-            'StudentInputValue.date BETWEEN ? AND ?' => array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d")),
-        );
 
         $options = array(
             'conditions' => array(

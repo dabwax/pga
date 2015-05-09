@@ -39,6 +39,10 @@
                                                     'total' => 'Total SEM média',
                                                     'nota' => 'Nota',
                                                 );
+                                            } else {
+                                                $options2 = array(
+
+                                                );
                                             }
                                             echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
                                             echo $this->Form->input('sub_type', array('label' => 'Sub-Tipo', 'options' => $options2, 'empty' => 'Selecionar') );
