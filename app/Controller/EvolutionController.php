@@ -139,15 +139,70 @@ class EvolutionController extends AppController {
                             $student_lessons = $this->Student->StudentLesson->find("all", $options);
 
                             foreach($student_lessons as $sl) {
-                                if(!in_array($sl['StudentLesson']['name'], $materias)) {
-                                    $materias[$sl['StudentLesson']['name']] = array(
+                                $materia_nome = $sl['StudentLesson']['name'];
+
+                                if(!in_array($materia_nome, $materias)) {
+                                    $materias[$materia_nome] = array(
                                         'nome' => $sl['StudentLesson']['name'],
                                         'notas' => array()
                                     );
+
+                                    $options = array(
+                                        'conditions' => array(
+                                            'StudentInputValue.student_id' => $student_id,
+                                            'StudentInputValue.student_lesson_id' => $sl['StudentLesson']['id'],
+                                        ),
+                                        'fields' => array(
+                                            'StudentInputValue.id',
+                                            'StudentInputValue.nota_1',
+                                            'StudentInputValue.nota_2',
+                                            'StudentInputValue.nota_3',
+                                            'StudentInputValue.nota_4',
+                                            'StudentInputValue.nota_6',
+                                            'StudentInputValue.nota_7',
+                                            'StudentInputValue.nota_8',
+                                        )
+                                    );
+                                    $aulas = $this->Student->StudentInput->StudentInputValue->find("all", $options);
+
+                                    $tmp2 = array(
+                                        array(1, 2),
+                                        array(3, 4),
+                                        array(5, 6),
+                                        array(7, 8),
+                                    );
+
+                                    foreach($tmp2 as $t2) {
+
+                                        if($t2 == array(1, 2)) {
+                                            $label = "Teste";
+                                        }
+
+                                        if($t2 == array(3, 4)) {
+                                            $label = "Prova";
+                                        }
+
+                                        if($t2 == array(5, 6)) {
+                                            $label = "Trabalho";
+                                        }
+
+                                        if($t2 == array(7, 8)) {
+                                            $label = "Nota Bimestral";
+                                        }
+
+                                        $tmp = array(
+                                            'esperado' => 0,
+                                            'alcancado' => 0,
+                                            'label' => $label
+                                        );
+
+                                        $materias[$materia_nome]['notas'][$t2[0] . "_" . $t2[1]] = $tmp;
+                                    }
                                 }
                             }
 
                             var_dump($materias);
+
                 }
             }
 
