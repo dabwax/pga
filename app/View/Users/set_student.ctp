@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="col-xs-12">
-		<h2 style="text-align: center; margin-bottom: 20px;"><i class="fa fa-user"></i> Selecionar Aluno</h2>
 
 		<?php foreach($actors as $a) : ?>
 			<a href="<?php echo $this->Html->url( array("action" => "set_student", $this->Html->dados($a, 'Student', 'id'), $this->Html->dados($a, 'id'), $a["prefix"] ) ); ?>" class="btn-escolher-estudante">

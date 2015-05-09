@@ -33,12 +33,12 @@ if($si["StudentInput"]["actor"] == strtolower($actor)) : $campos[$actor][] = $si
         <?php echo $this->Form->input("StudentInputValue." . $k . ".config.time_end", array("label" => false, "type" => "time", "interval" => 10, "timeFormat" => "24") ); ?>
 
     <?php elseif ( $si["StudentInput"]["Input"]["id"] == $this->Html->getInputId("Texto") ) : ?>
-
-        <?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false) ); ?>
+    
+        <?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "value" => $si['StudentInputValue']['value'], "class" => "ckeditor" ) ); ?>
 
     <?php elseif ( $si["StudentInput"]["Input"]["id"] == $this->Html->getInputId("Texto Privativo") ) : ?>
 
-        <?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false) ); ?>
+        <?php echo $this->Form->input("StudentInputValue." . $k . ".value", array("label" => false, "value" => $si['StudentInputValue']['value'], "class" => "ckeditor" ) ); ?>
 
     <?php elseif ( $si["StudentInput"]["Input"]["id"] == $this->Html->getInputId("Escala Numérica") ) : ?>
 

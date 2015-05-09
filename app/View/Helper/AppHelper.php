@@ -66,6 +66,7 @@ class AppHelper extends Helper {
 				return 2;
 			break;
 			case "Texto":
+			case "Registro Textual":
 				return 3;
 			break;
 			case "Escala Numérica":
