@@ -31,7 +31,17 @@
                                                 'pie' => 'Pizza',
                                                 'doughnut' => 'Donut',
                                             );
+
+                                            if($this->request->data['Chart']['type'] == "num_absoluto") {
+                                                $options['num_absoluto'] = 'Número Absoluto';
+                                                $options2 = array(
+                                                    'media' => 'Total COM média',
+                                                    'total' => 'Total SEM média',
+                                                    'nota' => 'Nota',
+                                                );
+                                            }
                                             echo $this->Form->input('type', array('label' => 'Tipo', 'options' => $options, 'empty' => 'Selecionar') );
+                                            echo $this->Form->input('sub_type', array('label' => 'Sub-Tipo', 'options' => $options2, 'empty' => 'Selecionar') );
                                             echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'empty' => 'Selecionar') );
 
                                         ?>

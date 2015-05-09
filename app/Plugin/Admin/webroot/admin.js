@@ -1,5 +1,28 @@
 $(document).ready(function() {
 
+  $("#ChartType").change(function() {
+          var value = $(this).val();
+
+          if(value == "num_absoluto") {
+              $("#ChartSubType").parent().fadeIn("fast");
+          } else {
+              $("#ChartSubType").val("");
+              $("#ChartSubType").parent().fadeOut("fast");
+          }
+      });
+      $("#ChartInputId").change(function() {
+          var value = $(this).val();
+
+          if(value == 6) {
+              $("#ChartType").append("<option value='num_absoluto'>Número Absoluto</option>").val("num_absoluto");
+              $("#ChartSubType").parent().fadeIn("fast");
+          } else {
+              $("#ChartSubType").val("");
+              $("#ChartSubType").parent().fadeOut("fast");
+              $("#ChartType").find("option").last().remove();
+          }
+      });
+
   $(".campo-studentinput").on("keypress", function(event) {
     if(event.which == 13) {
       $(this).blur();

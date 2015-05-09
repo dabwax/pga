@@ -3,7 +3,7 @@
  * Páginas envolvendo evolução encontram-se aqui.
  */
 class EvolutionController extends AppController {
-    public $uses = array("Chart");
+    public $uses = array("Chart", "Student");
 
     public function index() {
         $this->layout = "ajax";
@@ -108,6 +108,47 @@ class EvolutionController extends AppController {
                 $tmp = $this->Chart->datapointNumAbsoluto($c);
 
                 $dataPoints = $tmp['dataPoints'];
+
+                if($c['Chart']['sub_type'] == "nota") {
+                            $materias = array(
+                                array(
+                                    'nome' => 'Biologia',
+                                    'notas' => array(
+                                        array(
+                                            'esperado' => 7,
+                                            'alcancado' => 9,
+                                            'label' => '1ª Prova',
+                                        ),
+                                        array(
+                                            'esperado' => 3,
+                                            'alcancado' => 6,
+                                            'label' => '2ª Prova',
+                                        ),
+                                    )
+                                )
+                            );
+
+                            // Buscar todas as matérias do estudante
+                            $options = array(
+                                'conditions' => array(
+                                    'StudentLesson.student_id' => $student_id
+                                )
+                            );
+
+                            $materias = array();
+                            $student_lessons = $this->Student->StudentLesson->find("all", $options);
+
+                            foreach($student_lessons as $sl) {
+                                if(!in_array($sl['StudentLesson']['name'], $materias)) {
+                                    $materias[$sl['StudentLesson']['name']] = array(
+                                        'nome' => $sl['StudentLesson']['name'],
+                                        'notas' => array()
+                                    );
+                                }
+                            }
+
+                            var_dump($materias);
+                }
             }
 
             // gera o array de configurações do CanvasJS
@@ -133,6 +174,6 @@ class EvolutionController extends AppController {
         }
 
         // envia os gráficos pra view
-        $this->set(compact("charts", "tem_busca", "s", "busca_de_data"));
+        $this->set(compact("charts", "tem_busca", "s", "busca_de_data", "materias"));
     }
 }

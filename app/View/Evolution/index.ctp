@@ -30,23 +30,45 @@
                 <div id="grafico<?php echo $c['Chart']['id']; ?>" class="<?php echo $c['Chart']['type']; ?>" style="width: 100%;">
                     <?php if($c['Chart']['type'] == "num_absoluto") : ?>
                     <?php 
-                        $config = json_decode($c['config']);
-                        $datapoints = $config->data[0]->dataPoints;
-                        $total = $datapoints[0]->total;
-                        $total_dias = $datapoints[0]->total_dias;
 
-                        if($total > 0 && $total_dias > 0) {
-                            $media = $total / $total_dias;
-                        } else {
-                            $media = 0;
-                            $total_dias = 0;
+                        if($c['Chart']['sub_type'] != "nota") {
+                            $config = json_decode($c['config']);
+                            $datapoints = $config->data[0]->dataPoints;
+                            $total = $datapoints[0]->total;
+                            $total_dias = $datapoints[0]->total_dias;
+
+                            if($total > 0 && $total_dias > 0) {
+                                $media = $total / $total_dias;
+                            } else {
+                                $media = 0;
+                                $total_dias = 0;
+                            }
                         }
                         ?>
+
+                        <?php if($c['Chart']['sub_type'] == "media") { ?>
                         <div class="text-center" title="Total: <?php echo $total;?> - Total de Dias: <?php echo $total_dias ?>">
                             <h2><?php echo $media; ?> </h2>
                             <p><?php echo $config->title->text; ?></p>
                             <small><?php echo $total_dias; ?> dias</small>
                         </div>
+                    <?php } elseif($c['Chart']['sub_type'] == "total") { ?>
+                        <div class="text-center" title="Total: <?php echo $total;?>">
+                            <h2><?php echo $total; ?> </h2>
+                            <p><?php echo $config->title->text; ?></p>
+                        </div>
+                    <?php } elseif($c['Chart']['sub_type'] == "nota") {?>
+
+                        <?php foreach($materias as $materia) : ?>
+                        <?php foreach($materia['notas'] as $nota) : ?>
+                        <div class="text-center pull-left" style="width: 50%;">
+                            <h2><?php echo $nota['esperado'] ?> / <?php echo $nota['alcancado']; ?></h2>
+                            <p><?php echo $nota['label'] ?> - <?php echo $materia['nome'] ?></p>
+                        </div>
+                        <?php endforeach; ?>
+                        <?php endforeach; ?>
+
+                    <?php } ?>
                     <?php endif; ?>
                 </div>
             </div> <!-- .grafico -->
