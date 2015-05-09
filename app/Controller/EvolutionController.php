@@ -198,10 +198,66 @@ class EvolutionController extends AppController {
 
                                         $materias[$materia_nome]['notas'][$t2[0] . "_" . $t2[1]] = $tmp;
                                     }
+
+                                    foreach($aulas as $aula) {
+                                        for($i = 1; $i <= 8; $i++) {
+                                            if(!empty($aula['StudentInputValue']['nota_' . $i])) {
+                                                // descobrir qual underline é essa nota
+                                                if($i == 1 || $i == 2) {
+                                                    if($i == 1) {
+                                                        $materias[$materia_nome]['notas']['1_2']['esperado'] = $materias[$materia_nome]['notas']['1_2']['esperado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                    if($i == 2) {
+                                                        $materias[$materia_nome]['notas']['1_2']['alcancado'] = $materias[$materia_nome]['notas']['1_2']['alcancado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                }
+
+                                                if($i == 3 || $i == 4) {
+                                                    if($i == 3) {
+                                                        $materias[$materia_nome]['notas']['3_4']['esperado'] = $materias[$materia_nome]['notas']['3_4']['esperado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                    if($i == 4) {
+                                                        $materias[$materia_nome]['notas']['3_4']['alcancado'] = $materias[$materia_nome]['notas']['3_4']['alcancado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                }
+
+                                                if($i == 5 || $i == 6) {
+                                                    if($i == 5) {
+                                                        $materias[$materia_nome]['notas']['5_6']['esperado'] = $materias[$materia_nome]['notas']['5_6']['esperado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                    if($i == 6) {
+                                                        $materias[$materia_nome]['notas']['5_6']['alcancado'] = $materias[$materia_nome]['notas']['5_6']['alcancado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                }
+
+                                                if($i == 7 || $i == 8) {
+                                                    if($i == 7) {
+                                                        $materias[$materia_nome]['notas']['7_8']['esperado'] = $materias[$materia_nome]['notas']['7_8']['esperado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                    if($i == 8) {
+                                                        $materias[$materia_nome]['notas']['7_8']['alcancado'] = $materias[$materia_nome]['notas']['7_8']['alcancado'] + $aula['StudentInputValue']['nota_' . $i];
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
-                            var_dump($materias);
+                            foreach($materias as $materia_i => $materia) {
+                                $tem_nota = false;
+
+                                foreach($materia['notas'] as $nota) :
+                                    if($nota['esperado'] > 0 || $nota['alcancado'] > 0) {
+                                        $tem_nota = true;
+                                    }
+                                endforeach;
+
+                                if(!$tem_nota) {
+                                    unset($materias[$materia_i]);
+                                }
+                            }
 
                 }
             }

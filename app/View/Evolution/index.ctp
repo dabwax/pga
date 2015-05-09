@@ -25,7 +25,12 @@
 <div class="row">
     <?php foreach($charts as $c) : ?>
         <div class="col-md-<?php echo $c['Chart']['columns']; ?>">
+
+            <?php if($c['Chart']['sub_type'] == "nota") : ?>
+            <div class="grafico" style="width: 100%;">
+        <?php else: ?>
             <div class="grafico" style="height: <?php echo $c['Chart']['height']; ?>px; width: 100%;">
+    <?php endif; ?>
 
                 <div id="grafico<?php echo $c['Chart']['id']; ?>" class="<?php echo $c['Chart']['type']; ?>" style="width: 100%;">
                     <?php if($c['Chart']['type'] == "num_absoluto") : ?>
@@ -60,12 +65,15 @@
                     <?php } elseif($c['Chart']['sub_type'] == "nota") {?>
 
                         <?php foreach($materias as $materia) : ?>
+                        <div class="text-center pull-left" style="width: 100%;">
+                            <h2 style="font-size: 20px;"><?php echo $materia['nome'] ?></h2>
                         <?php foreach($materia['notas'] as $nota) : ?>
-                        <div class="text-center pull-left" style="width: 50%;">
-                            <h2><?php echo $nota['esperado'] ?> / <?php echo $nota['alcancado']; ?></h2>
-                            <p><?php echo $nota['label'] ?> - <?php echo $materia['nome'] ?></p>
-                        </div>
+                        <?php if($nota['esperado'] > 0 && $nota['alcancado'] > 0) : ?>
+                            <h3 style="font-size: 17px;"><?php echo $nota['esperado'] ?> / <?php echo $nota['alcancado']; ?></h3>
+                            <p style="font-size: 13px;"><?php echo $nota['label'] ?></p>
+                        <?php endif; ?>
                         <?php endforeach; ?>
+                        </div>
                         <?php endforeach; ?>
 
                     <?php } ?>
