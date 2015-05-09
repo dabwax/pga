@@ -19,16 +19,21 @@ class EvolutionController extends AppController {
         );
 
         if(!empty($date_start) && !empty($date_finish)) {
-            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
-            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+            $conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
+
+            $tem_busca = true;
+            $busca_de_data = true;
+
+            $this->Session->delete("date_start");
+            $this->Session->delete("date_finish");
         } else {
-            $dateTime = new DateTime("now");
+            $tem_busca = false;
+            $dateTime = new DateTime();
 
             $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
             $date_finish    = $dateTime;
-            
-            $conditions['StudentInputValue.date >='] = $date_start->format("Y-m-d");
-            $conditions['StudentInputValue.date <='] = $date_finish->format("Y-m-d");
+
+            $date_finish = new DateTime($date_finish->format("Y-m-t"));
         }
 
         $this->set(compact("date_start", "date_finish"));
@@ -98,6 +103,13 @@ class EvolutionController extends AppController {
                 $dataPoints = $tmp['dataPoints'];
             }
 
+            // SE FOR NÚMERO ABSOLUTO, DATAPOINT DE NÚMERO ABSOLUTO
+            if($c['Chart']['type'] == 'num_absoluto') {
+                $tmp = $this->Chart->datapointNumAbsoluto($c);
+
+                $dataPoints = $tmp['dataPoints'];
+            }
+
             // gera o array de configurações do CanvasJS
             $config = array(
                 'backgroundColor' => 'transparent',
@@ -121,6 +133,6 @@ class EvolutionController extends AppController {
         }
 
         // envia os gráficos pra view
-        $this->set(compact("charts"));
+        $this->set(compact("charts", "tem_busca", "s", "busca_de_data"));
     }
 }

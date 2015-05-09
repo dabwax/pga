@@ -27,7 +27,28 @@
         <div class="col-md-<?php echo $c['Chart']['columns']; ?>">
             <div class="grafico" style="height: <?php echo $c['Chart']['height']; ?>px; width: 100%;">
 
-                <div id="grafico<?php echo $c['Chart']['id']; ?>" style="width: 100%;"></div>
+                <div id="grafico<?php echo $c['Chart']['id']; ?>" class="<?php echo $c['Chart']['type']; ?>" style="width: 100%;">
+                    <?php if($c['Chart']['type'] == "num_absoluto") : ?>
+                    <?php 
+                        $config = json_decode($c['config']);
+                        $datapoints = $config->data[0]->dataPoints;
+                        $total = $datapoints[0]->total;
+                        $total_dias = $datapoints[0]->total_dias;
+
+                        if($total > 0 && $total_dias > 0) {
+                            $media = $total / $total_dias;
+                        } else {
+                            $media = 0;
+                            $total_dias = 0;
+                        }
+                        ?>
+                        <div class="text-center" title="Total: <?php echo $total;?> - Total de Dias: <?php echo $total_dias ?>">
+                            <h2><?php echo $media; ?> </h2>
+                            <p><?php echo $config->title->text; ?></p>
+                            <small><?php echo $total_dias; ?> dias</small>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div> <!-- .grafico -->
         </div>
     <?php endforeach; ?>
@@ -38,14 +59,7 @@ $(document).ready(function() {
 
     <?php foreach($charts as $c) : ?>
 
-
-        <?php if($c['Chart']['type'] != "line") : ?>
-        
-            <?php if(!empty($c['config'])) : ?>
-                var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
-            <?php endif; ?>
-
-        <?php else: ?>
+        <?php if($c['Chart']['type'] == "line") : ?>
 
             <?php
                 // faz um cache dos dados antigos
@@ -74,9 +88,18 @@ $(document).ready(function() {
 
             var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico" + id, config);
 
-        <?php endif; ?>
+        
+        <?php elseif($c['Chart']['type'] == "num_absoluto") : ?>
+            
+        <?php else : ?>
 
             <?php if(!empty($c['config'])) : ?>
+                var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
+            <?php endif; ?>
+
+        <?php endif; ?>
+
+            <?php if(!empty($c['config']) && $c['Chart']['type'] != "num_absoluto" ) : ?>
     chart<?php echo $c['Chart']['id']; ?>.render();
     <?php endif; ?>
     <?php endforeach; ?>

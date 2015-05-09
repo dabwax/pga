@@ -26,6 +26,7 @@
                             'line' => 'Linha',
                             'pie' => 'Pizza',
                             'doughnut' => 'Donut',
+                            'num_absoluto' => 'Número Absoluto',
                         );
                         echo $this->Form->input('type', array('label' => 'Gráfico', 'options' => $options, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-tipo-grafico') ); ?>
                       <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Student']['id']) ); ?>

@@ -243,4 +243,51 @@ class Chart extends AppModel {
 
         return array('dataPoints' => $dataPoints);
     }
+
+    public function datapointNumAbsoluto($c) {
+        $dataPoints = array();
+
+        $data = array();
+
+
+        // itera cada um dos campos incluídos no gráfico
+        foreach($c['ChartStudentInput'] as $csi) {
+            // nome do campo
+            $label = $csi['StudentInput']['name'];
+
+            // inclui o campo no array de data
+            $data[$label] = array();
+            
+
+            // se não for do tipo escala texto
+            if($csi['StudentInput']['Input']['id'] == 6) {
+
+
+                if(empty($csi['StudentInput']['StudentInputValue'])) {
+                    $data[$label] = 0;
+                } else {
+                    $data[$label] = array('total' => 0, 'total_dias' => 0);
+                    $datas_corridas = array();
+
+                    // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
+                    foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                        $data[$label]['total'] = $data[$label]['total'] + $siv['value'];
+
+                        if(!in_array($siv['date'], $datas_corridas)) {
+                            $data[$label]['total_dias'] = $data[$label]['total_dias'] + 1;
+                            $datas_corridas[] = $siv['date'];
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        foreach($data as $label => $dados) {
+                $dataPoints[] = array('total' => $dados['total'], 'total_dias' => $dados['total_dias'], 'label' => $label);
+        }
+
+        return array('dataPoints' => $dataPoints);
+    }
 }
