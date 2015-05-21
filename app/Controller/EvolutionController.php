@@ -377,7 +377,9 @@ class EvolutionController extends AppController {
             if($c['Chart']['type'] == 'column') {
                 $tmp = $this->Chart->datapointColumn($c);
 
-                $dataPoints = $tmp['dataPoints'];
+                $is_bar = true;
+                
+                $dataPoints = $tmp['data'];
             }
 
             // SE FOR NÚMERO ABSOLUTO, DATAPOINT DE NÚMERO ABSOLUTO

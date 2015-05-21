@@ -1,4 +1,3 @@
-
 <div class="col-md-8 pull-right text-right" style="margin-right: 0px; padding-right: 0px;">
 
     <?php echo $this->Form->create("Search", array('class' => 'form-pesquisar hide col-md-6', 'url' => array('controller' => 'search', 'action' => 'evolution_index') ) ); ?>
@@ -36,12 +35,35 @@
              <?php endif; ?>
 
                 <div id="grafico<?php echo $c['Chart']['id']; ?>" class="<?php echo $c['Chart']['type']; ?>" style="width: 100%;">
-                    <?php echo $this->element("grafico_nota"); ?>
+                    <?php echo $this->element("grafico_nota", array('c' => $c) ); ?>
                 </div>
             </div> <!-- .grafico -->
         </div>
     <?php endforeach; ?>
 </div>
+
+<?php foreach($charts as $c) : ?>
+<?php if($c['Chart']['type'] == "line") : ?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        <?php
+            $config = $this->Html->prepareLineChart($c);
+
+            $config = str_replace('"x":"new', '"x":new', $config);
+            $config = str_replace('01)"', '01)', $config);
+        ?>
+
+    var config = <?php echo $config; ?>;
+    var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", config);
+    chart<?php echo $c['Chart']['id']; ?>.render();
+
+    });
+</script>
+
+<?php endif; ?>
+<?php endforeach; ?>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -49,51 +71,14 @@ $(document).ready(function() {
     // Itera todos os gráficos
     <?php foreach($charts as $c) : ?>
 
-        // Se for um gráfico de linha
-        <?php if($c['Chart']['type'] == "line") : ?>
-
-            // Gera configuração própria para o gráfico de linha
-            <?php
-                // faz um cache dos dados antigos
-                $config = json_decode($c['config']);
-                $datapoints = $config->data[0]->dataPoints;
-                $datapoints_novo = array();
-
-                // remove os datapoints atuais
-                unset($config->data[0]->dataPoints);
-
-                // gera as linhas de JS
-                foreach($datapoints as $d) {
-                    $mes = $d->x[1] - 1;
-
-                    $mes = str_pad($mes, 2, '0', STR_PAD_LEFT);
-
-                    $datapoints_novo[] = "{x: new Date(" . $d->x[0] . ", " . ($mes) . ", " . $d->x[2] . "), y: " . $d->y . "}";
-                }
-            ?>
-            var config = <?php echo json_encode($config); ?>;
-            var id = <?php echo $c['Chart']['id']; ?>;
-            var dataPoints = [<?php echo implode(",", $datapoints_novo); ?>];
-            config["data"][0]["dataPoints"] = dataPoints;
-
-            var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico" + id, config);
-
-        // Se for um gráfico de número absoluto
-        <?php elseif($c['Chart']['type'] == "num_absoluto") : ?>
-            
-        // Se for um gráfico comum
-        <?php else : ?>
-
             // Se existir configuração para o gráfico
-            <?php if(!empty($c['config'])) : ?>
+            <?php if(!empty($c['config']) && $c['Chart']['type'] != "line") : ?>
                  // Instancia o CanvasJS
                 var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
             <?php endif; ?>
 
-        <?php endif; ?>
-
              // Se não for um gráfico de número absoluto, é renderizado o CanvasJS
-            <?php if(!empty($c['config']) && $c['Chart']['type'] != "num_absoluto" ) : ?>
+            <?php if(!empty($c['config']) && $c['Chart']['type'] != "num_absoluto" && $c['Chart']['type'] != "line" ) : ?>
                 chart<?php echo $c['Chart']['id']; ?>.render();
             <?php endif; ?>
     <?php endforeach; ?>

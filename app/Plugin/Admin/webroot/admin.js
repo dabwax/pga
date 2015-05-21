@@ -62,16 +62,11 @@ $(document).ready(function() {
     var value = $(this).val();
 
     if(value == 5) {
-      $(".select-tipo-grafico").find('[value="column"]').remove();
       $(".select-tipo-grafico").find('[value="line"]').remove();
     } else {
 
       if( $(".select-tipo-grafico").find('[value="line"]').length == 0) {
         $(".select-tipo-grafico").append("<option value='line'>Linha</option>");
-      }
-
-      if( $(".select-tipo-grafico").find('[value="column"]').length == 0) {
-        $(".select-tipo-grafico").append("<option value='column'>Coluna</option>");
       }
 
     }

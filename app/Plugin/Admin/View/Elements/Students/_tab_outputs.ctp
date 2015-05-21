@@ -67,6 +67,9 @@
                                 if($chart['Chart']['type'] == 'bar' && $chart['Chart']['input_id']  == 2) {
                                     $vai_dar_merda = true;
                                 }
+                                if($chart['Chart']['type'] == 'column' && $chart['Chart']['input_id']  == 2) {
+                                    $vai_dar_merda = true;
+                                }
                              ?>
 
                              <?php if($vai_dar_merda) : ?>

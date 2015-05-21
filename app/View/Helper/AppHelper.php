@@ -31,173 +31,241 @@ App::uses('Helper', 'View');
  */
 class AppHelper extends Helper {
 
-	public function formatChartType($type = null) {
+    public function prepareLineChart($c) {
+        // faz um cache dos dados antigos
+        $config = json_decode($c['config']);
 
-		switch($type) {
-			case 'line':
-				return "Linha";
-				break;
-			case 'pie':
-				return "Pizza";
-				break;
-			case 'bar':
-				return "Barra";
-				break;
-			case 'column':
-				return "Coluna";
-				break;
-			case 'donut':
-				return "Donut";
-				break;
-		}
-	}
+        $data = array();
+        $maiores_dados = array();
 
-	/**
-	 * Dicionário dos inputs.
-	 *
-	 * @return ID do Input no banco de dados.
-	 */
-	public function getInputId($name = null) {
-		switch($name) {
-			case "Calendário":
-				return 1;
-			break;
-			case "Intervalo de Tempo":
-				return 2;
-			break;
-			case "Texto":
-			case "Registro Textual":
-				return 3;
-			break;
-			case "Escala Numérica":
-				return 4;
-			break;
-			case "Escala Texto":
-				return 5;
-			break;
-			case "Número":
-				return 6;
-			break;
-			case "Texto Privativo":
-				return 7;
-			break;
-			default:
-				return 0;
-			break;
-		}
-	}
+        foreach($config->data as $label => $dados) {
 
-	/**
-	 * Função de atalho para a action set_student.
-	 */
-	public function dados($a, $campo, $subcampo = null) {
+            $dataPoints = array();
+            $maiores_dados[$label] = 0;
 
-		if($campo == "id")
-			$a["prefix"] = null;
 
-		if($campo == "Student")
-			return $a[$a["model"]]["Student"][$subcampo];
+            foreach($dados as $dado) {
 
-		return $a[$a["model"]][$a["prefix"] . $campo];
-	}
+                $ano = $dado->x[0];
+                $mes = str_pad($dado->x[1] - 1, 2, "0", STR_PAD_LEFT);
+                $dia = "01";
 
-	/**
-	 * Função de atalho para recuperar informações do ator logado.
-	 *
-	 * auxílio mágico - INFO: daltro.inq
-	 */
-	public function getActorInfo($field = null) {
-		$info = "Actor." . AuthComponent::user("Actor.prefix") . $field;
+                if($dado->y > $maiores_dados[$label]) {
+                    $maiores_dados[$label] = $dado->y;
+                    $indexLabel = $label;
+                    $markerType = "triangle";
+                    $markerColor = "red";
 
-		return AuthComponent::user($info);
-	}
+                    // limpa os labels antigos
+                    foreach($dataPoints as $x => $datapoint) {
+                        $dataPoints[$x]['indexLabel'] = null;
+                        $dataPoints[$x]['markerType'] = null;
+                        $dataPoints[$x]['markerColor'] = null;
+                    }
+                } else {
+                    $indexLabel = null;
+                    $markerType = null;
+                    $markerColor = null;
+                }
 
-	public function getActorInfo2($field = null) {
-		$info = "Actor." . $field;
+                $dataPoints[] = array(
+                    'x' => 'new Date(' . $ano . ', ' . $mes . ', ' . $dia .')',
+                    'y' => $dado->y,
+                    'indexLabel' => $indexLabel,
+                    'markerType' => $markerType,
+                    'markerColor' => $markerColor
+                );
+            }
+            $data[] = array(
+                'type' => 'line',
+                'showInLegend' => true,
+                'legendText' => $label,
+                'dataPoints' => $dataPoints
+            );
+        }
 
-		return AuthComponent::user($info);
-	}
+        $chart = array(
+            'backgroundColor' => 'transparent',
+            'height' => $c['Chart']['height'],
+            'toolTip' => array('enabled' => true),
+            'title' => array(
+                'text' => $c['Chart']['name'],
+            ),
+            'data' => $data
+        );
 
-	/**
-	 * Função de atalho para recuperar o nome do pai e da mãe.
-	 */
-	public function getParentsName() {
-		$student_parents = AuthComponent::user("Student.StudentParent");
+        $c['config'] = json_encode($chart);
 
-		return $student_parents["dad_name"] . " e " . $student_parents["mom_name"];
-	}
+        return $c['config'];
+    }
 
-	/**
-	 * Função de atalho para recuperar o nome do pai e da mãe.
-	 */
-	public function getTutorName() {
-		$student_parents = AuthComponent::user("Student.StudentParent");
+    public function formatChartType($type = null) {
 
-		return $student_parents["tutor_name"];
-	}
+        switch($type) {
+            case 'line':
+                return "Linha";
+                break;
+            case 'pie':
+                return "Pizza";
+                break;
+            case 'bar':
+                return "Barra";
+                break;
+            case 'column':
+                return "Coluna";
+                break;
+            case 'donut':
+                return "Donut";
+                break;
+        }
+    }
 
-	/**
-	 * Função de atalho para recuperar o nome do psiquiatra.
-	 */
-	public function getPsychiatristName() {
-		$psychiatrist = AuthComponent::user("Student.StudentPsychiatrist");
+    /**
+     * Dicionário dos inputs.
+     *
+     * @return ID do Input no banco de dados.
+     */
+    public function getInputId($name = null) {
+        switch($name) {
+            case "Calendário":
+                return 1;
+            break;
+            case "Intervalo de Tempo":
+                return 2;
+            break;
+            case "Texto":
+            case "Registro Textual":
+                return 3;
+            break;
+            case "Escala Numérica":
+                return 4;
+            break;
+            case "Escala Texto":
+                return 5;
+            break;
+            case "Número":
+                return 6;
+            break;
+            case "Texto Privativo":
+                return 7;
+            break;
+            default:
+                return 0;
+            break;
+        }
+    }
 
-		return $psychiatrist["name"];
-	}
+    /**
+     * Função de atalho para a action set_student.
+     */
+    public function dados($a, $campo, $subcampo = null) {
 
-	/**
-	 * Função de atalho para recuperar o nome da escola.
-	 */
-	public function getSchoolName() {
-		$school = AuthComponent::user("Student.StudentSchool");
+        if($campo == "id")
+            $a["prefix"] = null;
 
-		return $school["mediator_name"] . " e " . $school["coordinator_name"];
-	}
+        if($campo == "Student")
+            return $a[$a["model"]]["Student"][$subcampo];
 
-	/**
-	 * Função de atalho para recuperar informações do estudante logado.
-	 */
-	public function getStudentInfo($field = null) {
-		return AuthComponent::user("Student.Student." . $field);
-	}
+        return $a[$a["model"]][$a["prefix"] . $campo];
+    }
 
-	public function getActorTypeInPortuguese($model, $prefix) {
-		switch($model) {
-			case "Student":
-				$a = "aluno";
+    /**
+     * Função de atalho para recuperar informações do ator logado.
+     *
+     * auxílio mágico - INFO: daltro.inq
+     */
+    public function getActorInfo($field = null) {
+        $info = "Actor." . AuthComponent::user("Actor.prefix") . $field;
 
-				break;
-			case "StudentParent":
+        return AuthComponent::user($info);
+    }
 
-				if($prefix == "mom_") {
-					$a = "mae";
-				}
+    public function getActorInfo2($field = null) {
+        $info = "Actor." . $field;
 
-				if($prefix == "dad_") {
-					$a = "pai";
-				}
+        return AuthComponent::user($info);
+    }
 
-				if($prefix == "tutor_") {
-					$a = "tutor";
-				}
-				break;
-			case "StudentPsychiatrist":
-				$a = "psico";
-				break;
-			case "StudentSchool":
+    /**
+     * Função de atalho para recuperar o nome do pai e da mãe.
+     */
+    public function getParentsName() {
+        $student_parents = AuthComponent::user("Student.StudentParent");
 
-				if($prefix == "mediator_") {
-					$a = "escola";
-				}
+        return $student_parents["dad_name"] . " e " . $student_parents["mom_name"];
+    }
 
-				if($prefix == "coordinator_") {
-					$a = "escola";
-				}
+    /**
+     * Função de atalho para recuperar o nome do pai e da mãe.
+     */
+    public function getTutorName() {
+        $student_parents = AuthComponent::user("Student.StudentParent");
 
-				break;
-		}
+        return $student_parents["tutor_name"];
+    }
 
-		return $a;
-	}
+    /**
+     * Função de atalho para recuperar o nome do psiquiatra.
+     */
+    public function getPsychiatristName() {
+        $psychiatrist = AuthComponent::user("Student.StudentPsychiatrist");
+
+        return $psychiatrist["name"];
+    }
+
+    /**
+     * Função de atalho para recuperar o nome da escola.
+     */
+    public function getSchoolName() {
+        $school = AuthComponent::user("Student.StudentSchool");
+
+        return $school["mediator_name"] . " e " . $school["coordinator_name"];
+    }
+
+    /**
+     * Função de atalho para recuperar informações do estudante logado.
+     */
+    public function getStudentInfo($field = null) {
+        return AuthComponent::user("Student.Student." . $field);
+    }
+
+    public function getActorTypeInPortuguese($model, $prefix) {
+        switch($model) {
+            case "Student":
+                $a = "aluno";
+
+                break;
+            case "StudentParent":
+
+                if($prefix == "mom_") {
+                    $a = "mae";
+                }
+
+                if($prefix == "dad_") {
+                    $a = "pai";
+                }
+
+                if($prefix == "tutor_") {
+                    $a = "tutor";
+                }
+                break;
+            case "StudentPsychiatrist":
+                $a = "psico";
+                break;
+            case "StudentSchool":
+
+                if($prefix == "mediator_") {
+                    $a = "escola";
+                }
+
+                if($prefix == "coordinator_") {
+                    $a = "escola";
+                }
+
+                break;
+        }
+
+        return $a;
+    }
 
 }
