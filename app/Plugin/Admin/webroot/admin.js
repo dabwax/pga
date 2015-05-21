@@ -14,12 +14,14 @@ $(document).ready(function() {
           var value = $(this).val();
 
           if(value == 6) {
-              $("#ChartType").append("<option value='num_absoluto'>Número Absoluto</option>").val("num_absoluto");
+            if($("#ChartType").find("[value='num_absoluto']").length == 0) {
+                $("#ChartType").append("<option value='num_absoluto'>Número Absoluto</option>").val("num_absoluto");
+              }
               $("#ChartSubType").parent().fadeIn("fast");
           } else {
               $("#ChartSubType").val("");
               $("#ChartSubType").parent().fadeOut("fast");
-              $("#ChartType").find("option").last().remove();
+              $("#ChartType").find("[value='num_absoluto']").remove();
           }
       });
 

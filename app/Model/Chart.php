@@ -163,6 +163,10 @@ class Chart extends AppModel {
 
     public function datapointBar($c) {
         $dataPoints = array();
+        $labels = array();
+        $labels_escala_texto = array();
+        $labels_registro_textual = array();
+        $input_id = 0;
 
         $data = array();
 
@@ -173,26 +177,145 @@ class Chart extends AppModel {
 
             // inclui o campo no array de data
             $data[$label] = array();
+
+            if(!in_array($label, $labels)) {
+                $labels[] = strip_tags($label);
+            }
+
+            $input_id = $csi['StudentInput']['Input']['id'];
+
+            if($csi['StudentInput']['Input']['id'] == 5 || $csi['StudentInput']['Input']['id'] == 3 || $csi['StudentInput']['Input']['id'] == 1) {
+
+                if(!empty($csi['StudentInput']['StudentInputValue'])) {
+                    foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                        $novo_label = strip_tags($siv['value']);
+
+                        if($csi['StudentInput']['Input']['id'] == 1) {
+                            $dateTime = DateTime::createFromFormat("d/m/Y", $siv['value']);
+
+                            $novo_label = $dateTime->format("m/Y");
+                        }
+
+                        if(!in_array($novo_label, $labels_escala_texto)) {
+                            $labels_escala_texto[] = $novo_label;
+                        }
+                    }
+                }
+                
+            }
             
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             if(!empty($csi['StudentInput']['StudentInputValue'])) {
                 foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+
                     @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                 }
             } else {
                 $data[$label][0] = 0;
             }
-        }
+        } 
 
+        $linhas = array();
 
-        foreach($data as $label => $dados) {
-            foreach($dados as $y => $total) {
-                $dataPoints[] = array('y' => $y, 'label' => $label);
+        foreach($data as $label => $numeros) {
+
+            foreach($numeros as $x => $num) {
+                $tmp = array();
+
+                foreach($labels as $novo_label) {
+
+                    if($novo_label == $label) {
+
+                        if(is_numeric($x)) {
+                            $y = $x;
+                        } else {
+                            $novo_label = $x;
+                            $y = $num;
+
+                            if($input_id == 1) {
+                                $dateTime = DateTime::createFromFormat("d/m/Y", $x);
+
+                                $novo_label = $dateTime->format("m/Y");
+                            }
+                        }
+                    } else {
+                        $y = 0;
+                    }
+
+                    $tmp[] = array('y' => $y, 'label' => strip_tags($novo_label));
+                }
+
+                if(!empty($labels_escala_texto)) {
+                    foreach($labels_escala_texto as $l_escala_texto) {
+
+                        $ja_foi_incluido = false;
+
+                        foreach($tmp as $t) {
+                            if($t['label'] == $l_escala_texto) {
+                                $ja_foi_incluido = true;
+                            }
+                        }
+
+                        if(!$ja_foi_incluido) {
+                            $tmp[] = array('y' => 0, 'label' => $l_escala_texto);
+                        }
+                    }
+                }
+
+                $tmp = $this->array_orderby($tmp, 'label', SORT_ASC);
+
+                $linhas[] = array(
+                    'type' => 'bar',
+                    'dataPoints' => $tmp
+                );
             }
+
         }
 
-        return array('dataPoints' => $dataPoints);
+        if($input_id == 1) {
+            $total_por_mes = array();
+
+            foreach($linhas as $linha) {
+                foreach($linha['dataPoints'] as $datapoint) {
+                    @$total_por_mes[$datapoint['label']] = @$total_por_mes[$datapoint['label']] + $datapoint['y'];
+                }
+            }
+
+            $novo_datapoint = array();
+            foreach($total_por_mes as $mes => $num) {
+                $novo_datapoint[] = array(
+                    'label' => $mes,
+                    'y' => $num
+                );
+            }
+
+            $data = array(
+                'type' => 'bar',
+                'dataPoints' => $novo_datapoint
+            );
+
+            $data = array($data);
+        } else {
+            $data = $linhas;
+        }
+        return array('data' => $data);
     }
+
+    private function array_orderby() {
+    $args = func_get_args();
+    $data = array_shift($args);
+    foreach ($args as $n => $field) {
+        if (is_string($field)) {
+            $tmp = array();
+            foreach ($data as $key => $row)
+                $tmp[$key] = $row[$field];
+            $args[$n] = $tmp;
+            }
+    }
+    $args[] = &$data;
+    call_user_func_array('array_multisort', $args);
+    return array_pop($args);
+}
 
     public function datapointColumn($c) {
         $dataPoints = array();

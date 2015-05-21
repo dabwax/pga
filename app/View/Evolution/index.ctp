@@ -19,65 +19,24 @@
 
     <a href="#" class="btn btn-default btn-pesquisar" data-target="calendario"><i class="fa fa-calendar"></i></a>
     <a href="<?php echo $this->Html->url( array('controller' => 'search', 'action' => 'clear', 'evolucao') ); ?>" class="btn btn-default btn-limpar-busca disable-ajax">Limpar Busca</a>
+    <a href="<?php echo $this->Html->url( array('controller' => 'evolution', 'action' => 'export', AuthComponent::user('Student.Student.id'), $date_start->format('Y_m_d'), $date_finish->format('Y_m_d') ) ); ?>" target="_blank" class="btn btn-default disable-ajax">Relatório</a>
 
 </div>
 
 <div class="row">
     <?php foreach($charts as $c) : ?>
         <div class="col-md-<?php echo $c['Chart']['columns']; ?>">
-
+    
+            <!-- Se for gráfico de nota -->
             <?php if($c['Chart']['sub_type'] == "nota") : ?>
-            <div class="grafico" style="width: 100%;">
-        <?php else: ?>
-            <div class="grafico" style="height: <?php echo $c['Chart']['height']; ?>px; width: 100%;">
-    <?php endif; ?>
+                <div class="grafico" style="width: 100%;">
+            <!-- Se for um gráfico comum -->
+            <?php else: ?>
+                <div class="grafico" style="height: <?php echo $c['Chart']['height']; ?>px; width: 100%;">
+             <?php endif; ?>
 
                 <div id="grafico<?php echo $c['Chart']['id']; ?>" class="<?php echo $c['Chart']['type']; ?>" style="width: 100%;">
-                    <?php if($c['Chart']['type'] == "num_absoluto") : ?>
-                    <?php 
-
-                        if($c['Chart']['sub_type'] != "nota") {
-                            $config = json_decode($c['config']);
-                            $datapoints = $config->data[0]->dataPoints;
-                            $total = $datapoints[0]->total;
-                            $total_dias = $datapoints[0]->total_dias;
-
-                            if($total > 0 && $total_dias > 0) {
-                                $media = $total / $total_dias;
-                            } else {
-                                $media = 0;
-                                $total_dias = 0;
-                            }
-                        }
-                        ?>
-
-                        <?php if($c['Chart']['sub_type'] == "media") { ?>
-                        <div class="text-center" title="Total: <?php echo $total;?> - Total de Dias: <?php echo $total_dias ?>">
-                            <h2><?php echo $media; ?> </h2>
-                            <p><?php echo $config->title->text; ?></p>
-                            <small><?php echo $total_dias; ?> dias</small>
-                        </div>
-                    <?php } elseif($c['Chart']['sub_type'] == "total") { ?>
-                        <div class="text-center" title="Total: <?php echo $total;?>">
-                            <h2><?php echo $total; ?> </h2>
-                            <p><?php echo $config->title->text; ?></p>
-                        </div>
-                    <?php } elseif($c['Chart']['sub_type'] == "nota") {?>
-
-                        <?php foreach($materias as $materia) : ?>
-                        <div class="text-center pull-left" style="width: 100%;">
-                            <h2 style="font-size: 20px;"><?php echo $materia['nome'] ?></h2>
-                        <?php foreach($materia['notas'] as $nota) : ?>
-                        <?php if($nota['esperado'] > 0 && $nota['alcancado'] > 0) : ?>
-                            <h3 style="font-size: 17px;"><?php echo $nota['esperado'] ?> / <?php echo $nota['alcancado']; ?></h3>
-                            <p style="font-size: 13px;"><?php echo $nota['label'] ?></p>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
-                        </div>
-                        <?php endforeach; ?>
-
-                    <?php } ?>
-                    <?php endif; ?>
+                    <?php echo $this->element("grafico_nota"); ?>
                 </div>
             </div> <!-- .grafico -->
         </div>
@@ -87,10 +46,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+    // Itera todos os gráficos
     <?php foreach($charts as $c) : ?>
 
+        // Se for um gráfico de linha
         <?php if($c['Chart']['type'] == "line") : ?>
 
+            // Gera configuração própria para o gráfico de linha
             <?php
                 // faz um cache dos dados antigos
                 $config = json_decode($c['config']);
@@ -114,24 +76,26 @@ $(document).ready(function() {
             var dataPoints = [<?php echo implode(",", $datapoints_novo); ?>];
             config["data"][0]["dataPoints"] = dataPoints;
 
-            console.log(config);
-
             var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico" + id, config);
 
-        
+        // Se for um gráfico de número absoluto
         <?php elseif($c['Chart']['type'] == "num_absoluto") : ?>
             
+        // Se for um gráfico comum
         <?php else : ?>
 
+            // Se existir configuração para o gráfico
             <?php if(!empty($c['config'])) : ?>
+                 // Instancia o CanvasJS
                 var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
             <?php endif; ?>
 
         <?php endif; ?>
 
+             // Se não for um gráfico de número absoluto, é renderizado o CanvasJS
             <?php if(!empty($c['config']) && $c['Chart']['type'] != "num_absoluto" ) : ?>
-    chart<?php echo $c['Chart']['id']; ?>.render();
-    <?php endif; ?>
+                chart<?php echo $c['Chart']['id']; ?>.render();
+            <?php endif; ?>
     <?php endforeach; ?>
 });
 </script>

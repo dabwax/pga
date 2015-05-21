@@ -94,7 +94,7 @@ class AppController extends Controller {
             }
         }
 
-        $this->Auth->allow('display', 'set_student', 'sair');
+        $this->Auth->allow('display', 'set_student', 'sair', 'export');
     }
 
     /**

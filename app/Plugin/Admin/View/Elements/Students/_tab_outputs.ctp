@@ -50,6 +50,7 @@
                                 <th>Ordem</th>
                                 <th>Nome</th>
                                 <th>Tipo</th>
+                                <th>Pode dar problema?</th>
                                 <th>Data de Inserção</th>
                                 <th class="actions"><?php echo __('Ações'); ?></th>
                         </tr>
@@ -60,6 +61,21 @@
                             <td><?php echo h($chart['Chart']['order']); ?>&nbsp;</td>
                             <td><?php echo h($chart['Chart']['name']); ?>&nbsp;</td>
                             <td><?php echo $this->Html->formatChartType($chart['Chart']['type']); ?>&nbsp;</td>
+                            <td><?php 
+                            $vai_dar_merda = false;
+
+                                if($chart['Chart']['type'] == 'bar' && $chart['Chart']['input_id']  == 2) {
+                                    $vai_dar_merda = true;
+                                }
+                             ?>
+
+                             <?php if($vai_dar_merda) : ?>
+                             <span class="label label-warning">
+                                 <i class="fa fa-exclamation-triangle"></i>
+                             </span>
+                         <?php else: ?>
+                     <?php endif; ?>
+                         </td>
                             <td><?php $datetime = new DateTime($chart['Chart']['created']); echo $datetime->format("d/m/Y"); ?>&nbsp;</td>
                             <td class="actions">
                                 <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'edit', $chart['Chart']['id'] )); ?>" class="btn btn-default btn-editar-<?php echo $chart['Chart']['id']; ?> fancybox">

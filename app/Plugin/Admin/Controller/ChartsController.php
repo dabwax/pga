@@ -143,7 +143,7 @@ class ChartsController extends AdminAppController {
         );
         $chart_student_inputs = $this->ChartStudentInput->find("all", $options);
 
-        $inputs_para_excluir = array(3, 7);
+        $inputs_para_excluir = array(7);
 
         $options = array(
             'conditions' => array(
