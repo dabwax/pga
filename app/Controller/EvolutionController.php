@@ -345,16 +345,18 @@ class EvolutionController extends AppController {
             if($c['Chart']['type'] == 'pie') {
                 $tmp = $this->Chart->datapointPie($c);
 
-                $data = $tmp['data'];
-                $dataPoints = $tmp['dataPoints'];
+                $is_bar = true;
+
+                $dataPoints = $tmp['data'];
             }
 
             // SE FOR DONUT, DATAPOINT DE DONUT
             if($c['Chart']['type'] == 'doughnut') {
                 $tmp = $this->Chart->datapointPie($c);
 
-                $data = $tmp['data'];
-                $dataPoints = $tmp['dataPoints'];
+                $is_bar = true;
+                
+                $dataPoints = $tmp['data'];
             }
 
             // SE FOR LINHA, DATAPOINT DE LINHA
@@ -548,6 +550,7 @@ class EvolutionController extends AppController {
             if(!empty($dataPoints)) {
                 $charts[$x]['config'] = json_encode($config);
             }
+
         }
 
         // envia os gráficos pra view

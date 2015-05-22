@@ -111,6 +111,7 @@ class Chart extends AppModel {
     public function datapointPie($c) {
                 // prepara array de data
                 $data = array();
+                $labels_escala_texto = array();
 
                 // itera cada um dos campos incluídos no gráfico
                 foreach($c['ChartStudentInput'] as $csi) {
@@ -121,26 +122,46 @@ class Chart extends AppModel {
                     $data[$label] = array();
 
                     // itera as configurações do campo, para adicionar as opções da escala (muito, pouco, extravagante, etc) no $data
-                    foreach($csi['StudentInput']['config'] as $i => $config_i) {
-                        if(is_array($config_i)) {
-                            $sub_label = $config_i['name'];
-                        } else {
-                            $sub_label = $config_i;
+
+                    if(!empty($csi['StudentInput']['config'])) {
+                        foreach($csi['StudentInput']['config'] as $i => $config_i) {
+                            if(is_array($config_i)) {
+                                $sub_label = $config_i['name'];
+                            } else {
+                                $sub_label = $config_i;
+                            }
+
+                            $sub_labels[$i] = $sub_label;
+
+                            $data[$label][$sub_label] = 0;
                         }
+                    }
 
-                        $sub_labels[$i] = $sub_label;
+                    $input_id = $csi['StudentInput']['Input']['id'];
 
-                        $data[$label][$sub_label] = 1;
+                    if($input_id == 5 || $input_id == 3 || $input_id == 1) {
+
+                        if(!empty($csi['StudentInput']['StudentInputValue'])) {
+                            foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+                                $novo_label = strip_tags($siv['value']);
+
+                                if($csi['StudentInput']['Input']['id'] == 1) {
+                                    $dateTime = DateTime::createFromFormat("d/m/Y", $siv['value']);
+
+                                    $novo_label = $dateTime->format("m/Y");
+                                }
+
+                                if(!in_array($novo_label, $labels_escala_texto)) {
+                                    $labels_escala_texto[] = $novo_label;
+                                }
+                            }
+                        }
+                        
                     }
 
                     // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
                     foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
-
-                        if(!empty($data[$label][$siv['value']])) {
-                            $data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
-                        } else {
-                            $data[$label][$siv['value']] = 1;
-                        }
+                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                     }
 
                 }
@@ -150,22 +171,69 @@ class Chart extends AppModel {
 
                         if($y > 0) {
                             $dataPoints[] = array(
-                                'y' => $y + 1,
+                                'y' => $y,
                                 'legendText' => $sub_label,
-                                'indexLabel' => $label . ': ' .$sub_label . ' (' . $y . ')',
+                                'indexLabel' => $label,
                             );
                         } else if($y == 0) {
 
                             $dataPoints[] = array(
-                                'y' => 1,
+                                'y' => 0,
                                 'legendText' => $sub_label,
-                                'indexLabel' => $sub_label . ' (' . $y . ')',
+                                'indexLabel' => $sub_label,
                             );
                         }
                     }
                 }
 
-                return array('data' => $data, 'dataPoints' => $dataPoints);
+                $tmp = array();
+
+                if(!empty($labels_escala_texto)) {
+                    foreach($labels_escala_texto as $l_escala_texto) {
+
+                        $ja_foi_incluido = false;
+
+                        foreach($tmp as $t) {
+                            if($t['label'] == $l_escala_texto) {
+                                $ja_foi_incluido = true;
+                            }
+                        }
+
+                        if(!$ja_foi_incluido) {
+                            $tmp[] = array('y' => 0, 'label' => $l_escala_texto);
+                        }
+                    }
+                }
+
+                $tmp = $this->array_orderby($tmp, 'label', SORT_ASC);
+
+                foreach($dataPoints as $x => $dataPoint) {
+
+                    if($input_id == 5 || $input_id == 3 || $input_id == 1) {
+                    
+                        $dataPoint['indexLabel'] = $dataPoint['legendText'];
+                    } else {
+                        $dataPoint['y'] = $dataPoint['legendText'];
+                    }
+                    $tmp[$x] = $dataPoint;
+                }
+                
+                $dataPoints = $tmp;
+
+                if($c['Chart']['type'] == "pie") {
+                    $type = "pie";
+                } else {
+                    $type = "doughnut";
+                }
+                
+                $data = array(
+                    'type' => $type,
+                    'dataPoints' => $dataPoints
+                );
+
+                $data = array($data);
+
+                return array('data' => $data);
     }
 
     public function datapointBar($c) {

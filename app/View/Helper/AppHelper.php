@@ -71,7 +71,7 @@ class AppHelper extends Helper {
                 $dataPoints[] = array(
                     'x' => 'new Date(' . $ano . ', ' . $mes . ', ' . $dia .')',
                     'y' => $dado->y,
-                    'indexLabel' => $indexLabel,
+                    'indexLabel' => '',
                     'markerType' => $markerType,
                     'markerColor' => $markerColor
                 );

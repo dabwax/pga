@@ -70,6 +70,9 @@
                                 if($chart['Chart']['type'] == 'column' && $chart['Chart']['input_id']  == 2) {
                                     $vai_dar_merda = true;
                                 }
+                                if($chart['Chart']['type'] == 'line' && ($chart['Chart']['input_id']  != 4 && $chart['Chart']['input_id']  != 6)) {
+                                    $vai_dar_merda = true;
+                                }
                              ?>
 
                              <?php if($vai_dar_merda) : ?>
