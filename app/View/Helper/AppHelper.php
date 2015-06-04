@@ -43,10 +43,11 @@ class AppHelper extends Helper {
             $dataPoints = array();
             $maiores_dados[$label] = 0;
 
-
             foreach($dados as $dado) {
 
-                $ano = $dado->x[0];
+                if(is_object($dado)) {
+                    $ano = $dado->x[0];
+
                 $mes = str_pad($dado->x[1] - 1, 2, "0", STR_PAD_LEFT);
                 $dia = "01";
 
@@ -75,6 +76,8 @@ class AppHelper extends Helper {
                     'markerType' => $markerType,
                     'markerColor' => $markerColor
                 );
+                
+               } 
             }
             $data[] = array(
                 'type' => 'line',
@@ -93,6 +96,10 @@ class AppHelper extends Helper {
             ),
             'data' => $data
         );
+
+        if(!empty($config->axisY->maximum)) {
+            $chart['axisY'] = array('maximum' => $config->axisY->maximum + 1);
+        }
 
         $c['config'] = json_encode($chart);
 

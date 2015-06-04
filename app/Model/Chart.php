@@ -27,7 +27,17 @@ class Chart extends AppModel {
         'ChartStudentInput'
     );
 
-    public function datapointLine($c) {
+    public function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
+        $sort_col = array();
+        foreach ($arr as $key=> $row) {
+            $sort_col[$key] = $row[$col];
+        }
+
+        array_multisort($sort_col, $dir, $arr);
+    }
+
+
+    public function datapointLine($c, $materias) {
 
         $dataPoints = array();
 
@@ -48,11 +58,8 @@ class Chart extends AppModel {
 
                     $ano = $x->format("Y");
 
-                    if(!empty($data[$label][$x->format('m')])) {
-                        $data[$label][$x->format('m')] = array('value' => $data[$label][$x->format('m')]['value'] + $siv['value'], 'date' => $x->format("01/m/Y"));
-                    } else {
-                        $data[$label][$x->format('m')] = array('value' => $siv['value'],'date' => $siv['date']);
-                    }
+                        $data[$label][$x->format('m')][] = array('value' => $siv['value'], 'date' => $x->format("01/m/Y"));
+
                 } else {
                     @$data[$label][] = array('value' => $siv['value'], 'date' => $siv['date']);
 
@@ -63,35 +70,58 @@ class Chart extends AppModel {
 
         if($c['Chart']['display_mode'] == "mes_a_mes") {
 
-            foreach($c['ChartStudentInput'] as $csi) {
-                // nome do campo
-                $label = $csi['StudentInput']['name'];
+            $meses_anos = array();
 
-                $meses = 12;
+            foreach($data as $label => $dadoss) {
+                foreach($dadoss as $dados) {
 
-                for($i =1; $i <= $meses; $i++) {
-                    $i = str_pad($i, 2, '0', STR_PAD_LEFT);
+                    foreach($dados as $dado) {
+                        $datetime = DateTime::createFromFormat("d/m/Y", $dado['date']);
 
-                    if(empty($data[$label][$i])) {
+                        $ano = $datetime->format("Y");
+                        $mes = $datetime->format("n");
 
-                        if(empty($ano)) {
-                            $ano = date("Y");
-                        }
-                        
-                        $data[$label][$i] = array('value' => 0, 'date' => "01/" . $i . "/" . $ano);
-                    } else {
-                        $tmp = explode("/", $data[$label][$i]['date']);
-
-                        $data[$label][$i] = array(
-                            'value' => intval($data[$label][$i]['value']),
-                            'date' => "01/" . $tmp[1] . "/" . $tmp[2]
-                        );
+                        $meses_anos[$label][$ano][$mes][] = $dado['value'];
                     }
                 }
-                ksort($data[$label]);
             }
+
+            foreach($meses_anos as $label => $anos) {
+                ksort($meses_anos[$label]);
+
+                foreach($meses_anos[$label] as $ano => $dados) {
+                    ksort($meses_anos[$label][$ano]);
+                }
+            }
+
+            unset($data);
+
+            foreach($meses_anos as $label => $anos) {
+                $data[$label] = array();
+
+                foreach($anos as $ano => $meses) {
+
+                    foreach($meses as $mes => $values) {
+
+                        $total = count($values);
+                        $total2 = 0;
+
+                        foreach($values as $v) {
+                            $total2 = $total2 + $v;
+                        }
+
+                        $media = round($total2 / $total, 1);
+
+                        $mes = str_pad($mes, 2, "0", STR_PAD_LEFT);
+                        $data[$label][] = array('date' => '01/' . $mes . '/' . $ano, 'value' => $media);
+                    }
+                } 
+                
+            }
+
         }
 
+        if(!empty($data)) {
         foreach($data as $label => $dados) {
             foreach($dados as $y => $total) {
                 $x = DateTime::createFromFormat("d/m/Y", $total['date']);
@@ -101,14 +131,30 @@ class Chart extends AppModel {
 
                 $x = array($ano, $mes, $dia);
 
-                $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
+                if(in_array($total['date'], $materias)) {
+                    $materias_do_dia = $materias[$total['date']];
+                    $student_lesson_id = $c['Chart']['student_lesson_id'];
+                    
+                    if(!empty($student_lesson_id)) {
+                        if(in_array($student_lesson_id, $materias_do_dia)) {
+
+                            $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
+                        }
+                    } else {
+                        $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
+                    }
+                } else {
+                        $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
+                }
+
             }
+        }
         }
 
         return array('dataPoints' => $dataPoints);
     }
 
-    public function datapointPie($c) {
+    public function datapointPie($c, $materias) {
                 // prepara array de data
                 $data = array();
                 $labels_escala_texto = array();
@@ -124,16 +170,18 @@ class Chart extends AppModel {
                     // itera as configurações do campo, para adicionar as opções da escala (muito, pouco, extravagante, etc) no $data
 
                     if(!empty($csi['StudentInput']['config'])) {
-                        foreach($csi['StudentInput']['config'] as $i => $config_i) {
-                            if(is_array($config_i)) {
-                                $sub_label = $config_i['name'];
-                            } else {
-                                $sub_label = $config_i;
+                        if(is_array($csi['StudentInput']['config'])) {
+                            foreach($csi['StudentInput']['config'] as $i => $config_i) {
+                                if(is_array($config_i)) {
+                                    $sub_label = $config_i['name'];
+                                } else {
+                                    $sub_label = $config_i;
+                                }
+
+                                $sub_labels[$i] = $sub_label;
+
+                                $data[$label][$sub_label] = 0;
                             }
-
-                            $sub_labels[$i] = $sub_label;
-
-                            $data[$label][$sub_label] = 0;
                         }
                     }
 
@@ -161,7 +209,24 @@ class Chart extends AppModel {
 
                     // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
                     foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
-                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+
+                            $student_lesson_id = $c['Chart']['student_lesson_id'];
+                        if(in_array($siv['date'], $materias) && !empty($student_lesson_id)) {
+                            $materias_do_dia = $materias[$siv['date']];
+                            
+                            if(!empty($student_lesson_id)) {
+                                if(in_array($student_lesson_id, $materias_do_dia)) {
+
+                                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                                }
+                            } else {
+                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                            }
+                        } else {
+
+                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        }
+
                     }
 
                 }
@@ -207,6 +272,9 @@ class Chart extends AppModel {
 
                 $tmp = $this->array_orderby($tmp, 'label', SORT_ASC);
 
+                if(empty($dataPoints)) {
+                    return false;
+                }
                 foreach($dataPoints as $x => $dataPoint) {
 
                     if($input_id == 5 || $input_id == 3 || $input_id == 1) {
@@ -236,7 +304,7 @@ class Chart extends AppModel {
                 return array('data' => $data);
     }
 
-    public function datapointBar($c) {
+    public function datapointBar($c, $materias) {
         $dataPoints = array();
         $labels = array();
         $labels_escala_texto = array();
@@ -263,6 +331,7 @@ class Chart extends AppModel {
 
                 if(!empty($csi['StudentInput']['StudentInputValue'])) {
                     foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
+
                         $novo_label = strip_tags($siv['value']);
 
                         if($csi['StudentInput']['Input']['id'] == 1) {
@@ -283,7 +352,18 @@ class Chart extends AppModel {
             if(!empty($csi['StudentInput']['StudentInputValue'])) {
                 foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
 
+                    $materias_do_dia = $materias[$siv['date']];
+                    $student_lesson_id = $c['Chart']['student_lesson_id'];
+                    
+                    if(!empty($student_lesson_id)) {
+                        if(in_array($student_lesson_id, $materias_do_dia)) {
+
+                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        }
+                    } else {
                     @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                    }
+
                 }
             } else {
                 $data[$label][0] = 0;
@@ -373,6 +453,7 @@ class Chart extends AppModel {
         } else {
             $data = $linhas;
         }
+
         return array('data' => $data);
     }
 
@@ -392,7 +473,7 @@ class Chart extends AppModel {
     return array_pop($args);
 }
 
-    public function datapointColumn($c) {
+    public function datapointColumn($c, $materias) {
         $dataPoints = array();
         $labels = array();
         $labels_escala_texto = array();
@@ -436,10 +517,27 @@ class Chart extends AppModel {
             }
             
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
+            // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             if(!empty($csi['StudentInput']['StudentInputValue'])) {
                 foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
 
-                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        $student_lesson_id = $c['Chart']['student_lesson_id'];
+                    if(in_array($siv['date'], $materias) && !empty($student_lesson_id)) {
+                        $materias_do_dia = $materias[$siv['date']];
+                        
+                        if(!empty($student_lesson_id)) {
+                            if(in_array($student_lesson_id, $materias_do_dia)) {
+
+                                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                            }
+                        } else {
+                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        }
+                    } else {
+
+                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                    }
+
                 }
             } else {
                 $data[$label][0] = 0;
@@ -532,7 +630,7 @@ class Chart extends AppModel {
         return array('data' => $data);
     }
 
-    public function datapointNumAbsoluto($c) {
+    public function datapointNumAbsoluto($c, $materias) {
         $dataPoints = array();
 
         $data = array();

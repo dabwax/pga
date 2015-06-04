@@ -34,6 +34,7 @@
                 <div class="grafico" style="height: <?php echo $c['Chart']['height']; ?>px; width: 100%;">
              <?php endif; ?>
 
+
                 <div id="grafico<?php echo $c['Chart']['id']; ?>" class="<?php echo $c['Chart']['type']; ?>" style="width: 100%;">
                     <?php echo $this->element("grafico_nota", array('c' => $c) ); ?>
                 </div>
@@ -72,7 +73,7 @@ $(document).ready(function() {
     <?php foreach($charts as $c) : ?>
 
             // Se existir configuração para o gráfico
-            <?php if(!empty($c['config']) && $c['Chart']['type'] != "line") : ?>
+            <?php if(!empty($c['config']) && $c['Chart']['type'] != "line" && $c['Chart']['type'] != "num_absoluto") : ?>
                  // Instancia o CanvasJS
                 var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", <?php echo $c['config']; ?>);
             <?php endif; ?>

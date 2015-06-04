@@ -8,7 +8,7 @@
         $config = json_decode($c['config']);
 
         // Armazena o datapoint do gráfico
-        $datapoints = $config->data[0]->dataPoints;
+        $datapoints = $config->data;
 
         // Armazena os totais
         $total = $datapoints[0]->total;
@@ -23,6 +23,7 @@
         }
     }
     ?>
+
 
     <!-- Se for um ráfico de média -->
     <?php if($c['Chart']['sub_type'] == "media") { ?>

@@ -213,6 +213,16 @@ class StudentsController extends AdminAppController {
         );
         $inputs_o = $this->Input->find("list", $options);
 
+
+        $this->loadModel("StudentLesson");
+
+        $options = array(
+            'conditions' => array(
+                'StudentLesson.student_id' => $id
+            )
+        );
+        $lessons_o = $this->StudentLesson->find("list", $options);
+
         $options = array(
             'fields' => array(
                 'StudentInput.id',
@@ -321,7 +331,7 @@ class StudentsController extends AdminAppController {
             $this->set(compact("houve_criacao"));
         }
 
-        $this->set(compact("student_inputs_o", "inputs_o", "charts", "options_inputs", "options_lessons", "atores", "inputs", "student_inputs", "aulas", "student_lessons", "o_student_lessons", "student_exercises"));
+        $this->set(compact("lessons_o", "student_inputs_o", "inputs_o", "charts", "options_inputs", "options_lessons", "atores", "inputs", "student_inputs", "aulas", "student_lessons", "o_student_lessons", "student_exercises"));
     }
 
 /**

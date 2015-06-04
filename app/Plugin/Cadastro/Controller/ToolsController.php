@@ -42,7 +42,6 @@ class ToolsController extends CadastroAppController {
                 $dados_temporarios[$i][$coluna] = $dados[$num];
             }
         }
-        var_dump($dados_temporarios);
     }
 
     public function download($id) {

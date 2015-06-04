@@ -74,8 +74,6 @@ class StudentInputValue extends AppModel {
             foreach($csi['ChartStudentInput'] as $tmp) {
                 foreach($tmp['StudentInput']['StudentInputValue'] as $siv) {
 
-                    var_dump($dados);
-
                     if(!in_array($siv['value'], $dados)) {
                         $dados[$siv['value']] = 1;
                     } else {
@@ -95,7 +93,6 @@ class StudentInputValue extends AppModel {
                 );
             }
 
-            var_dump($chart_config);
         }
 
         // se for de linha

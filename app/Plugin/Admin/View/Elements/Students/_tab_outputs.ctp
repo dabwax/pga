@@ -15,9 +15,12 @@
 
                 <div class="col-md-3">
 
+                  <h3 style="font-size: 18px;">Novo Gráfico</h3>
+
                     <?php echo $this->Form->create("Chart", array('url' => array('controller' => 'charts', 'action' => 'add') ) ); ?>
 
                     <?php echo $this->Form->input("name", array('label' => 'Nome') ); ?>
+                    <?php echo $this->Form->input('student_lesson_id', array('label' => 'Matéria', 'options' => $lessons_o, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-materia') ); ?>
                     <?php echo $this->Form->input('input_id', array('label' => 'Tipo de Input', 'options' => $inputs_o, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-tipo-de-input') ); ?>
                     <?php
                         $options = array(
@@ -30,7 +33,7 @@
                         );
                         echo $this->Form->input('type', array('label' => 'Gráfico', 'options' => $options, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-tipo-grafico') ); ?>
                       <?php echo $this->Form->input("student_id", array('type' => 'hidden', 'value' => $this->request->data['Student']['id']) ); ?>
-                      <?php echo $this->Form->input("columns", array('label' => 'Colunas', 'type' => 'select', 'options' => array(3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10, 12 =>  12)  ) ); ?>
+                      <?php echo $this->Form->input("columns", array('label' => 'Colunas', 'type' => 'select', 'options' => array(6 => 6, 3 => 3, 4 => 4, 5 => 5, 7 => 7, 8 => 8, 9 => 9, 10 => 10, 12 =>  12)  ) ); ?>
                       <?php echo $this->Form->input("order", array('label' => 'Ordem', 'value' => 0, 'class' => 'form-control', 'type' => 'text' ) ); ?>
                       <?php echo $this->Form->input("height", array('label' => 'Altura (em pixels)', 'class' => 'form-control', 'type' => 'text', 'value' => 300 ) ); ?>
 
@@ -86,9 +89,6 @@
                             <td class="actions">
                                 <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'edit', $chart['Chart']['id'] )); ?>" class="btn btn-default btn-editar-<?php echo $chart['Chart']['id']; ?> fancybox">
                                     <i class="fa fa-pencil"></i> Editar
-                                </a>
-                                <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'view', $chart['Chart']['id'] )); ?>" class="btn btn-primary fancybox">
-                                    <i class="fa fa-eye"></i> Visualizar
                                 </a>
                                 <a href="<?php echo $this->Html->url(array('controller' => 'charts', 'action' => 'delete', $chart['Chart']['id'] )); ?>" onclick="if(!confirm('Você tem certeza disto? Esta ação é PERMANENTE!')){ return false; }" class="btn btn-danger">
                                     <i class="fa fa-trash"></i> Deletar

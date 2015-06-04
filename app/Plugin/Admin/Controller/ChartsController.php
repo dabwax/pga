@@ -155,7 +155,16 @@ class ChartsController extends AdminAppController {
 
         $inputs = $this->Chart->Input->find('list', $options);
 
-        $this->set(compact('students', 'student_inputs', 'chart_student_inputs', 'inputs'));
+        $this->loadModel("StudentLesson");
+
+        $options = array(
+            'conditions' => array(
+                'StudentLesson.student_id' => $this->request->data['Chart']['student_id']
+            )
+        );
+        $lessons_o = $this->StudentLesson->find("list", $options);
+
+        $this->set(compact('lessons_o', 'students', 'student_inputs', 'chart_student_inputs', 'inputs'));
     }
 
 /**

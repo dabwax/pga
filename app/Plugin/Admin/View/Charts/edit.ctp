@@ -24,6 +24,7 @@
                                         <?php
                                             echo $this->Form->input('id');
                                             echo $this->Form->input('name');
+                                            echo $this->Form->input('student_lesson_id', array('label' => 'Matéria', 'options' => $lessons_o, 'empty' => 'Selecionar', 'data-disable-select' => 'true', 'class' => 'form-control select-materia') );
                                             $options = array(
                                                 'bar' => 'Barra',
                                                 'column' => 'Coluna',

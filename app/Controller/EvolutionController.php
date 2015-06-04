@@ -11,39 +11,26 @@ class EvolutionController extends AppController {
 
         $tmp = explode("_", $date_start);
         $date_start  = new DateTime($tmp[0] . '-' . $tmp[1] . '-' . $tmp[2]);
-        $date_finish = $this->Session->read("date_finish");
+        $tmp = explode("_", $date_finish);
+        $date_finish  = new DateTime($tmp[0] . '-' . $tmp[1] . '-' . $tmp[2]);
 
         $conditions = array(
             "StudentInputValue.student_id" => $student_id
         );
 
-        if(!empty($date_start) && !empty($date_finish)) {
+            if($this->request->is("post")) {
+
+                $tmp = explode("/", $this->request->data['Evolution']['date_start']);
+                $date_start = $tmp[2] . "_" . $tmp[1] . "_" . $tmp[0];
+                $tmp = explode("/", $this->request->data['Evolution']['date_finish']);
+                $date_finish = $tmp[2] . "_" . $tmp[1] . "_" . $tmp[0];
+
+                return $this->redirect( array('action' => 'export', $student_id, $date_start, $date_finish) );
+            }
+
             $conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
-
-            $tem_busca = true;
-            $busca_de_data = true;
-
-            $this->Session->delete("date_start");
-            $this->Session->delete("date_finish");
-        } else {
             $tem_busca = false;
-            $dateTime = new DateTime();
 
-            $date_start     =  new DateTime($dateTime->format("Y-m-") . "01");
-            $date_finish    = $dateTime;
-
-            $date_finish = new DateTime($date_finish->format("Y-m-t"));
-
-            $conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
-        }
-
-        if($this->request->is("post")) {
-
-            $date_start          =  DateTime::createFromFormat("d/m/Y", $this->request->data['Evolution']['date_start']);
-            $date_finish        =  DateTime::createFromFormat("d/m/Y", $this->request->data['Evolution']['date_finish']);
-
-            $conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
-        }
 
         $this->set(compact("date_start", "date_finish"));
 
@@ -67,6 +54,25 @@ class EvolutionController extends AppController {
         );
         $charts = $this->Chart->find("all", $options);
 
+        $this->loadModel("StudentInputValue");
+
+        $options = array(
+            'conditions' => array(
+                'StudentInputValue.student_id' => $student_id,
+            )
+        );
+        $sivs_por_materia = $this->StudentInputValue->find("all", $options);
+
+        $sivs_por_materia2 = array();
+
+        foreach($sivs_por_materia as $siv) {
+            $date = $siv['StudentInputValue']['date'];
+
+            if(!empty($siv['StudentInputValue']['student_lesson_id'])) {
+                $sivs_por_materia2[$date][] = $siv['StudentInputValue']['student_lesson_id'];
+            }
+        }
+        
         // itera os gráficos existentes
         foreach($charts as $x => $c) {
 
@@ -74,30 +80,32 @@ class EvolutionController extends AppController {
 
             // SE FOR PIZZA, DATAPOINT DE PIZZA
             if($c['Chart']['type'] == 'pie') {
-                $tmp = $this->Chart->datapointPie($c);
+                $tmp = $this->Chart->datapointPie($c, $sivs_por_materia2);
 
-                $data = $tmp['data'];
-                $dataPoints = $tmp['dataPoints'];
+                $is_bar = true;
+
+                $dataPoints = $tmp['data'];
             }
 
             // SE FOR DONUT, DATAPOINT DE DONUT
             if($c['Chart']['type'] == 'doughnut') {
-                $tmp = $this->Chart->datapointPie($c);
+                $tmp = $this->Chart->datapointPie($c, $sivs_por_materia2);
 
-                $data = $tmp['data'];
-                $dataPoints = $tmp['dataPoints'];
+                $is_bar = true;
+                
+                $dataPoints = $tmp['data'];
             }
 
             // SE FOR LINHA, DATAPOINT DE LINHA
             if($c['Chart']['type'] == 'line') {
-                $tmp = $this->Chart->datapointLine($c);
+                $tmp = $this->Chart->datapointLine($c, $sivs_por_materia2);
 
                 $dataPoints = $tmp['dataPoints'];
             }
             
             // SE FOR BARRA, DATAPOINT DE BARRA
             if($c['Chart']['type'] == 'bar') {
-                $tmp = $this->Chart->datapointBar($c);
+                $tmp = $this->Chart->datapointBar($c, $sivs_por_materia2);
 
                 $is_bar = true;
 
@@ -106,14 +114,16 @@ class EvolutionController extends AppController {
 
             // SE FOR COLUNA, DATAPOINT DE COLUNA
             if($c['Chart']['type'] == 'column') {
-                $tmp = $this->Chart->datapointColumn($c);
+                $tmp = $this->Chart->datapointColumn($c, $sivs_por_materia2);
 
-                $dataPoints = $tmp['dataPoints'];
+                $is_bar = true;
+                
+                $dataPoints = $tmp['data'];
             }
 
             // SE FOR NÚMERO ABSOLUTO, DATAPOINT DE NÚMERO ABSOLUTO
             if($c['Chart']['type'] == 'num_absoluto') {
-                $tmp = $this->Chart->datapointNumAbsoluto($c);
+                $tmp = $this->Chart->datapointNumAbsoluto($c, $sivs_por_materia2);
 
                 $dataPoints = $tmp['dataPoints'];
 
@@ -277,6 +287,7 @@ class EvolutionController extends AppController {
             if(!empty($dataPoints)) {
                 $charts[$x]['config'] = json_encode($config);
             }
+
         }
 
         // envia os gráficos pra view
@@ -336,6 +347,25 @@ class EvolutionController extends AppController {
         );
         $charts = $this->Chart->find("all", $options);
 
+        $this->loadModel("StudentInputValue");
+
+        $options = array(
+            'conditions' => array(
+                'StudentInputValue.student_id' => $student_id,
+            )
+        );
+        $sivs_por_materia = $this->StudentInputValue->find("all", $options);
+
+        $sivs_por_materia2 = array();
+
+        foreach($sivs_por_materia as $siv) {
+            $date = $siv['StudentInputValue']['date'];
+
+            if(!empty($siv['StudentInputValue']['student_lesson_id'])) {
+                $sivs_por_materia2[$date][] = $siv['StudentInputValue']['student_lesson_id'];
+            }
+        }
+
         // itera os gráficos existentes
         foreach($charts as $x => $c) {
 
@@ -343,7 +373,7 @@ class EvolutionController extends AppController {
 
             // SE FOR PIZZA, DATAPOINT DE PIZZA
             if($c['Chart']['type'] == 'pie') {
-                $tmp = $this->Chart->datapointPie($c);
+                $tmp = $this->Chart->datapointPie($c, $sivs_por_materia2);
 
                 $is_bar = true;
 
@@ -352,7 +382,7 @@ class EvolutionController extends AppController {
 
             // SE FOR DONUT, DATAPOINT DE DONUT
             if($c['Chart']['type'] == 'doughnut') {
-                $tmp = $this->Chart->datapointPie($c);
+                $tmp = $this->Chart->datapointPie($c, $sivs_por_materia2);
 
                 $is_bar = true;
                 
@@ -361,14 +391,15 @@ class EvolutionController extends AppController {
 
             // SE FOR LINHA, DATAPOINT DE LINHA
             if($c['Chart']['type'] == 'line') {
-                $tmp = $this->Chart->datapointLine($c);
+                $tmp = $this->Chart->datapointLine($c, $sivs_por_materia2);
 
+                $is_bar = true;
                 $dataPoints = $tmp['dataPoints'];
             }
             
             // SE FOR BARRA, DATAPOINT DE BARRA
             if($c['Chart']['type'] == 'bar') {
-                $tmp = $this->Chart->datapointBar($c);
+                $tmp = $this->Chart->datapointBar($c, $sivs_por_materia2);
 
                 $is_bar = true;
 
@@ -377,7 +408,7 @@ class EvolutionController extends AppController {
 
             // SE FOR COLUNA, DATAPOINT DE COLUNA
             if($c['Chart']['type'] == 'column') {
-                $tmp = $this->Chart->datapointColumn($c);
+                $tmp = $this->Chart->datapointColumn($c, $sivs_por_materia2);
 
                 $is_bar = true;
                 
@@ -386,7 +417,7 @@ class EvolutionController extends AppController {
 
             // SE FOR NÚMERO ABSOLUTO, DATAPOINT DE NÚMERO ABSOLUTO
             if($c['Chart']['type'] == 'num_absoluto') {
-                $tmp = $this->Chart->datapointNumAbsoluto($c);
+                $tmp = $this->Chart->datapointNumAbsoluto($c, $sivs_por_materia2);
 
                 $dataPoints = $tmp['dataPoints'];
 
@@ -526,6 +557,24 @@ class EvolutionController extends AppController {
                 }
             }
 
+            $maior_numero = false;
+            foreach($c['ChartStudentInput'] as $csi) {
+
+                if(is_string($csi['StudentInput']['config'])) {
+                    $config = unserialize($csi['StudentInput']['config']);
+                } else {
+                    $config = $csi['StudentInput']['config'];
+                }
+
+                if(!empty($config['range_end'])) {
+                    $range_end = $config['range_end'];
+                }
+
+                if(!empty($range_end)) {
+                    $maior_numero = $range_end;
+                }
+            }
+
             // gera o array de configurações do CanvasJS
             $config = array(
                 'backgroundColor' => 'transparent',
@@ -541,6 +590,10 @@ class EvolutionController extends AppController {
                     )
                 )
             );
+
+            if($maior_numero) {
+                $config['axisY'] = array('maximum' => $maior_numero);
+            }
 
             if(isset($is_bar) && $is_bar == true) {
                 $config['data'] = $dataPoints;

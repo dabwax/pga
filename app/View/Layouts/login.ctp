@@ -19,10 +19,21 @@
 		echo $this->Html->css('app.css');
 
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-		echo $this->Html->script('//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js');
+		echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js');
 		echo $this->Html->script('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js');
+		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/i18n/jquery-ui-i18n.min.js');
 		echo $this->Html->script('jquery.mask.min.js');
 		echo $this->Html->script('jquery.timeago.js');
+		echo $this->Html->script('/files/select2-3.5.2/select2.min.js');
+		echo $this->Html->script('/files/select2-3.5.2/select2_locale_pt-BR.js');
+		echo $this->Html->script('/files/zozo-tabs/js/zozo.tabs.js');
+		echo $this->Html->script('/files/timeline/javascript/timeline.js');
+		echo $this->Html->script('http://imperavi.com/js/redactor/redactor.js');
+		echo $this->Html->script('/files/canvasjs/jquery.canvasjs.min.js');
+		echo $this->Html->script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js");
+		echo $this->Html->script('/files/fancybox/jquery.fancybox.pack.js');
+		echo $this->Html->script('/files/jquery.highlight-5.js');
+		echo $this->Html->script('/files/jquery.fittext.js');
 		echo $this->Html->script('app.js');
 
 		echo $this->fetch('meta');
