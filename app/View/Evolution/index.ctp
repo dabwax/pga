@@ -53,12 +53,18 @@
             $config = $this->Html->prepareLineChart($c);
 
             $config = str_replace('"x":"new', '"x":new', $config);
-            $config = str_replace('01)"', '01)', $config);
+
+            for($i = 1; $i <= 31; $i++) {
+                $i = str_pad($i, 2, "0", STR_PAD_LEFT);
+            $config = str_replace($i . ')"', $i . ')', $config);
+            }
         ?>
 
+        <?php if(!empty($config) || $config != "[]") : ?>
     var config = <?php echo $config; ?>;
     var chart<?php echo $c['Chart']['id']; ?> = new CanvasJS.Chart("grafico<?php echo $c['Chart']['id']; ?>", config);
     chart<?php echo $c['Chart']['id']; ?>.render();
+    <?php endif; ?>
 
     });
 </script>
@@ -79,7 +85,7 @@ $(document).ready(function() {
             <?php endif; ?>
 
              // Se não for um gráfico de número absoluto, é renderizado o CanvasJS
-            <?php if(!empty($c['config']) && $c['Chart']['type'] != "num_absoluto" && $c['Chart']['type'] != "line" ) : ?>
+            <?php if(!empty($c['config']) && $c['Chart']['type'] != "num_absoluto" && $c['Chart']['type'] != "line" && $c['config'] != "[]" ) : ?>
                 chart<?php echo $c['Chart']['id']; ?>.render();
             <?php endif; ?>
     <?php endforeach; ?>

@@ -36,12 +36,44 @@ class Chart extends AppModel {
         array_multisort($sort_col, $dir, $arr);
     }
 
+    public function getMateriasPorDia($student_id) {
+           $options = [
+            'conditions' => [
+                    'StudentInputValue.student_id' => $student_id,
+                    'StudentInputValue.student_lesson_id IS NOT NULL',
+            ],
+            'contain' => false
+        ];
+
+        $oStudentInputValue = ClassRegistry::init("StudentInputValue");
+        $find = $oStudentInputValue->find("all", $options);
+        $dias = array();
+
+        foreach($find as $f) {
+            $student_lesson_id = $f['StudentInputValue']['student_lesson_id'];
+            $date = $f['StudentInputValue']['date'];
+
+            if(empty($dias[$date])) {
+                $dias[$date] = [];
+
+                $dias[$date][$student_lesson_id] = 1;
+            } else {
+
+                $dias[$date][$student_lesson_id] = 1;
+            }
+
+        }
+
+        return $dias;
+    }
+
 
     public function datapointLine($c, $materias) {
 
         $dataPoints = array();
 
         $data = array();
+        $datas = array();
 
         // itera cada um dos campos incluídos no gráfico
         foreach($c['ChartStudentInput'] as $csi) {
@@ -51,6 +83,8 @@ class Chart extends AppModel {
             // inclui o campo no array de data
             $data[$label] = array();
             
+            $aulas_dessa_materias = $this->getMateriasPorDia( $c['Chart']['student_id'] );
+
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
                 if($c['Chart']['display_mode'] == "mes_a_mes") {
@@ -58,8 +92,31 @@ class Chart extends AppModel {
 
                     $ano = $x->format("Y");
 
-                        $data[$label][$x->format('m')][] = array('value' => $siv['value'], 'date' => $x->format("01/m/Y"));
+                    if( !empty( $c['Chart']['student_lesson_id'] ) ) {
 
+                        $data_dessa_aula = $siv['date'];
+
+                        if(array_key_exists($data_dessa_aula, $aulas_dessa_materias)) {
+
+                            if(array_key_exists($c['Chart']['student_lesson_id'], $aulas_dessa_materias[$data_dessa_aula])) {
+
+                                if($c['Chart']['display_mode'] == "mes_a_mes") {
+                                    $data[$label][$x->format('m')][] = array('value' => $siv['value'], 'date' => $x->format("01/m/Y"));
+                                } else {
+                                    $data[$label][$x->format('m')][] = array('value' => $siv['value'], 'date' => $x->format("d/m/Y"));
+                                }
+
+                            }
+                        }
+
+                            
+                    } else {
+                        if($c['Chart']['display_mode'] == "mes_a_mes") {
+                            $data[$label][$x->format('m')][] = array('value' => $siv['value'], 'date' => $x->format("01/m/Y"));
+                        } else {
+                            $data[$label][$x->format('m')][] = array('value' => $siv['value'], 'date' => $x->format("d/m/Y"));
+                        }
+                    }
                 } else {
                     @$data[$label][] = array('value' => $siv['value'], 'date' => $siv['date']);
 
@@ -68,20 +125,38 @@ class Chart extends AppModel {
             }
         }
 
-        if($c['Chart']['display_mode'] == "mes_a_mes") {
-
             $meses_anos = array();
 
             foreach($data as $label => $dadoss) {
                 foreach($dadoss as $dados) {
 
-                    foreach($dados as $dado) {
-                        $datetime = DateTime::createFromFormat("d/m/Y", $dado['date']);
+                    if(empty($dados['date'])) {
+                        foreach($dados as $dado) {
+                            $datetime = DateTime::createFromFormat("d/m/Y", $dado['date']);
 
-                        $ano = $datetime->format("Y");
-                        $mes = $datetime->format("n");
+                            $ano = $datetime->format("Y");
+                            $mes = $datetime->format("n");
 
-                        $meses_anos[$label][$ano][$mes][] = $dado['value'];
+                            $meses_anos[$label][$ano][$mes][] = $dado['value'];
+                        }
+                    } else {
+
+                            $datetime = DateTime::createFromFormat("d/m/Y", $dados['date']);
+
+                            $ano = $datetime->format("Y");
+                            $mes = $datetime->format("n");
+                            $dia = $datetime->format("d");
+
+                            if(!in_array($dados['date'], $datas)) {
+                                $datas[] = $dados['date'];
+                            }
+
+
+                             if($c['Chart']['display_mode'] == "mes_a_mes") {
+                                $meses_anos[$label][$ano][$mes][] = $dados['value'];
+                            } else {
+                                $meses_anos[$label][$ano][$mes][] = array('value' => $dados['value'], 'dia' => $dia);
+                            }
                     }
                 }
             }
@@ -103,23 +178,44 @@ class Chart extends AppModel {
 
                     foreach($meses as $mes => $values) {
 
-                        $total = count($values);
-                        $total2 = 0;
+                        if($c['Chart']['display_mode'] == "mes_a_mes") {
 
-                        foreach($values as $v) {
-                            $total2 = $total2 + $v;
+                            $total = count($values);
+                            $total2 = 0;
+                            $dia = "01";
+
+                            foreach($values as $v) {
+                                    $total2 = $total2 + $v;
+                            }
+
+                            $media = round($total2 / $total, 1);
+
+                            $mes = str_pad($mes, 2, "0", STR_PAD_LEFT);
+                            $data[$label][] = array('date' => $dia . '/' . $mes . '/' . $ano, 'value' => $media);
+
+                            // dia a dia
+                        } else {
+                                $total = count($values);
+                                $total2 = 0;
+
+                                foreach($values as $v) {
+                                        $total2 = $total2 + $v['value'];
+                                        $dia = $v['dia'];
+                                    $mes = str_pad($mes, 2, "0", STR_PAD_LEFT);
+                                    $data[$label][] = array('date' => $dia . '/' . $mes . '/' . $ano, 'value' => $v['value']);
+
+                                }
+
+
                         }
 
-                        $media = round($total2 / $total, 1);
-
-                        $mes = str_pad($mes, 2, "0", STR_PAD_LEFT);
-                        $data[$label][] = array('date' => '01/' . $mes . '/' . $ano, 'value' => $media);
+                        // TODO SE FOR DIA A DIA USAR O DIA ATUAL SE FOR MES A MES SEMPRE DIA PRIMEIRO
                     }
                 } 
                 
             }
 
-        }
+            //var_dump($data);
 
         if(!empty($data)) {
         foreach($data as $label => $dados) {
@@ -131,24 +227,13 @@ class Chart extends AppModel {
 
                 $x = array($ano, $mes, $dia);
 
-                if(in_array($total['date'], $materias)) {
-                    $materias_do_dia = $materias[$total['date']];
-                    $student_lesson_id = $c['Chart']['student_lesson_id'];
-                    
-                    if(!empty($student_lesson_id)) {
-                        if(in_array($student_lesson_id, $materias_do_dia)) {
+                $student_lesson_id = $c['Chart']['student_lesson_id'];
 
-                            $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
-                        }
-                    } else {
-                        $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
-                    }
-                } else {
-                        $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
-                }
+                $dataPoints[$label][] = array('y' => $total['value'], 'label' => $label, 'x' => $x);
 
             }
         }
+        
         }
 
         return array('dataPoints' => $dataPoints);
@@ -207,20 +292,21 @@ class Chart extends AppModel {
                         
                     }
 
+
+                    $aulas_desse_estudante = $this->getMateriasPorDia( $c['Chart']['student_id'] );
+
                     // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
                     foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
 
-                            $student_lesson_id = $c['Chart']['student_lesson_id'];
-                        if(in_array($siv['date'], $materias) && !empty($student_lesson_id)) {
-                            $materias_do_dia = $materias[$siv['date']];
-                            
-                            if(!empty($student_lesson_id)) {
-                                if(in_array($student_lesson_id, $materias_do_dia)) {
+                        if(!empty($c['Chart']['student_lesson_id'])) {
 
+                            $date = $siv['date'];
+                            $student_lesson_id = $c['Chart']['student_lesson_id'];
+
+                            if(array_key_exists($date, $aulas_desse_estudante)) {
+                                if(array_key_exists($student_lesson_id, $aulas_desse_estudante[$date])) {
                                     @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                                 }
-                            } else {
-                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                             }
                         } else {
 
@@ -279,7 +365,7 @@ class Chart extends AppModel {
 
                     if($input_id == 5 || $input_id == 3 || $input_id == 1) {
                     
-                        $dataPoint['indexLabel'] = $dataPoint['legendText'];
+                        $dataPoint['indexLabel'] = $dataPoint['legendText'] . ' (#percent%)';
                     } else {
                         $dataPoint['y'] = $dataPoint['legendText'];
                     }
@@ -352,16 +438,21 @@ class Chart extends AppModel {
             if(!empty($csi['StudentInput']['StudentInputValue'])) {
                 foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
 
-                    $materias_do_dia = $materias[$siv['date']];
-                    $student_lesson_id = $c['Chart']['student_lesson_id'];
-                    
-                    if(!empty($student_lesson_id)) {
-                        if(in_array($student_lesson_id, $materias_do_dia)) {
+                    if(in_array($siv['date'], $materias)) {
+                        $materias_do_dia = $materias[$siv['date']];
+                        $student_lesson_id = $c['Chart']['student_lesson_id'];
+                        
+                        if(!empty($student_lesson_id)) {
+                            if(in_array($student_lesson_id, $materias_do_dia)) {
 
-                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                            }
+                        } else {
+                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                         }
                     } else {
-                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        
+                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                     }
 
                 }

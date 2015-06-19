@@ -32,7 +32,7 @@ class StudentsController extends AdminAppController {
             ### PSICO ###
             $nome = $this->request->data["StudentPsychiatrist"]["name"];
             $destinatario = $this->request->data["StudentPsychiatrist"]["email"];
-            $ator = "psicopedagogo(a)";
+            $ator = "terapeuta";
 
             $this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
         }
@@ -127,7 +127,7 @@ class StudentsController extends AdminAppController {
                 ### PSICO ###
                 $nome = $this->request->data["StudentPsychiatrist"]["name"];
                 $destinatario = $this->request->data["StudentPsychiatrist"]["email"];
-                $ator = "psicopedagogo(a)";
+                $ator = "terapeuta";
 
                 #$this->Student->sendWelcomeEmail($nome, $ator, $aluno, $destinatario);
 

@@ -11,9 +11,14 @@
         $datapoints = $config->data;
 
         // Armazena os totais
+        if(!empty($datapoints[0]->total)) {
         $total = $datapoints[0]->total;
         $total_dias = $datapoints[0]->total_dias;
-
+        } else {
+            $total = 1;
+            $total_dias = 1;
+        }  
+        
         // Se o total não for zerado, calcula a media, do contrário a média é 0
         if($total > 0 && $total_dias > 0) {
             $media = $total / $total_dias;

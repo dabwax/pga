@@ -32,11 +32,14 @@ App::uses('Helper', 'View');
 class AppHelper extends Helper {
 
     public function prepareLineChart($c) {
+
+        if(isset($c['config'])) {
         // faz um cache dos dados antigos
         $config = json_decode($c['config']);
 
         $data = array();
         $maiores_dados = array();
+        $maior_dado = 0;
 
         foreach($config->data as $label => $dados) {
 
@@ -49,7 +52,12 @@ class AppHelper extends Helper {
                     $ano = $dado->x[0];
 
                 $mes = str_pad($dado->x[1] - 1, 2, "0", STR_PAD_LEFT);
-                $dia = "01";
+
+                if($c['Chart']['display_mode'] == "mes_a_mes") {
+                    $dia = "01";
+                } else {
+                    $dia = $dado->x[2];
+                }
 
                 if($dado->y > $maiores_dados[$label]) {
                     $maiores_dados[$label] = $dado->y;
@@ -69,9 +77,15 @@ class AppHelper extends Helper {
                     $markerColor = null;
                 }
 
+                $y = intval($dado->y);
+
+                if($y > $maior_dado) {
+                    $maior_dado = $y;
+                }
+
                 $dataPoints[] = array(
                     'x' => 'new Date(' . $ano . ', ' . $mes . ', ' . $dia .')',
-                    'y' => $dado->y,
+                    'y' => intval($dado->y),
                     'indexLabel' => '',
                     'markerType' => $markerType,
                     'markerColor' => $markerColor
@@ -97,13 +111,27 @@ class AppHelper extends Helper {
             'data' => $data
         );
 
-        if(!empty($config->axisY->maximum)) {
-            $chart['axisY'] = array('maximum' => $config->axisY->maximum + 1);
+        if($maior_dado > 0 && $c['Chart']['display_mode'] == "mes_a_mes") {
+            $chart['axisY'] = array('maximum' => $maior_dado + 1);
         }
+
+        if($c['Chart']['display_mode'] == "dia_a_dia") {
+            $chart['axisX']['valueFormatString'] = "DD/MM/YYYY";
+        }
+
+        $chart['axisX']['gridDashType'] = "dot";
+        $chart['axisX']['gridThickness'] = 0;
+        $chart['axisY']['gridDashType'] = "dot";
+        $chart['axisY']['gridThickness'] = 2;
 
         $c['config'] = json_encode($chart);
 
+
         return $c['config'];
+
+        } else {
+            return json_encode(array());
+        }
     }
 
     public function formatChartType($type = null) {

@@ -26,6 +26,9 @@ input[type="text"], select {
    background: #F2F1EF;
    width: 100%;
 }
+select {
+  height: 54px !important;
+}
 ::-webkit-input-placeholder {
    color: #26A65B;
    font-family: "Oxygen";

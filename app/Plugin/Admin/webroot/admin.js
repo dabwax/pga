@@ -13,6 +13,8 @@ $(document).ready(function() {
       $("#ChartInputId").change(function() {
           var value = $(this).val();
 
+          console.log("testes");
+
           if(value == 6) {
             if($("#ChartType").find("[value='num_absoluto']").length == 0) {
                 $("#ChartType").append("<option value='num_absoluto'>Número Absoluto</option>").val("num_absoluto");
@@ -21,28 +23,10 @@ $(document).ready(function() {
           } else {
               $("#ChartSubType").val("");
               $("#ChartSubType").parent().fadeOut("fast");
-              $("#ChartType").find("[value='num_absoluto']").remove();
 
               if(value == 1) {
-                $("#ChartType").find('[value="column"]').remove();
-                $("#ChartType").find('[value="pie"]').remove();
-                $("#ChartType").find('[value="doughnut"]').remove();
                 $("#ChartType").append("<option value='num_absoluto'>Número Absoluto</option>").val("num_absoluto");
-              } else {
-
-                if($("#ChartType").find("[value='column']").length == 0) {
-                  $("#ChartType").append("<option value='column'>Coluna</option>");
-                }
-
-                if($("#ChartType").find("[value='pie']").length == 0) {
-                  $("#ChartType").append("<option value='pie'>Pizza</option>");
-                }
-
-              if($("#ChartType").find("[value='doughnut']").length == 0) {
-                  $("#ChartType").append("<option value='doughnut'>Donut</option>");
-                }
-                
-              }
+              } 
           }
       });
 
@@ -83,7 +67,6 @@ $(document).ready(function() {
     var value = $(this).val();
 
     if(value == 5) {
-      $(".select-tipo-grafico").find('[value="line"]').remove();
     } else {
 
       if( $(".select-tipo-grafico").find('[value="line"]').length == 0) {

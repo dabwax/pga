@@ -71,7 +71,7 @@ class FlowController extends AppController {
 
 		// adicionando o psiquiatra
 		$psychiatrist = AuthComponent::user("Student.StudentPsychiatrist");
-		$label = $psychiatrist["name"] . " (Psico)";
+		$label = $psychiatrist["name"] . " (Terapeuta)";
 		$value = $psychiatrist["id"] . ",psico," . $psychiatrist["email"] . "," . $psychiatrist["name"];
 
 		$recipients[$value] = $label;

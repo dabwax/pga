@@ -1,15 +1,5 @@
 $(document).ready(function() {
 
-        $("#ChartType").change(function() {
-          var value = $(this).val();
-
-          if(value == "num_absoluto") {
-              $("#ChartSubType").parent().fadeIn("fast");
-          } else {
-              $("#ChartSubType").val("");
-              $("#ChartSubType").parent().fadeOut("fast");
-          }
-      });
       $("#ChartInputId").change(function() {
           var value = $(this).val();
 
@@ -19,7 +9,6 @@ $(document).ready(function() {
           } else {
               $("#ChartSubType").val("");
               $("#ChartSubType").parent().fadeOut("fast");
-              $("#ChartType").find("option").last().remove();
           }
       });
 

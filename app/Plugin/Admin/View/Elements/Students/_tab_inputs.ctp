@@ -49,7 +49,7 @@
 
                 <div class="col-md-12">
                     <h4>Exportação</h4>
-                    <?php $options = array('tutor' => 'Tutor', 'pais' => 'Pais', 'psiquiatra' => 'Psiquiatra', 'mediador' => 'Mediador', 'coordenador' => 'Coordenador'); ?>
+                    <?php $options = array('tutor' => 'Tutor', 'pais' => 'Pais', 'psiquiatra' => 'Terapeuta', 'mediador' => 'Mediador', 'coordenador' => 'Coordenador'); ?>
                     <?php echo $this->Form->input("actor", array("label" => "Atores (opcional)", 'multiple' => true, 'class' => 'form-control', "type" => "select", 'empty' => 'Selecionar', "options" => $options)); ?>
                     <?php $formatos = array('Excel5' => 'Excel', 'CSV' => 'CSV'); echo $this->Form->input("formato", array("label" => "Formato", 'options' => $formatos)); ?>
 

@@ -138,7 +138,7 @@
 					</li>
 
 					<li title="<?php echo $this->Html->getPsychiatristName(); ?>">
-						<strong><i class="fa fa-user-md"></i> Psico</strong>
+						<strong><i class="fa fa-user-md"></i> Terapeuta</strong>
 						<?php
 						echo $this->Text->truncate($this->Html->getPsychiatristName(),
 						    30,

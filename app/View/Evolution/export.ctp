@@ -2,10 +2,10 @@
 <div class="row">
     <?php echo $this->Form->create("Evolution"); ?>
     <div class="col-md-6">
-        <?php echo $this->Form->input("date_start", array("label" => "Data Inicial", "value" => $date_start->format("d/m/Y")) ); ?>
+        <?php echo $this->Form->input("date_start", array("label" => "Data Inicial", "value" => $date_start->format("d/m/Y"), 'class' => 'calendario') ); ?>
     </div>
     <div class="col-md-6">
-        <?php echo $this->Form->input("date_finish", array("label" => "Data Final", "value" => $date_finish->format("d/m/Y")) ); ?>
+        <?php echo $this->Form->input("date_finish", array("label" => "Data Final", "value" => $date_finish->format("d/m/Y"), 'class' => 'calendario') ); ?>
     </div>
     <div class="col-md-12">
         <button type="submit" class="btn btn-block btn-success">Recarregar</button>

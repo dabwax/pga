@@ -265,6 +265,8 @@ class EvolutionController extends AppController {
 
             // gera o array de configurações do CanvasJS
             $config = array(
+                'axisX' => array('gridDashType' => 'dot', 'gridThickness' => 0),
+                'axisY' => array('gridDashType' => 'dot', 'gridThickness' => 2),
                 'backgroundColor' => 'transparent',
                 'height' => $c['Chart']['height'],
                 'toolTip' => array('enabled' => true),
@@ -342,7 +344,7 @@ class EvolutionController extends AppController {
                 )
             ),
             'order' => array(
-                'Chart.order DESC'
+                'Chart.order ASC'
             )
         );
         $charts = $this->Chart->find("all", $options);
