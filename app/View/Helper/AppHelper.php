@@ -93,6 +93,7 @@ class AppHelper extends Helper {
                 
                } 
             }
+
             $data[] = array(
                 'type' => 'line',
                 'showInLegend' => true,
