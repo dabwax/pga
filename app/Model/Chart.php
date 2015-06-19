@@ -433,27 +433,27 @@ class Chart extends AppModel {
                 }
                 
             }
+
+            $aulas_desse_estudante = $this->getMateriasPorDia($c['Chart']['student_id']);
             
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             if(!empty($csi['StudentInput']['StudentInputValue'])) {
                 foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
 
-                    if(in_array($siv['date'], $materias)) {
-                        $materias_do_dia = $materias[$siv['date']];
-                        $student_lesson_id = $c['Chart']['student_lesson_id'];
-                        
-                        if(!empty($student_lesson_id)) {
-                            if(in_array($student_lesson_id, $materias_do_dia)) {
+                    if(!empty($c['Chart']['student_lesson_id'])) {
 
-                                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                            $date = $siv['date'];
+                            $student_lesson_id = $c['Chart']['student_lesson_id'];
+
+                            if(array_key_exists($date, $aulas_desse_estudante)) {
+                                if(array_key_exists($student_lesson_id, $aulas_desse_estudante[$date])) {
+                                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                                }
                             }
                         } else {
-                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+
+                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
                         }
-                    } else {
-                        
-                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
-                    }
 
                 }
             } else {
@@ -606,28 +606,30 @@ class Chart extends AppModel {
                 }
                 
             }
+
+
+                    $aulas_desse_estudante = $this->getMateriasPorDia( $c['Chart']['student_id'] );
             
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             // agora, itera os registros deste input e inclui ele no seu devido grupo no $data
             if(!empty($csi['StudentInput']['StudentInputValue'])) {
                 foreach($csi['StudentInput']['StudentInputValue'] as $siv) {
 
-                        $student_lesson_id = $c['Chart']['student_lesson_id'];
-                    if(in_array($siv['date'], $materias) && !empty($student_lesson_id)) {
-                        $materias_do_dia = $materias[$siv['date']];
-                        
-                        if(!empty($student_lesson_id)) {
-                            if(in_array($student_lesson_id, $materias_do_dia)) {
+                    if(!empty($c['Chart']['student_lesson_id'])) {
 
-                                @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                            $date = $siv['date'];
+                            $student_lesson_id = $c['Chart']['student_lesson_id'];
+
+                            if(array_key_exists($date, $aulas_desse_estudante)) {
+                                if(array_key_exists($student_lesson_id, $aulas_desse_estudante[$date])) {
+                                    @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                                }
                             }
                         } else {
-                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
-                        }
-                    } else {
 
-                        @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
-                    }
+                            @$data[$label][$siv['value']] = $data[$label][$siv['value']] + 1;
+                        }
+
 
                 }
             } else {

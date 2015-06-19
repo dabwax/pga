@@ -5,9 +5,17 @@
 class EvolutionController extends AppController {
     public $uses = array("Chart", "Student");
 
-    public function export($student_id, $date_start, $date_finish) {
+    public function export($student_id, $date_start, $date_finish, $compartilhar = "nao", $observacao = "") {
         $this->layout = "iframe";
         $this->set("title_for_layout", "Relatório da Evolução");
+
+        if(!empty($observacao)) {
+            $this->loadModel("Observation");
+            $observation = $this->Observation->findById($observacao);
+
+            $observacao = $observation['Observation']['content'];
+        }
+        $this->set(compact("compartilhar", "observacao"));
 
         $tmp = explode("_", $date_start);
         $date_start  = new DateTime($tmp[0] . '-' . $tmp[1] . '-' . $tmp[2]);
@@ -20,12 +28,28 @@ class EvolutionController extends AppController {
 
             if($this->request->is("post")) {
 
+                if(!empty($this->request->data['compartilhar'])) {
+                    $compartilhar = "sim";
+
+                    $this->loadModel("Observation");
+
+                    $this->Observation->create();
+                    $this->Observation->save(array('content' => $this->request->data['Evolution']['observacao']));
+
+                    $observation_id = $this->Observation->getInsertID();
+
+                    $observacao = $observation_id;
+                } else {
+                    $compartilhar = "nao";
+                    $observacao = "";
+                }
+
                 $tmp = explode("/", $this->request->data['Evolution']['date_start']);
                 $date_start = $tmp[2] . "_" . $tmp[1] . "_" . $tmp[0];
                 $tmp = explode("/", $this->request->data['Evolution']['date_finish']);
                 $date_finish = $tmp[2] . "_" . $tmp[1] . "_" . $tmp[0];
 
-                return $this->redirect( array('action' => 'export', $student_id, $date_start, $date_finish) );
+                return $this->redirect( array('action' => 'export', $student_id, $date_start, $date_finish, $compartilhar, $observacao) );
             }
 
             $conditions['StudentInputValue.date BETWEEN ? AND ?'] = array($date_start->format("Y-m-d"), $date_finish->format("Y-m-d"));
@@ -49,7 +73,7 @@ class EvolutionController extends AppController {
                 )
             ),
             'order' => array(
-                'Chart.order DESC'
+                'Chart.order ASC'
             )
         );
         $charts = $this->Chart->find("all", $options);
@@ -72,7 +96,7 @@ class EvolutionController extends AppController {
                 $sivs_por_materia2[$date][] = $siv['StudentInputValue']['student_lesson_id'];
             }
         }
-        
+
         // itera os gráficos existentes
         foreach($charts as $x => $c) {
 
@@ -100,6 +124,7 @@ class EvolutionController extends AppController {
             if($c['Chart']['type'] == 'line') {
                 $tmp = $this->Chart->datapointLine($c, $sivs_por_materia2);
 
+                $is_bar = true;
                 $dataPoints = $tmp['dataPoints'];
             }
             
@@ -263,10 +288,26 @@ class EvolutionController extends AppController {
                 }
             }
 
+            $maior_numero = false;
+            foreach($c['ChartStudentInput'] as $csi) {
+
+                if(is_string($csi['StudentInput']['config'])) {
+                    $config = unserialize($csi['StudentInput']['config']);
+                } else {
+                    $config = $csi['StudentInput']['config'];
+                }
+
+                if(!empty($config['range_end'])) {
+                    $range_end = $config['range_end'];
+                }
+
+                if(!empty($range_end)) {
+                    $maior_numero = $range_end;
+                }
+            }
+
             // gera o array de configurações do CanvasJS
             $config = array(
-                'axisX' => array('gridDashType' => 'dot', 'gridThickness' => 0),
-                'axisY' => array('gridDashType' => 'dot', 'gridThickness' => 2),
                 'backgroundColor' => 'transparent',
                 'height' => $c['Chart']['height'],
                 'toolTip' => array('enabled' => true),
@@ -280,6 +321,10 @@ class EvolutionController extends AppController {
                     )
                 )
             );
+
+            if($maior_numero) {
+                $config['axisY'] = array('maximum' => $maior_numero);
+            }
 
             if(isset($is_bar) && $is_bar == true) {
                 $config['data'] = $dataPoints;
